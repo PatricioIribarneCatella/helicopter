@@ -1,11 +1,9 @@
-main();
-
 //
 // main function
 //
 function main() {
 
-	const canvas = document.querySelector("#glCanvas");
+	const canvas = document.querySelector("canvas");
 
 	const gl = canvas.getContext("webgl");
 
@@ -22,3 +20,4 @@ function main() {
 	gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
+main();
