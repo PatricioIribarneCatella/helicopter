@@ -1,11 +1,13 @@
+import * as app from './app.js';
+
 //
 // main function
 //
 function main() {
 
-	const canvas = document.querySelector("canvas");
+	var canvas = document.getElementById("canvas");
 
-	const gl = canvas.getContext("webgl");
+	var gl = canvas.getContext("webgl");
 
 	// check if WebGL is available
 	if (gl ===  null) {
@@ -13,11 +15,46 @@ function main() {
 		return;
 	}
 
-	// black color
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
+	app.init(gl, canvas);
 
-	// clear the color buffer
-	gl.clear(gl.COLOR_BUFFER_BIT);
+	/*
+		var app = new App(gl, canvas);
+
+		app.start();
+
+		-----------------------------------------------------
+
+		class App {
+			
+			constructor(gl, canvas) {
+				this.gl = gl;
+				this.canvas = canvas;
+				this.scene = new Scene(gl);
+			}
+
+			function start() {
+				this.scene.draw();
+			}
+		}
+
+		------------------------------------------------------
+
+		class Scene {
+		
+			constructor(gl) {
+				this.gl = gl;
+				this.init();
+			}
+
+			function init() {
+			
+			}
+
+			function draw() {
+			
+			}
+		}
+	*/
 }
 
 main();
