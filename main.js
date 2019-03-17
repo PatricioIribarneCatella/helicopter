@@ -18,45 +18,6 @@ function main() {
 	var app = new App(gl, canvas);
 
 	app.start();
-
-	/*
-		var app = new App(gl, canvas);
-
-		app.start();
-
-		-----------------------------------------------------
-
-		class App {
-			
-			constructor(gl, canvas) {
-				this.gl = gl;
-				this.canvas = canvas;
-				this.scene = new Scene(gl);
-			}
-
-			function start() {
-				this.scene.draw();
-			}
-		}
-
-		------------------------------------------------------
-
-		class Scene {
-		
-			constructor(gl) {
-				this.gl = gl;
-				this.init();
-			}
-
-			function init() {
-			
-			}
-
-			function draw() {
-			
-			}
-		}
-	*/
 }
 
 main();

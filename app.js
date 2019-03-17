@@ -1,3 +1,5 @@
+import {Scene} from './scene.js';
+
 //
 // Background and WebGl setup
 //
@@ -7,6 +9,7 @@ export class App {
 	constructor(gl, canvas) {
 		this.gl = gl;
 		this.canvas = canvas;
+		this.scene = new Scene(this.gl);
 	}
 
 	// private methods
@@ -26,6 +29,7 @@ export class App {
 
 	start() {
 		this.init();
+		this.scene.draw();
 	}
 }
 
