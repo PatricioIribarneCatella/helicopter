@@ -1,4 +1,4 @@
-import * as app from './app.js';
+import {App} from './app.js';
 
 //
 // main function
@@ -15,7 +15,9 @@ function main() {
 		return;
 	}
 
-	app.init(gl, canvas);
+	var app = new App(gl, canvas);
+
+	app.start();
 
 	/*
 		var app = new App(gl, canvas);

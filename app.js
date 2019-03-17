@@ -1,15 +1,31 @@
 //
 // Background and WebGl setup
 //
-export function init(gl, canvas) {
 
-	// black color
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
+export class App {
+	
+	constructor(gl, canvas) {
+		this.gl = gl;
+		this.canvas = canvas;
+	}
 
-	// clear the color buffer
-	gl.clear(gl.COLOR_BUFFER_BIT);
+	// private methods
 
-	// viewport init
-	gl.viewport(0, 0, canvas.width, canvas.height);
+	init() {
+		// black color
+		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+		// clear the color buffer
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+
+		// viewport init
+		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+	}
+
+	// public methods
+
+	start() {
+		this.init();
+	}
 }
 
