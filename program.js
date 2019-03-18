@@ -15,10 +15,12 @@ export class ShaderProgram {
 		this._init();
 	}
 
+	/* private methods  */
+	
 	_init() {
 		// get shader from source
-		var vs_src = document.getElementById(this.vs_src_id);
-		var fs_src = document.getElementById(this.fs_src_id);
+		var vs_src = document.getElementById(this.vs_src_id).text;
+		var fs_src = document.getElementById(this.fs_src_id).text;
 
 
 		// compile the shader
@@ -40,6 +42,12 @@ export class ShaderProgram {
 
 		// use the program
 		this.gl.useProgram(this.program);
+	}
+
+	/* public methods  */
+
+	findAttribute(id) {
+		return this.gl.getAttribLocation(this.program, id);
 	}
 }
 

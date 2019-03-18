@@ -10,24 +10,19 @@ export class Scene {
 		this.gl = gl;
 		this.vs_id = vert_shader_id;
 		this.fs_id = frag_shader_id;
+		this.elements = [];
 		this.program = new ShaderProgram(this.gl, this.vs_id, this.fs_id);
-		this._init();
-	}
-
-	/* private methods */
-
-	_init() {
-		console.log("init-scene");
 	}
 
 	/* public methods */
 
 	add(element) {
-		console.log("add-element-scene");
+		this.elements.push(element);
 	}
 
 	draw() {
-		console.log("drawing-scene");
+		var e1 = this.elements[0];
+		e1.draw(this.program);
 	}
 }
 

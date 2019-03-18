@@ -27,8 +27,7 @@ export class App {
 
 	/* public methods */
 
-	start() {
-		
+	start() {		
 		var scene = new Scene(this.gl, "vs", "fs");
 
 		var t1 = {
@@ -57,8 +56,8 @@ export class App {
 			}
 		};
 
-		scene.add(new Triangle(t1));
-		scene.add(new Triangle(t2));
+		scene.add(new Triangle(this.gl, t1));
+		scene.add(new Triangle(this.gl, t2));
 
 		scene.draw();
 	}
