@@ -1,4 +1,3 @@
-//
 // Compiles a shader source code
 // depending on its type
 //

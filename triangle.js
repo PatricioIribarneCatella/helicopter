@@ -5,9 +5,14 @@
 //
 export class Triangle  {
 
-	constructor(gl, data) {
+	constructor(gl, color) {
 		this.gl = gl;
-		this.model = data;
+		this.color = color;
+		this.model = [
+			0.0, 0.0, 0.0,
+			1.0, 0.0, 0.0,
+			0.0, 1.0, 0.0
+		];
 		this._init();
 	}
 
@@ -19,7 +24,7 @@ export class Triangle  {
                 
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleVertexBuffer);
                 this.gl.bufferData(this.gl.ARRAY_BUFFER,
-				   new Float32Array(this.model["pos"]),
+				   new Float32Array(this.model),
 				   this.gl.STATIC_DRAW);
 
 		// set webgl vertex color
@@ -27,13 +32,11 @@ export class Triangle  {
 
                 this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleColorBuffer);
                 this.gl.bufferData(this.gl.ARRAY_BUFFER,
-				   new Float32Array(this.model["color"]),
+				   new Float32Array(this.color),
 				   this.gl.STATIC_DRAW);
 	}
 
-	/* public methods */
-
-	draw(program) {
+	_bindBuffers(program) {
 		// connect position data in local buffers 
 		// with shader vertex position buffer
 		var vertexPositionAttribute = program.findAttribute("aVertexPosition");
@@ -49,6 +52,13 @@ export class Triangle  {
                 this.gl.enableVertexAttribArray(vertexColorAttribute);
                 this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleColorBuffer);
                 this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
+	}
+
+	/* public methods */
+
+	draw(program) {
+
+		this._bindBuffers(program);
 
                 this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
 	}
