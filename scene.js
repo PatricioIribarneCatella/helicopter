@@ -21,8 +21,10 @@ export class Scene {
 	}
 
 	draw() {
-		var e1 = this.elements[0];
-		e1.draw(this.program);
+		var i;
+		for (i = 0; i < this.elements.length; i++) {
+			this.elements[i].draw(this.program);
+		}
 	}
 }
 

@@ -50,6 +50,6 @@ export class Triangle  {
                 this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.triangleColorBuffer);
                 this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
-                this.gl.drawArrays(this.gl.TRIANGLES, 0, 1);
+                this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
 	}
 }
