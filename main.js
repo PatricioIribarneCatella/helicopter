@@ -20,4 +20,4 @@ function main() {
 	app.start();
 }
 
-window.onload = main();
+window.onload = main;
