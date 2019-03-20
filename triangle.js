@@ -56,6 +56,10 @@ export class Triangle  {
 
 	/* public methods */
 
+	addTransform(t) {
+		this.transformation = t;
+	}
+
 	draw(program) {
 
 		this._bindBuffers(program);

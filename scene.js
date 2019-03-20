@@ -6,8 +6,9 @@ import {ShaderProgram} from './program.js';
 //
 export class Scene {
 
-	constructor(gl, vert_shader_id, frag_shader_id) {
+	constructor(gl, canvas, vert_shader_id, frag_shader_id) {
 		this.gl = gl;
+		this.canvas = canvas;
 		this.vs_id = vert_shader_id;
 		this.fs_id = frag_shader_id;
 		this.elements = [];
