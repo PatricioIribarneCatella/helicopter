@@ -22,6 +22,7 @@ export class Scene {
 	}
 
 	draw() {
+		requestAnimationFrame(draw);
 		var i;
 		for (i = 0; i < this.elements.length; i++) {
 			this.elements[i].draw(this.program);

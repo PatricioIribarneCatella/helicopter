@@ -10,7 +10,7 @@ export class Transformation {
 		this.modelMatrix = mat4.create();
 		this.viewMatrix = mat4.create();
 		this.projMatrix = mat4.create();
-		this.rotate_angle = -1.57078;
+		this.angle = -1.57078;
 		
 		this._init();
 	}
@@ -23,7 +23,7 @@ export class Transformation {
 
 		// initialize rotation matrix
 		mat4.identity(this.modelMatrix);
-		mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotate_angle, [0.0, 0.0, 1.0]);
+		mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, [0.0, 0.0, 1.0]);
 
 		// initialize translation matrix
 		mat4.identity(this.viewMatrix);
@@ -31,4 +31,9 @@ export class Transformation {
 
 	/* public methods */
 
+	update() {
+		this.angle += 0.01;
+		mat4.identity(this.modelMatrix);
+		mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, [0.0, 0.0, 1.0]);
+	}
 }

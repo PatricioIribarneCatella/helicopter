@@ -7,7 +7,7 @@ export class App {
 	constructor(gl, canvas) {
 		this.gl = gl;
 		this.canvas = canvas;
-		this.init();
+		this._init();
 	}
 
 	/* private methods */
@@ -15,7 +15,7 @@ export class App {
 	//
 	// Background and WebGl setup
 	//
-	init() {
+	_init() {
 		// black color
 		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
