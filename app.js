@@ -29,7 +29,7 @@ export class App {
 	/* public methods */
 
 	start() {		
-		var scene = new Scene(this.gl, this.canvas, "vs-matrix", "fs");
+		var scene = new Scene();
 
 		var color = [
 			1.0, 0.0, 0.0, // v1
@@ -37,11 +37,12 @@ export class App {
 			0.0, 1.0, 0.0  // v3
 		];
 
-		var t = new Triangle(this.gl, color);
-		
-		t.addTransform(new Transformation(this.canvas));
+		var t = new Transformation(this.gl, this.canvas, "vs-matrix", "fs");
+
+		t.add(new Triangle(this.gl, color));
 
 		scene.add(t);
+
 		scene.draw();
 	}
 }

@@ -49,5 +49,9 @@ export class ShaderProgram {
 	findAttribute(id) {
 		return this.gl.getAttribLocation(this.program, id);
 	}
+
+	findUniform(id) {
+		return this.gl.getUniformLocation(this.program, id);
+	}
 }
 
