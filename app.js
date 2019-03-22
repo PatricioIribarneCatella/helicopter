@@ -29,7 +29,7 @@ export class App {
 	/* public methods */
 
 	start() {		
-		var scene = new Scene();
+		var scene = new Scene(this.gl);
 
 		var color = [
 			1.0, 0.0, 0.0, // v1

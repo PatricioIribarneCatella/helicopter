@@ -4,7 +4,8 @@
 //
 export class Scene {
 
-	constructor() {
+	constructor(gl) {
+		this.gl = gl;
 		this.elements = [];
 	}
 
@@ -15,7 +16,9 @@ export class Scene {
 	}
 
 	draw() {
-		window.requestAnimationFrame(draw);
+		window.requestAnimationFrame(() => this.draw());
+		
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		
 		var i;
 		for (i = 0; i < this.elements.length; i++) {

@@ -13,7 +13,7 @@ export class Transformation {
 		this.modelMatrix = mat4.create();
 		this.viewMatrix = mat4.create();
 		this.projMatrix = mat4.create();
-		this.angle = -1.57078;
+		this.angle = 1.57078;
 		
 		this.program = new ShaderProgram(this.gl, vs_id, fs_id);
 		this.elements = [];
@@ -25,7 +25,8 @@ export class Transformation {
 
 	_init() {
 		// initialize perspective matrix
-		mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 100.0);
+		mat4.identity(this.projMatrix);
+		//mat4.perspective(this.projMatrix, 45, this.canvas.with / this.canvas.height, 0.1, 100.0);
 
 		// initialize rotation matrix
 		mat4.identity(this.modelMatrix);
@@ -33,6 +34,7 @@ export class Transformation {
 
 		// initialize translation matrix
 		mat4.identity(this.viewMatrix);
+		//mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -5.0]);
 	}
 
 	_updateShaderMatrix() {
