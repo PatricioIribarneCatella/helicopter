@@ -6,7 +6,7 @@ import {ShaderProgram} from './program.js';
 //
 export class Transformation {
 
-	constructor(gl, canvas, vs_id, fs_id) {
+	constructor(gl, canvas) {
 
 		this.gl = gl;
 		this.canvas = canvas;
@@ -15,7 +15,9 @@ export class Transformation {
 		this.projMatrix = mat4.create();
 		this.angle = 1.57078;
 		
-		this.program = new ShaderProgram(this.gl, vs_id, fs_id);
+		this.program = new ShaderProgram(this.gl,
+					matrix_vertex_shader,
+					simple_fragment_shader);
 		this.elements = [];
 
 		this._init();

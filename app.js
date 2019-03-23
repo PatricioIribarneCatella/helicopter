@@ -37,7 +37,7 @@ export class App {
 			0.0, 1.0, 0.0  // v3
 		];
 
-		var t = new Transformation(this.gl, this.canvas, "vs-matrix", "fs");
+		var t = new Transformation(this.gl, this.canvas);
 
 		t.add(new Triangle(this.gl, color));
 

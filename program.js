@@ -6,11 +6,11 @@ import * as utils from './libs/utils.js';
 //
 export class ShaderProgram {
 
-	constructor(gl, vertex_src_id, fragment_src_id) {
+	constructor(gl, vertex_src, fragment_src) {
 		
 		this.gl = gl;
-		this.vs_src_id = vertex_src_id;
-		this.fs_src_id = fragment_src_id;
+		this.vs_src = vertex_src;
+		this.fs_src = fragment_src;
 		
 		this._init();
 	}
@@ -18,14 +18,9 @@ export class ShaderProgram {
 	/* private methods  */
 	
 	_init() {
-		// get shader from source
-		var vs_src = document.getElementById(this.vs_src_id).text;
-		var fs_src = document.getElementById(this.fs_src_id).text;
-
-
 		// compile the shader
-		var vs = utils.compile(this.gl, vs_src, this.gl.VERTEX_SHADER);
-		var fs = utils.compile(this.gl, fs_src, this.gl.FRAGMENT_SHADER);
+		var vs = utils.compile(this.gl, this.vs_src, this.gl.VERTEX_SHADER);
+		var fs = utils.compile(this.gl, this.fs_src, this.gl.FRAGMENT_SHADER);
 
 		this.program = this.gl.createProgram();
 		
