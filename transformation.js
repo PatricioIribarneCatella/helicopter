@@ -8,12 +8,11 @@ export class Transformation {
 
 		this.gl = gl;
 		this.canvas = canvas;
+		this.program = shader;
+		
 		this.modelMatrix = mat4.create();
 		this.viewMatrix = mat4.create();
 		this.projMatrix = mat4.create();
-		this.angle = 1.57078;
-		
-		this.program = shader;
 
 		this._init();
 	}
@@ -44,20 +43,28 @@ export class Transformation {
 
 	/* public methods */
 
-	rotate(axe) {
-		this.raxe = axe;
+	rotate(axis, init_angle, increment) {
+		
+		this.raxis = axis;
+		this.angle = init_angle;
+		this.increment = increment;
+
 		mat4.rotate(this.modelMatrix, this.modelMatrix,
-				this.angle, this.raxe);
+				this.angle, this.raxis);
+	}
+
+	move(position) {
+		this.element.move(position);
 	}
 
 	perspective(turn_on) {
 		if (turn_on) {
 			mat4.perspective(this.projMatrix, 45,
-				this.canvas.with / this.canvas.height, 0.1, 100.0);
+				this.canvas.width / this.canvas.height, 0.1, 100.0);
 		}
 	}
 
-	move(position) {
+	view(position) {
 		mat4.translate(this.viewMatrix, this.viewMatrix, position);
 	}
 
@@ -71,9 +78,9 @@ export class Transformation {
 	}
 
 	update() {
-		this.angle += 0.01;
+		this.angle += this.increment;
 		mat4.identity(this.modelMatrix);
 		mat4.rotate(this.modelMatrix, this.modelMatrix,
-				this.angle, this.raxe);
+				this.angle, this.raxis);
 	}
 }

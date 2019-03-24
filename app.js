@@ -1,7 +1,9 @@
 import {Scene} from './scene.js';
 import {ShaderProgram} from './program.js';
+
 import {Grid} from './grid.js';
 import {Triangle} from './triangle.js';
+
 import {Transformation} from './transformation.js';
 
 export class App {
@@ -23,6 +25,9 @@ export class App {
 
 		// clear the color buffer
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+		
+		this.gl.enable(this.gl.DEPTH_TEST);                              
+		this.gl.depthFunc(this.gl.LEQUAL);
 
 		// viewport init
 		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
@@ -37,38 +42,38 @@ export class App {
 					       matrix_vertex_shader,
 					       simple_fragment_shader);
 		
-		var color = [
-			1.0, 0.0, 0.0, // v1
-			1.0, 1.0, 0.0, // v2
-			0.0, 1.0, 0.0  // v3
-		];
-	
-
 		// TRIANLGE
+		
+		var color = [1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0];
+
 		var tr = new Triangle(this.gl, color);
 		
 		var t1 = new Transformation(this.gl, this.canvas, shader);
 		
-		t1.rotate([0.0, 0.0, 1.0]);
-		t1.perspective(false);
-		
 		t1.add(tr);
+		
+		t1.perspective(true);
+		t1.view([0.0, 0.0, -5.0]);
+		t1.rotate([0.0, 0.0, 1.0], 0.0, 0.01);
+		t1.move([1.0, 0.0, 0.0]);
 		
 		scene.add(t1);
 		
 		// GRID
-		var gr = new Grid(this.gl, 4, 3);
+		
+		var gr = new Grid(this.gl, 2, 2);
 		
 		var t2 = new Transformation(this.gl, this.canvas, shader);
 		
-		t2.rotate([0.0, 1.0, 0.0]);
-		t2.perspective(true);
-		t2.move([0.0, 0.0, -5.0]);
-		
 		t2.add(gr);
-
+		
+		t2.perspective(true);
+		t2.view([0.0, 0.0, -5.0]);
+		t2.rotate([0.0, 1.0, 0.0], 0.0, 0.03);
+		t2.move([0.0, 1.0, 0.0]);
+		
 		scene.add(t2);
-
+		
 		scene.draw();
 	}
 }

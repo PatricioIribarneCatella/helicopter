@@ -1,6 +1,6 @@
 //
 // Represents a Grid made up 
-// of triangles and drawed it 
+// of triangles and drawn it 
 // by TRIANGLE_STRIP
 //
 export class Grid {
@@ -63,15 +63,20 @@ export class Grid {
 		this._createIndexes();
 	}
 
-	_init() {
-		this._generateBuffers();
-
-		this.webgl_position_buffer = this.gl.createBuffer();
+	_fillPositionBuffer() {
+	
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_position_buffer);
 		this.gl.bufferData(this.gl.ARRAY_BUFFER,
 				   new Float32Array(this.position_buffer),
 				   this.gl.STATIC_DRAW);
+	}
 
+	_init() {
+		this._generateBuffers();
+
+		this.webgl_position_buffer = this.gl.createBuffer();
+		this._fillPositionBuffer();
+	
 		this.webgl_color_buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
 		this.gl.bufferData(this.gl.ARRAY_BUFFER,
@@ -108,6 +113,17 @@ export class Grid {
 	}
 
 	/* public methods */
+
+	move(position) {
+		
+		for (var i = 0; i < this.position_buffer; i += 3) {
+			this.model[i] += position[0];
+			this.model[i + 1] += position[1];
+			this.model[i + 2] += position[2];
+		}
+
+		this._fillPositionBuffer();
+	}
 
 	draw(program) {
 
