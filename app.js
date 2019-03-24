@@ -1,4 +1,6 @@
 import {Scene} from './scene.js';
+import {ShaderProgram} from './program.js';
+import {Grid} from './grid.js';
 import {Triangle} from './triangle.js';
 import {Transformation} from './transformation.js';
 
@@ -31,17 +33,41 @@ export class App {
 	start() {		
 		var scene = new Scene(this.gl);
 
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+		
 		var color = [
 			1.0, 0.0, 0.0, // v1
 			1.0, 1.0, 0.0, // v2
 			0.0, 1.0, 0.0  // v3
 		];
+	
 
-		var t = new Transformation(this.gl, this.canvas);
+		// TRIANLGE
+		var tr = new Triangle(this.gl, color);
+		
+		var t1 = new Transformation(this.gl, this.canvas, shader);
+		
+		t1.rotate([0.0, 0.0, 1.0]);
+		t1.perspective(false);
+		
+		t1.add(tr);
+		
+		scene.add(t1);
+		
+		// GRID
+		var gr = new Grid(this.gl, 4, 3);
+		
+		var t2 = new Transformation(this.gl, this.canvas, shader);
+		
+		t2.rotate([0.0, 1.0, 0.0]);
+		t2.perspective(true);
+		t2.move([0.0, 0.0, -5.0]);
+		
+		t2.add(gr);
 
-		t.add(new Triangle(this.gl, color));
-
-		scene.add(t);
+		scene.add(t2);
 
 		scene.draw();
 	}

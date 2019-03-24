@@ -1,12 +1,10 @@
-import {ShaderProgram} from './program.js';
-
 //
 // Manages transformation
 // matrix: model + view + perspective
 //
 export class Transformation {
 
-	constructor(gl, canvas) {
+	constructor(gl, canvas, shader) {
 
 		this.gl = gl;
 		this.canvas = canvas;
@@ -15,10 +13,7 @@ export class Transformation {
 		this.projMatrix = mat4.create();
 		this.angle = 1.57078;
 		
-		this.program = new ShaderProgram(this.gl,
-					matrix_vertex_shader,
-					simple_fragment_shader);
-		this.elements = [];
+		this.program = shader;
 
 		this._init();
 	}
@@ -28,15 +23,12 @@ export class Transformation {
 	_init() {
 		// initialize perspective matrix
 		mat4.identity(this.projMatrix);
-		//mat4.perspective(this.projMatrix, 45, this.canvas.with / this.canvas.height, 0.1, 100.0);
 
 		// initialize rotation matrix
 		mat4.identity(this.modelMatrix);
-		mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, [0.0, 0.0, 1.0]);
 
 		// initialize translation matrix
 		mat4.identity(this.viewMatrix);
-		//mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -5.0]);
 	}
 
 	_updateShaderMatrix() {
@@ -52,22 +44,36 @@ export class Transformation {
 
 	/* public methods */
 
+	rotate(axe) {
+		this.raxe = axe;
+		mat4.rotate(this.modelMatrix, this.modelMatrix,
+				this.angle, this.raxe);
+	}
+
+	perspective(turn_on) {
+		if (turn_on) {
+			mat4.perspective(this.projMatrix, 45,
+				this.canvas.with / this.canvas.height, 0.1, 100.0);
+		}
+	}
+
+	move(position) {
+		mat4.translate(this.viewMatrix, this.viewMatrix, position);
+	}
+
 	add(element) {
-		this.elements.push(element);
+		this.element = element;
 	}
 
 	draw() {
 		this._updateShaderMatrix();
-
-		var i;
-		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].draw(this.program);
-		}
+		this.element.draw(this.program);
 	}
 
 	update() {
 		this.angle += 0.01;
 		mat4.identity(this.modelMatrix);
-		mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, [0.0, 0.0, 1.0]);
+		mat4.rotate(this.modelMatrix, this.modelMatrix,
+				this.angle, this.raxe);
 	}
 }
