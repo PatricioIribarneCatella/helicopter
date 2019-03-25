@@ -116,10 +116,10 @@ export class Grid {
 
 	move(position) {
 		
-		for (var i = 0; i < this.position_buffer; i += 3) {
-			this.model[i] += position[0];
-			this.model[i + 1] += position[1];
-			this.model[i + 2] += position[2];
+		for (var i = 0; i < this.position_buffer.length; i += 3) {
+			this.position_buffer[i] += position[0];
+			this.position_buffer[i + 1] += position[1];
+			this.position_buffer[i + 2] += position[2];
 		}
 
 		this._fillPositionBuffer();

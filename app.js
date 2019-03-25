@@ -54,7 +54,7 @@ export class App {
 		
 		t1.perspective(true);
 		t1.view([0.0, 0.0, -5.0]);
-		t1.rotate([0.0, 0.0, 1.0], 0.0, 0.01);
+		t1.rotate([0.0, 0.0, 1.0], 0.0, 0.05);
 		t1.move([1.0, 0.0, 0.0]);
 		
 		scene.add(t1);
@@ -70,7 +70,7 @@ export class App {
 		t2.perspective(true);
 		t2.view([0.0, 0.0, -5.0]);
 		t2.rotate([0.0, 1.0, 0.0], 0.0, 0.03);
-		t2.move([0.0, 1.0, 0.0]);
+		t2.move([1.0, 0.0, 0.0]);
 		
 		scene.add(t2);
 		
