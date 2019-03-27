@@ -41,6 +41,15 @@ export class Transformation {
 		this.gl.uniformMatrix4fv(uniformMatrixProj, false, this.projMatrix);
 	}
 
+	_updateModel() {
+		var pos = [-this.position[0], -this.position[1], -this.position[2]];
+		mat4.identity(this.modelMatrix);
+		mat4.translate(this.modelMatrix, this.modelMatrix, pos);
+		mat4.rotate(this.modelMatrix, this.modelMatrix,
+				this.angle, this.raxis);
+		mat4.translate(this.modelMatrix, this.modelMatrix, this.position);
+	}
+
 	/* public methods */
 
 	rotate(axis, init_angle, increment) {
@@ -49,12 +58,12 @@ export class Transformation {
 		this.angle = init_angle;
 		this.increment = increment;
 
-		mat4.rotate(this.modelMatrix, this.modelMatrix,
-				this.angle, this.raxis);
+		this._updateModel();
 	}
 
 	move(position) {
-		this.element.move(position);
+		this.position = position;
+		this.element.move(this.position);
 	}
 
 	perspective(turn_on) {
@@ -79,8 +88,7 @@ export class Transformation {
 
 	update() {
 		this.angle += this.increment;
-		mat4.identity(this.modelMatrix);
-		mat4.rotate(this.modelMatrix, this.modelMatrix,
-				this.angle, this.raxis);
+		
+		this._updateModel();
 	}
 }
