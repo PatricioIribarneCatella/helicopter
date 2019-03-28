@@ -3,6 +3,7 @@ import {ShaderProgram} from './program.js';
 
 import {Grid} from './grid.js';
 import {Triangle} from './triangle.js';
+import {Sphere} from './sphere.js';
 
 import {Transformation} from './transformation.js';
 
@@ -52,7 +53,7 @@ export class App {
 		
 		t1.add(tr);
 		
-		t1.move([0.5, 0.0, 0.0]);
+		t1.move([0.0, 0.0, 0.0]);
 		
 		t1.perspective(true);
 		t1.view([0.0, 0.0, -5.0]);
@@ -62,7 +63,7 @@ export class App {
 		
 		// GRID
 		
-		var gr = new Grid(this.gl, 2, 2);
+		var gr = new Grid(this.gl, 2, 3);
 		
 		var t2 = new Transformation(this.gl, this.canvas, shader);
 		
@@ -76,6 +77,22 @@ export class App {
 		
 		scene.add(t2);
 		
+		// SPHERE
+
+		var s = new Sphere(this.gl, 20, 20);
+
+		var t3 = new Transformation(this.gl, this.canvas, shader);
+
+		t3.add(s);
+
+		t3.move([2.0, 0.0, 0.0]);
+
+		t3.perspective(true);
+		t3.view([0.0, 0.0, -5.0]);
+		t3.rotate([0.0, 1.0, 0.0], 0.0, 0.04);
+
+		scene.add(t3);
+
 		scene.draw();
 	}
 }
