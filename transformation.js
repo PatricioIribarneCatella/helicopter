@@ -14,6 +14,7 @@ export class Transformation {
 		this.viewMatrix = mat4.create();
 		this.projMatrix = mat4.create();
 
+		this._update = false;
 		this._init();
 	}
 
@@ -44,16 +45,17 @@ export class Transformation {
 	_updateModel() {
 		var pos = [-this.position[0], -this.position[1], -this.position[2]];
 		mat4.identity(this.modelMatrix);
-		mat4.translate(this.modelMatrix, this.modelMatrix, pos);
+		mat4.translate(this.modelMatrix, this.modelMatrix, this.position);
 		mat4.rotate(this.modelMatrix, this.modelMatrix,
 				this.angle, this.raxis);
-		mat4.translate(this.modelMatrix, this.modelMatrix, this.position);
+		mat4.translate(this.modelMatrix, this.modelMatrix, pos);
 	}
 
 	/* public methods */
 
 	rotate(axis, init_angle, increment) {
-		
+	
+		this._update = true;
 		this.raxis = axis;
 		this.angle = init_angle;
 		this.increment = increment;
@@ -87,8 +89,9 @@ export class Transformation {
 	}
 
 	update() {
-		this.angle += this.increment;
-		
-		this._updateModel();
+		if (this._update) {
+			this.angle += this.increment;
+			this._updateModel();
+		}
 	}
 }
