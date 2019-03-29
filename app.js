@@ -79,7 +79,7 @@ export class App {
 		
 		// SPHERE
 
-		var s = new Sphere(this.gl, 20, 20);
+		var s = new Sphere(this.gl, 30, 30);
 
 		var t3 = new Transformation(this.gl, this.canvas, shader);
 

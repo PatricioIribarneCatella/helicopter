@@ -9,7 +9,7 @@ export class Sphere {
 		this.gl = gl;
 		this.rows = rows;
 		this.cols = cols;
-		this.alpha = 2 * Math.PI / this.rows;
+		this.theta = 2 * Math.PI / this.rows;
 		this.phi = 2 * Math.PI / this.cols;
 		this._init();
 	}
@@ -24,9 +24,10 @@ export class Sphere {
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
 				// position = (x, y, z = 0)
-				var x = Math.cos(j * this.phi) * Math.cos(i * this.alpha);
-				var y = Math.cos(j * this.phi) * Math.sin(i * this.alpha);
-				var z = Math.sin(j * this.phi);
+				var x = Math.cos(i * this.theta) * Math.sin(j * this.phi);
+				var y = Math.sin(i * this.theta) * Math.sin(j * this.phi);
+				var z = Math.cos(j * this.phi);
+				
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
