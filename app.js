@@ -69,7 +69,7 @@ export class App {
 		
 		t2.add(gr);
 		
-		t2.move([-2.0, 0.0, 0.0]);
+		t2.move([-3.0, 0.0, 0.0]);
 		
 		t2.perspective(true);
 		t2.view([0.0, 0.0, -5.0]);
@@ -85,7 +85,7 @@ export class App {
 
 		t3.add(s);
 
-		t3.move([2.0, 0.0, 0.0]);
+		t3.move([3.0, 0.0, 0.0]);
 
 		t3.perspective(true);
 		t3.view([0.0, 0.0, -5.0]);
