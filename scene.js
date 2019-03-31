@@ -15,6 +15,10 @@ export class Scene {
 		this.elements.push(element);
 	}
 
+	addCamera(camera) {
+		this.camera = camera;
+	}
+
 	draw() {
 		window.requestAnimationFrame(() => this.draw());
 		
@@ -22,11 +26,11 @@ export class Scene {
 		
 		var i;
 		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].draw();
+			this.elements[i].draw(this.camera);
 		}
 		
 		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].update();
+			this.elements[i].animate();
 		}
 	}
 }

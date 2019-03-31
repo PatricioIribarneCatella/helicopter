@@ -1,11 +1,12 @@
 import {Scene} from './scene.js';
+import {Camera} from './camera.js';
 import {ShaderProgram} from './program.js';
 
 import {Grid} from './grid.js';
-import {Triangle} from './triangle.js';
-import {Sphere} from './sphere.js';
 
-import {Transformation} from './transformation.js';
+import {Rotation} from './rotation.js';
+import {Translation} from './translation.js';
+import {Graphic} from './graphic.js';
 
 export class App {
 	
@@ -42,57 +43,23 @@ export class App {
 		var shader = new ShaderProgram(this.gl,
 					       matrix_vertex_shader,
 					       simple_fragment_shader);
-		
-		// TRIANLGE
-		
-		var color = [1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0];
+	
+		// Create a perspective camera moved 5 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 5.0]);
 
-		var tr = new Triangle(this.gl, color);
-		
-		var t1 = new Transformation(this.gl, this.canvas, shader);
-		
-		t1.add(tr);
-		
-		t1.move([0.0, 0.0, 0.0]);
-		
-		t1.perspective(true);
-		t1.view([0.0, 0.0, -5.0]);
-		t1.rotate([0.0, 0.0, 1.0], 0.0, 0.01);
-		
-		scene.add(t1);
-		
+		scene.addCamera(camera);
+
 		// GRID
 		
-		var gr = new Grid(this.gl, 2, 3);
+		var grid = new Grid(this.gl, 2, 3);
+
+		var ts = [new Translation([-3.0, 0.0, 0.0]),
+			  new Rotation([0.0, 1.0, 0.0], 0.0, 0.02)];
+
+		var graphic = new Graphic(this.gl, grid, ts, shader);
+
+		scene.add(graphic);
 		
-		var t2 = new Transformation(this.gl, this.canvas, shader);
-		
-		t2.add(gr);
-		
-		t2.move([-3.0, 0.0, 0.0]);
-		
-		t2.perspective(true);
-		t2.view([0.0, 0.0, -5.0]);
-		t2.rotate([0.0, 1.0, 0.0], 0.0, 0.02);
-		
-		scene.add(t2);
-		
-		// SPHERE
-
-		var s = new Sphere(this.gl, 30, 30);
-
-		var t3 = new Transformation(this.gl, this.canvas, shader);
-
-		t3.add(s);
-
-		t3.move([3.0, 0.0, 0.0]);
-
-		t3.perspective(true);
-		t3.view([0.0, 0.0, -5.0]);
-		t3.rotate([0.0, 1.0, 0.0], 0.0, 0.04);
-
-		scene.add(t3);
-
 		scene.draw();
 	}
 }
