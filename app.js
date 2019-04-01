@@ -7,6 +7,8 @@ import {Sphere} from './sphere.js';
 
 import {Rotation} from './rotation.js';
 import {Translation} from './translation.js';
+import {Scale} from './scaling.js';
+
 import {Graphic} from './graphic.js';
 
 export class App {
@@ -62,7 +64,8 @@ export class App {
 		var s = new Sphere(this.gl, 30, 30);
 
 		var ts = [new Translation([0.0, 0.0, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], 0.0, 0.04)];
+			  new Rotation([1.0, 0.0, 0.0], 0.0, 0.04),
+			  new Scale([0.5, 0.5, 0.5])];
 
 		var g2 = new Graphic(this.gl, s, ts, shader);
 
