@@ -8,7 +8,7 @@ export class Graphic {
 	constructor(gl, element, transformations, shader) {
 		
 		this.gl = gl;
-		this.element = element;
+		this.model = element;
 		this.ts = transformations;
 		this.program = shader;
 
@@ -34,19 +34,25 @@ export class Graphic {
 		var uniformMatrixModel = this.program.findUniform("model");
 		this.gl.uniformMatrix4fv(uniformMatrixModel, false, this.matrix);
 	}
-
-	/* public methods */
-
-	animate() {
+	
+	_animate() {
 		var i;
 		for (i = 0; i < this.ts.length; i++) {
 			this.ts[i].update();
 		}
 	}
 
+	/* public methods */
+
 	draw(camera) {
+		
 		camera.update(this.program);
+
 		this._updateModelMatrix();
-		this.element.draw(this.program);
+		
+		this.model.draw(this.program);
+
+		this._animate();
 	}
 }
+

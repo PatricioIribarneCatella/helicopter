@@ -49,11 +49,11 @@ export class App {
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 6.0]);
 		scene.addCamera(camera);
 
-		var grid = new Grid(this.gl, 2, 3);
+		var grid = new Grid(this.gl, 3, 2);
 
 		var tg = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.03),
 			  new Translation([3.0, 0.0, 0.0]),
-			  new Rotation([0.0, 1.0, 0.0], 0.0, 0.02)];
+			  new Rotation([0.0, 1.0, 0.0], 0.0, 0.07)];
 
 		var g1 = new Graphic(this.gl, grid, tg, shader);
 

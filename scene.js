@@ -28,10 +28,6 @@ export class Scene {
 		for (i = 0; i < this.elements.length; i++) {
 			this.elements[i].draw(this.camera);
 		}
-		
-		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].animate();
-		}
 	}
 }
 
