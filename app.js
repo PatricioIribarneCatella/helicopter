@@ -3,6 +3,7 @@ import {Camera} from './camera.js';
 import {ShaderProgram} from './program.js';
 
 import {Grid} from './grid.js';
+import {Sphere} from './sphere.js';
 
 import {Rotation} from './rotation.js';
 import {Translation} from './translation.js';
@@ -45,20 +46,27 @@ export class App {
 					       simple_fragment_shader);
 	
 		// Create a perspective camera moved 5 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 5.0]);
-
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 6.0]);
 		scene.addCamera(camera);
 
-		// GRID
-		
 		var grid = new Grid(this.gl, 2, 3);
 
-		var ts = [new Translation([-3.0, 0.0, 0.0]),
+		var tg = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.03),
+			  new Translation([3.0, 0.0, 0.0]),
 			  new Rotation([0.0, 1.0, 0.0], 0.0, 0.02)];
 
-		var graphic = new Graphic(this.gl, grid, ts, shader);
+		var g1 = new Graphic(this.gl, grid, tg, shader);
 
-		scene.add(graphic);
+		scene.add(g1);
+
+		var s = new Sphere(this.gl, 30, 30);
+
+		var ts = [new Translation([0.0, 0.0, 0.0]),
+			  new Rotation([1.0, 0.0, 0.0], 0.0, 0.04)];
+
+		var g2 = new Graphic(this.gl, s, ts, shader);
+
+		scene.add(g2);
 		
 		scene.draw();
 	}
