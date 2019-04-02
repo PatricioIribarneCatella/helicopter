@@ -1,16 +1,19 @@
 //
-// Combines a Model element
-// and a list of transformations
-// to aplicate on it
+// Represents an abstract 3D
+// object node in the scene's tree.
 //
-export class Graphic {
-
-	constructor(gl, element, transformations, shader) {
+// It contains childrens:
+// 	- others 3D containers
+// 		(a.k.a 'Container3D' object)
+// 	- graphical objects
+// 		(a.k.a 'Graphic' object)
+//
+export class Container3D {
+	
+	constructor(transformations) {
 		
-		this.gl = gl;
-		this.model = element;
 		this.ts = transformations;
-		this.program = shader;
+		this.childrens = [];
 
 		this._init();
 	}
@@ -18,12 +21,11 @@ export class Graphic {
 	/* private methods */
 
 	_init() {
-		// initialize model matrix element
 		this.matrix = mat4.create();
 	}
 
 	_updateTransformations(matrix) {
-
+	
 		var i;
 		mat4.identity(this.matrix);
 
@@ -32,12 +34,6 @@ export class Graphic {
 		}
 
 		mat4.multiply(this.matrix, matrix, this.matrix);
-	}
-	
-	_bindTransformations() {
-
-		var uniformMatrixModel = this.program.findUniform("model");
-		this.gl.uniformMatrix4fv(uniformMatrixModel, false, this.matrix);
 	}
 
 	_animate() {
@@ -49,15 +45,17 @@ export class Graphic {
 
 	/* public methods */
 
+	add(e) {
+		this.childrens.push(e);
+	}
+
 	draw(camera, matrix) {
-		
-		camera.update(this.program);
 
 		this._updateTransformations(matrix);
 
-		this._bindTransformations();
-		
-		this.model.draw(this.program);
+		for (i = 0; i < this.childrens.length; i++) {
+			this.childrens[i].draw(camera, this.matrix);
+		}
 
 		this._animate();
 	}

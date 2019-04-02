@@ -2,14 +2,16 @@ import {Scene} from './scene.js';
 import {Camera} from './camera.js';
 import {ShaderProgram} from './program.js';
 
-import {Grid} from './grid.js';
 import {Sphere} from './sphere.js';
 
 import {Rotation} from './rotation.js';
 import {Translation} from './translation.js';
 import {Scale} from './scaling.js';
+import {Identity} from './identity.js';
 
 import {Graphic} from './graphic.js';
+import {Container3D} from './container.js';
+import {World} from './world.js';
 
 export class App {
 	
@@ -51,25 +53,45 @@ export class App {
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 6.0]);
 		scene.addCamera(camera);
 
-		var grid = new Grid(this.gl, 3, 2);
+		// World
+		var world = new World();
 
-		var tg = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.03),
-			  new Translation([3.0, 0.0, 0.0]),
-			  new Rotation([0.0, 1.0, 0.0], 0.0, 0.07)];
-
-		var g1 = new Graphic(this.gl, grid, tg, shader);
-
-		scene.add(g1);
-
+		// Sun
 		var s = new Sphere(this.gl, 30, 30);
+		var gs = new Graphic(this.gl, s, [new Identity()], shader);
 
-		var ts = [new Translation([0.0, 0.0, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], 0.0, 0.04),
+		world.add(gs);
+
+		// Earth - Moon system
+		var tem = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.03),
+			   new Translation([3.0, 0.0, 0.0])];
+
+		var em = new Container3D(tem);
+
+		// Earth
+		var e = new Sphere(this.gl, 30, 30);
+
+		var ts = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.05),
 			  new Scale([0.5, 0.5, 0.5])];
 
-		var g2 = new Graphic(this.gl, s, ts, shader);
+		var ge = new Graphic(this.gl, e, ts, shader);
 
-		scene.add(g2);
+		em.add(ge);
+
+		// Moon
+		var m = new Sphere(this.gl, 30, 30);
+
+		var tm = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.05),
+			  new Translation([3.0, 0.0, 0.0]),
+			  new Scale([0.75, 0.75, 0.75])];
+
+		var gm = new Graphic(this.gl, m, tm, shader);
+
+		em.add(gm);
+
+		world.add(em);
+
+		scene.add(world);
 		
 		scene.draw();
 	}

@@ -42,3 +42,4 @@ export class Rotation {
 		return this.modelMatrix;
 	}
 }
+

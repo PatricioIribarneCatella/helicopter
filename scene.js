@@ -11,8 +11,8 @@ export class Scene {
 
 	/* public methods */
 
-	add(element) {
-		this.elements.push(element);
+	add(world) {
+		this.world = world;
 	}
 
 	addCamera(camera) {
@@ -23,11 +23,8 @@ export class Scene {
 		window.requestAnimationFrame(() => this.draw());
 		
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-		
-		var i;
-		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].draw(this.camera);
-		}
+
+		this.world.draw(this.camera);
 	}
 }
 
