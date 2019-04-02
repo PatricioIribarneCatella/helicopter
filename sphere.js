@@ -69,19 +69,14 @@ export class Sphere {
 		this._createIndexes();
 	}
 
-	_fillPositionBuffer() {
-	
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_position_buffer);
-		this.gl.bufferData(this.gl.ARRAY_BUFFER,
-				   new Float32Array(this.position_buffer),
-				   this.gl.STATIC_DRAW);
-	}
-
 	_init() {
 		this._generateBuffers();
 
 		this.webgl_position_buffer = this.gl.createBuffer();
-		this._fillPositionBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_position_buffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER,
+				   new Float32Array(this.position_buffer),
+				   this.gl.STATIC_DRAW);
 	
 		this.webgl_color_buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
@@ -119,17 +114,6 @@ export class Sphere {
 	}
 
 	/* public methods */
-
-	move(position) {
-		
-		for (var i = 0; i < this.position_buffer.length; i += 3) {
-			this.position_buffer[i] += position[0];
-			this.position_buffer[i + 1] += position[1];
-			this.position_buffer[i + 2] += position[2];
-		}
-
-		this._fillPositionBuffer();
-	}
 
 	draw(program) {
 
