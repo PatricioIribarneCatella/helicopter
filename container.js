@@ -53,6 +53,7 @@ export class Container3D {
 
 		this._updateTransformations(matrix);
 
+		var i;
 		for (i = 0; i < this.childrens.length; i++) {
 			this.childrens[i].draw(camera, this.matrix);
 		}

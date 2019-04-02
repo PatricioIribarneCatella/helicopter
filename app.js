@@ -50,7 +50,7 @@ export class App {
 					       simple_fragment_shader);
 	
 		// Create a perspective camera moved 5 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 6.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 7.0]);
 		scene.addCamera(camera);
 
 		// World
@@ -82,8 +82,8 @@ export class App {
 		var m = new Sphere(this.gl, 30, 30);
 
 		var tm = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.05),
-			  new Translation([3.0, 0.0, 0.0]),
-			  new Scale([0.75, 0.75, 0.75])];
+			  new Translation([1.25, 0.0, 0.0]),
+			  new Scale([0.25, 0.25, 0.25])];
 
 		var gm = new Graphic(this.gl, m, tm, shader);
 
