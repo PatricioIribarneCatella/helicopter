@@ -1,6 +1,6 @@
 //
 // Represents a Translation
-// |
+//
 export class Translation {
 	
 	constructor(position) {
