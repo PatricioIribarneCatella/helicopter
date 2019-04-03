@@ -58,7 +58,7 @@ export class App {
 		var world = new World();
 	
 		// Sphere model for all the solar system objects
-		var model = new Sphere(this.gl, 30, 30);
+		var model = new Sphere(30, 30);
 
 		// Sun
 		var gs = new Graphic(this.gl, model, [new Identity()], shader);

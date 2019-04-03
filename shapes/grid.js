@@ -5,10 +5,11 @@
 //
 export class Grid {
 
-	constructor(gl, rows, cols) {
-		this.gl = gl;
+	constructor(rows, cols) {
+		
 		this.rows = rows;
 		this.cols = cols;
+		
 		this._init();
 	}
 

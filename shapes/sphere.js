@@ -5,12 +5,13 @@
 //
 export class Sphere {
 
-	constructor(gl, rows, cols) {
-		this.gl = gl;
+	constructor(rows, cols) {
+		
 		this.rows = rows;
 		this.cols = cols;
 		this.theta = 2 * Math.PI / this.rows;
 		this.phi = 2 * Math.PI / this.cols;
+		
 		this._init();
 	}
 
