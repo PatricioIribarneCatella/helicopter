@@ -17,6 +17,29 @@ export class Graphic {
 
 	/* private methods */
 
+	_createIndexes() {
+		
+		this.index_buffer = [];
+		var cols = this.model.getCols();
+		var rows = this.model.getRows();
+
+		for (var i = 0.0; i < (rows - 1); i++) {
+			if ((i % 2) == 0) {
+				// even rows stay normal
+				for (var j = 0; j < cols; j++) {
+					this.index_buffer.push(i * cols + j);
+					this.index_buffer.push((i + 1) * cols + j);
+				}
+			} else {
+				// odd rows get flipped
+				for (var j = (cols - 1); j >= 0; j--) {
+					this.index_buffer.push(i * cols + j);
+					this.index_buffer.push((i + 1) * cols + j);
+				}
+			}
+		}
+	}
+
 	_initBuffers() {
 		
 		this.webgl_position_buffer = this.gl.createBuffer();
@@ -34,7 +57,7 @@ export class Graphic {
 		this.webgl_index_buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
 		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,
-				   new Uint16Array(this.model.getIndexes()),
+				   new Uint16Array(this.index_buffer),
 				   this.gl.STATIC_DRAW);
 	}
 
@@ -42,6 +65,7 @@ export class Graphic {
 		// initialize model matrix element
 		this.matrix = mat4.create();
 
+		this._createIndexes();
 		this._initBuffers();
 	}
 
@@ -99,7 +123,7 @@ export class Graphic {
 		this._bindBuffers();
 
 		this.gl.drawElements(this.gl.TRIANGLE_STRIP,
-				     this.model.getIndexes().length,
+				     this.index_buffer.length,
 				     this.gl.UNSIGNED_SHORT, 0);
 	}
 

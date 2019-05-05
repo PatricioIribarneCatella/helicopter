@@ -56,7 +56,7 @@ export class App {
 
 		// World
 		var world = new World();
-	
+		
 		// Sphere model for all the solar system objects
 		var model = new Sphere(30, 30);
 
