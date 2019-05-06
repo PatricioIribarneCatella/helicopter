@@ -6,6 +6,7 @@ export class Curve {
 
 	constructor(points) {
 		this.points = points;
+		this.stretches = [];
 	}
 
 	get(u) {
