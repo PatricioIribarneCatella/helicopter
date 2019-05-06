@@ -1,4 +1,5 @@
-import {Curve} from './curve.js'
+import {Curve} from './curve.js';
+import {CuadStretch, CubicStretch} from './stretch.js';
 
 //
 // BSpline cuadratic and cubic curves
