@@ -69,10 +69,6 @@ export class Sphere {
 		return this.color_buffer;
 	}
 
-	getIndexes() {
-		return this.index_buffer;
-	}
-
 	getCols() {
 		return this.cols;
 	}
