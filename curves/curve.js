@@ -16,5 +16,9 @@ export class Curve {
 	getTangent(u) {
 		return this._calculateTangent(u);
 	}
+
+	getNormal(u) {
+		return this._calculateNormal(u);
+	}
 }
 

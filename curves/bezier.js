@@ -75,6 +75,10 @@ export class BezierCuad extends Curve {
 
 		return this._linear(s.getTangCoeff(), fracc);
 	}
+
+	_calculateNormal(u) {
+	
+	}
 }
 
 //
@@ -149,6 +153,10 @@ export class BezierCubic extends Curve {
 		var s = this.stretches[integer];
 
 		return this._cuad(s.getTangCoeff(), fracc);
+	}
+
+	_calculateNormal(u) {
+	
 	}
 }
 

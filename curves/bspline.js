@@ -73,6 +73,10 @@ export class BSplineCuad extends Curve {
 
 		return this._linear(s.getTangCoeff(), fracc);
 	}
+	
+	_calculateNormal(u) {
+	
+	}
 }
 
 //
@@ -145,6 +149,10 @@ export class BSplineCubic extends Curve {
 		var s = this.stretches[integer];
 
 		return this._cuad(s.getTangCoeff(), fracc);
+	}
+
+	_calculateNormal(u) {
+	
 	}
 }
 
