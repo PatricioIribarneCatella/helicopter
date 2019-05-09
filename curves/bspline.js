@@ -28,6 +28,7 @@ export class BSplineCuad extends Curve {
 			p2 = this.points[i+2];
 
 			// position coefficients
+			a = [p0[0]-p1[0]+p2[0], p0[1]-p1[1]+p2[1], p0[2]-p1[2]+p2[2]];
 			a = p0 - p1 + p2;
 			b = -2*p0 + p1;
 			c = p0;
