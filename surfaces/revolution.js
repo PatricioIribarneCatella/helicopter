@@ -24,11 +24,23 @@ export class RevolutionSurface extends Surface {
 	/* private methods */
 	
 	_createModel() {
-	
+
+		var m;
+		mat4.create(m);
+
 		for (var i = 0.0; i < this.rows; i++) {
 		
-			for (var j = 0.0; j < this.cols; j++) {
+			mat4.identity(m);
+			mat4.rotate(m, m, i / this.rows, this.axis);
 			
+			for (var j = 0.0; j < this.cols; j++) {
+
+				// check
+				var p = m * this.shape.get(j / this.cols);
+
+				this.position_buffer.push(p.x);
+				this.position_buffer.push(p.y);
+				this.position_buffer.push(p.z);
 			}
 		}
 	}

@@ -32,13 +32,15 @@ export class SweepSurface extends Surface {
 			var t = this.path.getTangent(u);
 			var b = this.path.getBinormal(u);
 			var n = this.path.getNormal(u);
-			
+
+			// check
 			var matrix = mat(t, n, b, this.path.get(u));
 
 			for (var j = 0.0; j < this.cols; j++) {
 
 				var v = j / this.cols;
 
+				// check
 				var p = matrix * this.shape.get(v);
 
 				this.position_buffer.push(p.x);
