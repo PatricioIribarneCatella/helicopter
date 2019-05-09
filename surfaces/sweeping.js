@@ -24,24 +24,28 @@ export class SweepSurface extends Surface {
 	/* private methods */
 	
 	_createModel() {
-	
+
+		var u, v, p, t, b, n, matrix;
+
+		mat4.create(matrix);
+
 		for (var i = 0.0; i < this.rows; i++) {
 		
-			var u = i / this.rows;
+			u = i / this.rows;
 
-			var t = this.path.getTangent(u);
-			var b = this.path.getBinormal(u);
-			var n = this.path.getNormal(u);
+			t = this.path.getTangent(u);
+			b = this.path.getBinormal(u);
+			n = this.path.getNormal(u);
 
 			// check
-			var matrix = mat(t, n, b, this.path.get(u));
+			matrix = mat(t, n, b, this.path.get(u));
 
 			for (var j = 0.0; j < this.cols; j++) {
 
-				var v = j / this.cols;
+				v = j / this.cols;
 
 				// check
-				var p = matrix * this.shape.get(v);
+				p = matrix * this.shape.get(v);
 
 				this.position_buffer.push(p.x);
 				this.position_buffer.push(p.y);
