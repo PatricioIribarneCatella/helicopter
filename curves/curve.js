@@ -20,5 +20,9 @@ export class Curve {
 	getNormal(u) {
 		return this._calculateNormal(u);
 	}
+
+	getBinormal(u) {
+		return this._calculateBinormal(u);
+	}
 }
 

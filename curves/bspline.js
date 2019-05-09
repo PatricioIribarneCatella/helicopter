@@ -77,6 +77,10 @@ export class BSplineCuad extends Curve {
 	_calculateNormal(u) {
 	
 	}
+
+	_calculateBinormal(u) {
+	
+	}
 }
 
 //
@@ -152,6 +156,10 @@ export class BSplineCubic extends Curve {
 	}
 
 	_calculateNormal(u) {
+	
+	}
+
+	_calculateBinormal(u) {
 	
 	}
 }

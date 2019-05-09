@@ -79,6 +79,10 @@ export class BezierCuad extends Curve {
 	_calculateNormal(u) {
 	
 	}
+
+	_calculateBinormal(u) {
+	
+	}
 }
 
 //
@@ -156,6 +160,10 @@ export class BezierCubic extends Curve {
 	}
 
 	_calculateNormal(u) {
+	
+	}
+
+	_calculateBinormal(u) {
 	
 	}
 }

@@ -20,10 +20,10 @@ export class Sphere {
 	_createModel() {
 
 		this.position_buffer = [];
-		this.color_buffer = [];
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
+				
 				// position = (x, y, z = 0)
 				var x = Math.cos(i * this.theta) * Math.sin(j * this.phi);
 				var y = Math.sin(i * this.theta) * Math.sin(j * this.phi);
