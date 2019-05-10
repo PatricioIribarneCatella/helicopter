@@ -9,16 +9,16 @@ export class Grid {
 		
 		this.rows = rows;
 		this.cols = cols;
-		
+
+		this.position_buffer = [];
+		this.color_buffer = [];
+
 		this._init();
 	}
 
 	/* private methods */
 
 	_createModel() {
-
-		this.position_buffer = [];
-		this.color_buffer = [];
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
@@ -31,8 +31,6 @@ export class Grid {
 	}
 
 	_createColor() {
-		
-		this.color_buffer = [];
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {

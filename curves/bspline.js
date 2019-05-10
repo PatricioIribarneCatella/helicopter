@@ -29,13 +29,12 @@ export class BSplineCuad extends Curve {
 
 			// position coefficients
 			a = [p0[0]-p1[0]+p2[0], p0[1]-p1[1]+p2[1], p0[2]-p1[2]+p2[2]];
-			a = p0 - p1 + p2;
-			b = -2*p0 + p1;
+			b = [-2*p0[0]+p1[0], -2*p0[1]+p1[1], -2*p0[2]+p1[2]];
 			c = p0;
 
 			// tangent coefficients
-			at = 2*p0 -2*p1 + p2;
-			bt = -2*p0 + p1;
+			at = [2*p0[0]-2*p1[0]+p2[0], 2*p0[1]-2*p1[1]+p2[1], 2*p0[2]-2*p1[2]+p2[2]];
+			bt = [-2*p0[0]+p1[0], -2*p0[1]+p1[1], -2*p0[2]+p1[2]];
 
 			var s = new CubicStretch([a, b, c], [at, bt]);
 
@@ -44,11 +43,15 @@ export class BSplineCuad extends Curve {
 	}
 
 	_cuad(coeffs, u) {
-		return coeffs.a*u*u + coeffs.b*u + coeffs.c;
+		return [coeffs.a[0]*u*u + coeffs.b[0]*u + coeffs.c[0],
+			coeffs.a[1]*u*u + coeffs.b[1]*u + coeffs.c[1],
+			coeffs.a[2]*u*u + coeffs.b[2]*u + coeffs.c[2]];
 	}
 
 	_linear(coeffs, u) {
-		return coeffs.a*u + coeffs.b;
+		return [coeffs.a[0]*u + coeffs.b[0],
+			coeffs.a[1]*u + coeffs.b[1],
+			coeffs.a[2]*u + coeffs.b[2]];
 	}
 
 	_calculate(u) {
@@ -107,15 +110,15 @@ export class BSplineCubic extends Curve {
 			p3 = this.points[i+3];
 			
 			// position coefficients
-			a = -p0 + 3*p1 - 3*p2 + p3;
-			b = 3*p0 - 6*p1 +3*p2;
-			c = -3*p0 -3*p2;
-			d = p0 + 4*p1 + p2;
+			a = [-p0[0]+3*p1[0]-3*p2[0]+p3[0], -p0[1]+3*p1[1]-3*p2[1]+p3[1], -p0[2]+3*p1[2]-3*p2[2]+p3[2]];
+			b = [3*p0[0]-6*p1[0]+3*p2[0], 3*p0[1]-6*p1[1]+3*p2[1], 3*p0[2]-6*p1[2]+3*p2[2]];
+			c = [-3*p0[0]-3*p2[0], -3*p0[1]-3*p2[1], -3*p0[2]-3*p2[2]];
+			d = [p0[0]+4*p1[0]+p2[0], p0[1]+4*p1[1]+p2[1], p0[2]+4*p1[2]+p2[2]];
 
 			// tangent coefficients
-			at = -3*p0 + 9*p1 - 9*p2 + 3*p3;
-			bt = 6*p0 - 12*p1 +6*p2;
-			ct = -3*p0 -3*p2;
+			at = [-3*p0[0]+9*p1[0]-9*p2[0]+3*p3[0], -3*p0[1]+9*p1[1]-9*p2[1]+3*p3[1], -3*p0[2]+9*p1[2]-9*p2[2]+3*p3[2]];
+			bt = [6*p0[0]-12*p1[0]+6*p2[0], 6*p0[1]-12*p1[1]+6*p2[1], 6*p0[2]-12*p1[2]+6*p2[2]];
+			ct = [-3*p0[0] -3*p2[0], -3*p0[1] -3*p2[1], -3*p0[2] -3*p2[2]];
 
 			var s = new CubicStretch([a, b, c, d], [at, bt, ct]);
 
@@ -125,11 +128,15 @@ export class BSplineCubic extends Curve {
 	}
 
 	_cubic(coeffs, u) {
-		return coeffs.a*u*u*u + coeffs.b*u*u + coeffs.c*u + coeffs.d;
+		return [coeffs.a[0]*u*u*u + coeffs.b[0]*u*u + coeffs.c[0]*u + coeffs.d[0],
+			coeffs.a[1]*u*u*u + coeffs.b[1]*u*u + coeffs.c[1]*u + coeffs.d[1],
+			coeffs.a[2]*u*u*u + coeffs.b[2]*u*u + coeffs.c[2]*u + coeffs.d[2]];
 	}
 
 	_cuad(coeffs, u) {
-		return coeffs.a*u*u + coeffs.b*u + coeffs.c;
+		return [coeffs.a[0]*u*u + coeffs.b[0]*u + coeffs.c[0],
+			coeffs.a[1]*u*u + coeffs.b[1]*u + coeffs.c[1],
+			coeffs.a[2]*u*u + coeffs.b[2]*u + coeffs.c[2]];
 	}
 
 	_calculate(u) {

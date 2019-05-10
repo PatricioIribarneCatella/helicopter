@@ -9,8 +9,12 @@ export class Sphere {
 		
 		this.rows = rows;
 		this.cols = cols;
+
 		this.theta = 2 * Math.PI / this.rows;
 		this.phi = 2 * Math.PI / this.cols;
+		
+		this.position_buffer = [];
+		this.color_buffer = [];
 		
 		this._init();
 	}
@@ -18,8 +22,6 @@ export class Sphere {
 	/* private methods */
 
 	_createModel() {
-
-		this.position_buffer = [];
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
@@ -37,8 +39,6 @@ export class Sphere {
 	}
 
 	_createColor() {
-		
-		this.color_buffer = [];
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
