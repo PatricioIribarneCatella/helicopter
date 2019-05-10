@@ -22,10 +22,14 @@ export class Grid {
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
-				// position = (x, y, z = 0)
-				this.position_buffer.push(j - (this.cols - 1.0) / 2.0);
-				this.position_buffer.push(i - (this.rows - 1.0) / 2.0);
-				this.position_buffer.push(0);
+			
+				var x = j - (this.cols - 1.0) / 2.0;
+				var y = i - (this.rows - 1.0) / 2.0;
+				var z = 0;
+				
+				this.position_buffer.push(x);
+				this.position_buffer.push(y);
+				this.position_buffer.push(z);
 			};
 		};
 	}
