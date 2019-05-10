@@ -37,7 +37,7 @@ export class RevolutionSurface extends Surface {
 
 				v = j / this.cols;
 
-				pos = this.shape.get();
+				pos = this.shape.get(v);
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 
 				vec4.transformMat4(p, p, matrix);
