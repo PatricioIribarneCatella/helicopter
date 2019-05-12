@@ -1,4 +1,4 @@
-import {App} from './app.js';
+import {SolarSystemApp} from './solarsystem.js';
 
 //
 // main function
@@ -15,7 +15,7 @@ function main() {
 		return;
 	}
 
-	var app = new App(gl, canvas);
+	var app = new SolarSystemApp(gl, canvas);
 
 	app.start();
 }

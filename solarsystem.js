@@ -1,3 +1,4 @@
+import {App} from './scene/app.js';
 import {Scene} from './scene/scene.js';
 import {Camera} from './scene/camera.js';
 
@@ -14,31 +15,10 @@ import {Graphic} from './3d/graphic.js';
 import {Container3D} from './3d/container.js';
 import {World} from './3d/world.js';
 
-export class App {
-	
+export class SolarSystemApp extends App {
+
 	constructor(gl, canvas) {
-		this.gl = gl;
-		this.canvas = canvas;
-		this._init();
-	}
-
-	/* private methods */
-	
-	//
-	// Background and WebGl setup
-	//
-	_init() {
-		// black color
-		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-		// clear the color buffer
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-		
-		this.gl.enable(this.gl.DEPTH_TEST);                              
-		this.gl.depthFunc(this.gl.LEQUAL);
-
-		// viewport init
-		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+		super(gl, canvas);
 	}
 
 	/* public methods */
@@ -95,4 +75,3 @@ export class App {
 		scene.draw();
 	}
 }
-
