@@ -4,19 +4,15 @@ import {Camera} from './scene/camera.js';
 
 import {ShaderProgram} from './shaders/program.js';
 
-import {SweepSurface} from './surfaces/sweeping.js';
+import {RevolutionSurface} from './surfaces/revolution.js';
 import {Circle} from './shapes/circle.js';
 
 import {Rotation} from './transformations/rotation.js';
-import {Translation} from './transformations/translation.js';
-import {Scale} from './transformations/scaling.js';
-import {Identity} from './transformations/identity.js';
 
 import {Graphic} from './3d/graphic.js';
-import {Container3D} from './3d/container.js';
 import {World} from './3d/world.js';
 
-export class ToroidApp extends App {
+export class ToroidRevApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -39,13 +35,14 @@ export class ToroidApp extends App {
 		// World
 		var world = new World();
 
-		// Toroid model
 		var shape = new Circle(1);
-		var path = new Circle(5);
-		var model = new SweepSurface(shape, path, 100, 50);
+		shape.move([2.0, 0.0, 0.0]);
+		
+		// Toroid model 1
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 500, 50);
 
-		// Toroid graphic
-		var t = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
+		// Toroid graphic 1
+		var t = [new Rotation([1.0, 0.0, 0.0], 0.0, 0.01)];
 		var gt = new Graphic(this.gl, model, t, shader);
 
 		world.add(gt);
@@ -55,3 +52,4 @@ export class ToroidApp extends App {
 		scene.draw();
 	}
 }
+

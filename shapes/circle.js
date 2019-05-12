@@ -10,6 +10,7 @@ export class Circle extends Curve {
 	constructor(radius) {
 		super([]);
 		this.r = radius;
+		this.pos = [0.0, 0.0, 0.0];
 	}
 
 	/* private methods */
@@ -18,9 +19,9 @@ export class Circle extends Curve {
 		
 		var x, y, z;
 		
-		x = this.r*Math.cos(2*Math.PI*u);
-		y = this.r*Math.sin(2*Math.PI*u);
-		z = 0.0;
+		x = this.r*Math.cos(2*Math.PI*u) + this.pos[0];
+		y = this.r*Math.sin(2*Math.PI*u) + this.pos[1];
+		z = 0.0 + this.pos[2];
 		
 		return [x, y, z];
 	}
@@ -53,6 +54,12 @@ export class Circle extends Curve {
 
 	_calculateBinormal(u) {
 		return [0.0, 0.0, 1.0];
+	}
+
+	/* public methods */
+
+	move(pos) {
+		this.pos = pos;
 	}
 }
 

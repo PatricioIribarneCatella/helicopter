@@ -25,17 +25,20 @@ export class RevolutionSurface extends Surface {
 	
 	_createModel() {
 
-		var p, v, pos, matrix;
-		mat4.create(matrix);
+		var p, v, ang, pos, matrix;
+		
+		matrix = mat4.create(matrix);
 
 		for (var i = 0.0; i < this.rows; i++) {
 		
+			ang = 2 * Math.PI * (i / this.rows - 1);
+
 			mat4.identity(matrix);
-			mat4.rotate(matrix, matrix, i / this.rows, this.axis);
+			mat4.rotate(matrix, matrix, ang, this.axis);
 			
 			for (var j = 0.0; j < this.cols; j++) {
 
-				v = j / this.cols;
+				v = j / (this.cols - 1);
 
 				pos = this.shape.get(v);
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);

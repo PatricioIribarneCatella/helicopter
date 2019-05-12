@@ -1,5 +1,6 @@
 import {SolarSystemApp} from './solarsystem.js';
-import {ToroidApp} from './toroid.js';
+import {ToroidSweepApp} from './toroid-sweep.js';
+import {ToroidRevApp} from './toroid-rev.js';
 
 //
 // main function
@@ -17,7 +18,8 @@ function main() {
 	}
 
 	//var app = new SolarSystemApp(gl, canvas);
-	var app = new ToroidApp(gl, canvas);
+	//var app = new ToroidSweepApp(gl, canvas);
+	var app = new ToroidRevApp(gl, canvas);
 
 	app.start();
 }
