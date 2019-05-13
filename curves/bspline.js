@@ -20,6 +20,7 @@ export class BSplineCuad extends Curve {
 		var p0, p1, p2;
 		var a, b, c;
 		var at, bt;
+		var ad;
 
 		for (var i = 0; i < this.points.lenght - 3; i++) {
 			
@@ -36,7 +37,10 @@ export class BSplineCuad extends Curve {
 			at = [2*p0[0]-2*p1[0]+p2[0], 2*p0[1]-2*p1[1]+p2[1], 2*p0[2]-2*p1[2]+p2[2]];
 			bt = [-2*p0[0]+p1[0], -2*p0[1]+p1[1], -2*p0[2]+p1[2]];
 
-			var s = new CubicStretch([a, b, c], [at, bt]);
+			// second order derivate
+			ad = [p0[0]-p[0]+p2[0], p0[1]-p[1]+p2[1], p0[2]-p[2]+p2[2]];
+
+			var s = new CuadStretch([a, b, c], [at, bt], ad);
 
 			this.stretches.push(s);
 		}
@@ -101,6 +105,7 @@ export class BSplineCubic extends Curve {
 		var p0, p1, p2, p3;
 		var a, b, c, d;
 		var at, bt, ct;
+		var ad, bd;
 
 		for (var i = 0; i < this.points.lenght - 4; i++) {
 			
@@ -120,7 +125,11 @@ export class BSplineCubic extends Curve {
 			bt = [6*p0[0]-12*p1[0]+6*p2[0], 6*p0[1]-12*p1[1]+6*p2[1], 6*p0[2]-12*p1[2]+6*p2[2]];
 			ct = [-3*p0[0] -3*p2[0], -3*p0[1] -3*p2[1], -3*p0[2] -3*p2[2]];
 
-			var s = new CubicStretch([a, b, c, d], [at, bt, ct]);
+			// second order derivate
+			ad = [-p0[0]+3*p1[0]-3*p2[0]+p3[0], -p0[1]+3*p1[1]-3*p2[1]+p3[1], -p0[2]+3*p1[2]-3*p2[2]+p3[2]];
+			bd = [p0[0]-2*p1[0]+p2[0], p0[1]-2*p1[1]+p2[1], p0[2]-2*p1[2]+p2[2]];
+			
+			var s = new CubicStretch([a, b, c, d], [at, bt, ct], [ad, bd]);
 
 			this.stretches.push(s);
 		}
