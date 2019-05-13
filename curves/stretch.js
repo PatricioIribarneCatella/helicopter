@@ -4,9 +4,6 @@
 //
 class Stretch {
 
-	constructor(coeffs, tcoeffs, sdcoeffs) {
-	}
-
 	getPosCoeff() {
 		return this.coeffs;
 	}
@@ -22,45 +19,45 @@ class Stretch {
 
 export class CuadStretch extends Stretch {
 
-	constructor(coeffs, tcoeffs, sdcoeffs) {
+	constructor(c, tc, sdc) {
 	
 		this.coeffs = {
-			"a": coeffs[0],
-			"b": coeffs[1],
-			"c": coeffs[2]
+			"a": c[0],
+			"b": c[1],
+			"c": c[2]
 		};
 
 		this.tcoeffs = {
-			"a": tcoeffs[0],
-			"b": tcoeffs[1]
+			"a": tc[0],
+			"b": tc[1]
 		};
 
 		this.sdcoeffs = {
-			"a": sdcoeffs
+			"a": sdc
 		};
 	}
 }
 
 export class CubicStretch extends Stretch {
 
-	constructor(coeffs, tcoeffs, sdcoeffs) {
+	constructor(c, tc, sdc) {
 	
 		this.coeffs = {
-			"a": coeffs[0],
-			"b": coeffs[1],
-			"c": coeffs[2],
-			"d": coeffs[3]
+			"a": c[0],
+			"b": c[1],
+			"c": c[2],
+			"d": c[3]
 		};
 
 		this.tcoeffs = {
-			"a": tcoeffs[0],
-			"b": tcoeffs[1],
-			"c": tcoeffs[2]
+			"a": tc[0],
+			"b": tc[1],
+			"c": tc[2]
 		};
 
 		this.sdcoeffs = {
-			"a": sdcoeffs[0],
-			"b": sdcoeffs[1]
+			"a": sdc[0],
+			"b": sdc[1]
 		};
 	}
 }

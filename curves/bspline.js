@@ -1,4 +1,4 @@
-import {Curve} from './curve.js';
+import {CuadCurve, CubicCurve} from './curve.js';
 import {CuadStretch, CubicStretch} from './stretch.js';
 
 //
@@ -8,7 +8,7 @@ import {CuadStretch, CubicStretch} from './stretch.js';
 //
 // Cuadratic
 //
-export class BSplineCuad extends Curve {
+export class BSplineCuad extends CuadCurve {
 
 	constructor(points) {
 		super(points);
@@ -45,56 +45,12 @@ export class BSplineCuad extends Curve {
 			this.stretches.push(s);
 		}
 	}
-
-	_cuad(coeffs, u) {
-		return [coeffs.a[0]*u*u + coeffs.b[0]*u + coeffs.c[0],
-			coeffs.a[1]*u*u + coeffs.b[1]*u + coeffs.c[1],
-			coeffs.a[2]*u*u + coeffs.b[2]*u + coeffs.c[2]];
-	}
-
-	_linear(coeffs, u) {
-		return [coeffs.a[0]*u + coeffs.b[0],
-			coeffs.a[1]*u + coeffs.b[1],
-			coeffs.a[2]*u + coeffs.b[2]];
-	}
-
-	_calculate(u) {
-		
-		u = u * this.stretches.lenght;
-		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
-		return this._cuad(s.getPosCoeff(), fracc);
-	}
-
-	_calculateTangent(u) {
-		
-		u = u * this.stretches.lenght;
-		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
-		return this._linear(s.getTangCoeff(), fracc);
-	}
-	
-	_calculateNormal(u) {
-	
-	}
-
-	_calculateBinormal(u) {
-	
-	}
 }
 
 //
 // Cubic
 //
-export class BSplineCubic extends Curve {
+export class BSplineCubic extends CubicCurve {
 
 	constructor(points) {
 		super(points);
@@ -134,50 +90,6 @@ export class BSplineCubic extends Curve {
 			this.stretches.push(s);
 		}
 
-	}
-
-	_cubic(coeffs, u) {
-		return [coeffs.a[0]*u*u*u + coeffs.b[0]*u*u + coeffs.c[0]*u + coeffs.d[0],
-			coeffs.a[1]*u*u*u + coeffs.b[1]*u*u + coeffs.c[1]*u + coeffs.d[1],
-			coeffs.a[2]*u*u*u + coeffs.b[2]*u*u + coeffs.c[2]*u + coeffs.d[2]];
-	}
-
-	_cuad(coeffs, u) {
-		return [coeffs.a[0]*u*u + coeffs.b[0]*u + coeffs.c[0],
-			coeffs.a[1]*u*u + coeffs.b[1]*u + coeffs.c[1],
-			coeffs.a[2]*u*u + coeffs.b[2]*u + coeffs.c[2]];
-	}
-
-	_calculate(u) {
-		
-		u = u * this.stretches.lenght;
-		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
-		return this._cubic(s.getPosCoeff(), fracc);
-	}
-
-	_calculateTangent(u) {
-	
-		u = u * this.stretches.lenght;
-		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
-		return this._cuad(s.getTangCoeff(), fracc);
-	}
-
-	_calculateNormal(u) {
-	
-	}
-
-	_calculateBinormal(u) {
-	
 	}
 }
 
