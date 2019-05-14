@@ -1,4 +1,4 @@
-import {SolarSystemApp} from './solarsystem.js';
+import {SolarSystemApp} from './solar-system.js';
 import {ToroidSweepApp} from './toroid-sweep.js';
 import {ToroidRevApp} from './toroid-rev.js';
 

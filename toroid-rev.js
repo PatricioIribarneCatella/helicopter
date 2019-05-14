@@ -36,7 +36,7 @@ export class ToroidRevApp extends App {
 		var world = new World();
 
 		var shape = new Circle(1);
-		shape.move([2.0, 0.0, 0.0]);
+		shape.move([3.0, 0.0, 0.0]);
 		
 		// Toroid model 1
 		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 500, 50);
