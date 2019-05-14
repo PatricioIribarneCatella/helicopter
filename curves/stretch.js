@@ -20,7 +20,9 @@ class Stretch {
 export class CuadStretch extends Stretch {
 
 	constructor(c, tc, sdc) {
-	
+
+		super();
+
 		this.coeffs = {
 			"a": c[0],
 			"b": c[1],
@@ -42,6 +44,8 @@ export class CubicStretch extends Stretch {
 
 	constructor(c, tc, sdc) {
 	
+		super();
+
 		this.coeffs = {
 			"a": c[0],
 			"b": c[1],

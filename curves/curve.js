@@ -58,8 +58,8 @@ export class CuadCurve extends Curve {
 
 	_calculate(u) {
 		
-		u = u * this.stretches.lenght;
-		
+		u = u * this.stretches.length;
+
 		var integer = Math.floor(u);
 		var fracc = u - integer;
 
@@ -70,7 +70,7 @@ export class CuadCurve extends Curve {
 
 	_calculateTangent(u) {
 		
-		u = u * this.stretches.lenght;
+		u = u * this.stretches.length;
 		
 		var integer = Math.floor(u);
 		var fracc = u - integer;
@@ -86,7 +86,7 @@ export class CuadCurve extends Curve {
 
 	_calculateNormal(u) {
 		
-		var ug = u * this.stretches.lenght;
+		var ug = u * this.stretches.length;
 
 		var integer = Math.floor(ug);
 		var fracc = ug - integer;
@@ -105,7 +105,7 @@ export class CuadCurve extends Curve {
 
 	_calculateBinormal(u) {
 
-		var ug = u * this.stretches.lenght;
+		var ug = u * this.stretches.length;
 
 		var integer = Math.floor(ug);
 		var fracc = ug - integer;
@@ -132,7 +132,7 @@ export class CubicCurve extends Curve {
 
 	_calculate(u) {
 		
-		u = u * this.stretches.lenght;
+		u = u * this.stretches.length;
 		
 		var integer = Math.floor(u);
 		var fracc = u - integer;
@@ -144,7 +144,7 @@ export class CubicCurve extends Curve {
 
 	_calculateTangent(u) {
 	
-		u = u * this.stretches.lenght;
+		u = u * this.stretches.length;
 		
 		var integer = Math.floor(u);
 		var fracc = u - integer;
@@ -160,7 +160,7 @@ export class CubicCurve extends Curve {
 
 	_calculateNormal(u) {
 		
-		var ug = u * this.stretches.lenght;
+		var ug = u * this.stretches.length;
 
 		var integer = Math.floor(ug);
 		var fracc = ug - integer;
@@ -179,7 +179,7 @@ export class CubicCurve extends Curve {
 
 	_calculateBinormal(u) {
 		
-		var ug = u * this.stretches.lenght;
+		var ug = u * this.stretches.length;
 
 		var integer = Math.floor(ug);
 		var fracc = ug - integer;

@@ -1,6 +1,7 @@
 import {SolarSystemApp} from './solar-system.js';
 import {ToroidSweepApp} from './toroid-sweep.js';
 import {ToroidRevApp} from './toroid-rev.js';
+import {CurveApp} from './curve-test.js';
 
 //
 // main function
@@ -19,7 +20,8 @@ function main() {
 
 	//var app = new SolarSystemApp(gl, canvas);
 	//var app = new ToroidSweepApp(gl, canvas);
-	var app = new ToroidRevApp(gl, canvas);
+	//var app = new ToroidRevApp(gl, canvas);
+	var app = new CurveApp(gl, canvas);
 
 	app.start();
 }

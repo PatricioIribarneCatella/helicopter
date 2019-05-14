@@ -22,7 +22,7 @@ export class BSplineCuad extends CuadCurve {
 		var at, bt;
 		var ad;
 
-		for (var i = 0; i < this.points.lenght - 3; i++) {
+		for (var i = 0; i < this.points.length - 3; i++) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];
@@ -63,7 +63,7 @@ export class BSplineCubic extends CubicCurve {
 		var at, bt, ct;
 		var ad, bd;
 
-		for (var i = 0; i < this.points.lenght - 4; i++) {
+		for (var i = 0; i < this.points.length - 4; i++) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];

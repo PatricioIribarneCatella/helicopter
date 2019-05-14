@@ -24,7 +24,7 @@ export class BezierCuad extends CuadCurve {
 		var at, bt;
 		var ad;
 
-		for (var i = 0; i < this.points.lenght; i += 2) {
+		for (var i = 0; i < this.points.length - 1; i += 2) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];
@@ -68,7 +68,7 @@ export class BezierCubic extends CubicCurve {
 		var at, bt, ct;
 		var ad, bd;
 
-		for (var i = 0; i < this.points.lenght; i += 3) {
+		for (var i = 0; i < this.points.length - 1; i += 3) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];
