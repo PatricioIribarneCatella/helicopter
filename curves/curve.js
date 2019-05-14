@@ -131,7 +131,7 @@ export class CubicCurve extends Curve {
 	}
 
 	_calculate(u) {
-		
+	
 		u = u * this.stretches.length;
 		
 		var integer = Math.floor(u);

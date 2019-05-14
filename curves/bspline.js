@@ -22,7 +22,7 @@ export class BSplineCuad extends CuadCurve {
 		var at, bt;
 		var ad;
 
-		for (var i = 0; i < this.points.length - 3; i++) {
+		for (var i = 0; i <= this.points.length - 3; i++) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];
@@ -38,7 +38,7 @@ export class BSplineCuad extends CuadCurve {
 			bt = [-2*p0[0]+p1[0], -2*p0[1]+p1[1], -2*p0[2]+p1[2]];
 
 			// second order derivate
-			ad = [p0[0]-p[0]+p2[0], p0[1]-p[1]+p2[1], p0[2]-p[2]+p2[2]];
+			ad = [p0[0]-p1[0]+p2[0], p0[1]-p1[1]+p2[1], p0[2]-p1[2]+p2[2]];
 
 			var s = new CuadStretch([a, b, c], [at, bt], ad);
 
@@ -63,7 +63,7 @@ export class BSplineCubic extends CubicCurve {
 		var at, bt, ct;
 		var ad, bd;
 
-		for (var i = 0; i < this.points.length - 4; i++) {
+		for (var i = 0; i <= this.points.length - 4; i++) {
 			
 			p0 = this.points[i];
 			p1 = this.points[i+1];
@@ -89,7 +89,6 @@ export class BSplineCubic extends CubicCurve {
 
 			this.stretches.push(s);
 		}
-
 	}
 }
 
