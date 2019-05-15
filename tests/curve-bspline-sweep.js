@@ -73,7 +73,45 @@ export class BSplineCubicCurveSweepApp extends App {
 	
 	start() {
 	
+		var scene = new Scene(this.gl);
 
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+
+		// Perspective camera moved 7 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		scene.addCamera(camera);
+
+		// World
+		var world = new World();
+
+		var shape = new BSplineCubic([[0.0, 0.0, 0.0],
+					      [1.0, 2.0, 0.0],
+					      [3.0, 3.0, 0.0],
+					      [4.0, 1.0, 0.0],
+					      [6.0, 3.0, 0.0],
+					      [6.0, 5.0, 0.0],
+				 	      [4.0, 6.0, 0.0],
+					      [3.0, 5.0, 0.0]]);
+
+		var path = new BSplineCubic([[0.0, 0.0, 0.0],
+					     [1.0, 3.0, 0.0],
+					     [4.0, 3.0, 0.0],
+					     [5.0, 0.0, 0.0],
+					     [8.0, 0.0, 0.0],
+					     [9.0, 3.0, 0.0]]);
+
+		var model = new SweepSurface(shape, path, 100, 50);
+
+		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
+		var gt1 = new Graphic(this.gl, model, t1, shader);
+
+		world.add(gt1);
+
+		scene.add(world);
+
+		scene.draw();
 	}
 }
 

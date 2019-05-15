@@ -27,8 +27,10 @@ function main() {
 	//app = new ToroidSweepApp(gl, canvas);
 	//app = new ToroidRevApp(gl, canvas);
 	//app = new CurveApp(gl, canvas);
-	app = new BezierQuadCurveSweepApp(gl, canvas);
-
+	//app = new BezierQuadCurveSweepApp(gl, canvas);
+	//app = new BezierCubicCurveSweepApp(gl, canvas);
+	//app = new BSplineQuadCurveSweepApp(gl, canvas);
+	app = new BSplineCubicCurveSweepApp(gl, canvas);
 
 	app.start();
 }
