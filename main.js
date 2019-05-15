@@ -29,6 +29,7 @@ function main() {
 	//app = new CurveApp(gl, canvas);
 	app = new BezierQuadCurveSweepApp(gl, canvas);
 
+
 	app.start();
 }
 

@@ -6,7 +6,6 @@ import {ShaderProgram} from '../shaders/program.js';
 
 import {SweepSurface} from '../surfaces/sweeping.js';
 import {BezierCuad, BezierCubic} from '../curves/bezier.js';
-import {BSplineCuad, BSplineCubic} from '../curves/bspline.js';
 
 import {Rotation} from '../transformations/rotation.js';
 
@@ -65,5 +64,15 @@ export class BezierQuadCurveSweepApp extends App {
 
 export class BezierCubicCurveSweepApp extends App {
 
+	constructor(gl, canvas) {
+		super(gl, canvas);
+	}
+
+	/* public methods */
+	
+	start() {
+	
+
+	}
 }
 
