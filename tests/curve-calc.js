@@ -1,7 +1,7 @@
-import {App} from './scene/app.js';
+import {App} from '../scene/app.js';
 
-import {BezierCuad, BezierCubic} from './curves/bezier.js';
-import {BSplineCuad, BSplineCubic} from './curves/bspline.js';
+import {BezierCuad, BezierCubic} from '../curves/bezier.js';
+import {BSplineCuad, BSplineCubic} from '../curves/bspline.js';
 
 export class CurveApp extends App {
 

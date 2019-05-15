@@ -57,28 +57,45 @@ export class CuadCurve extends Curve {
 	/* private methods */
 
 	_calculate(u) {
+	
+		//console.log(u);
+		//console.log(this.stretches);
+		//console.log(this.stretches.length);
+
+		var s, fracc;
+
+		if (u < 1) {
+			u = u * this.stretches.length;
+
+			var integer = Math.floor(u);
+			fracc = u - integer;
+
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+			fracc = u;
+		}
 		
-		u = u * this.stretches.length;
-
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
 		return this._cuad(s.getPosCoeff(), fracc);
 	}
 
 	_calculateTangent(u) {
 		
-		u = u * this.stretches.length;
+		var s, fracc;
+
+		if (u < 1) {
+			u = u * this.stretches.length;
+			
+			var integer = Math.floor(u);
+			fracc = u - integer;
+
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+			fracc = u;
+		}
 		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
 		var t = this._linear(s.getTangCoeff(), fracc);
-
 		var norm = Math.sqrt(t[0]*t[0] + t[1]*t[1] + t[2]*t[2]);
 
 		return [t[0] / norm, t[1] / norm, t[2] / norm];
@@ -86,11 +103,6 @@ export class CuadCurve extends Curve {
 
 	_calculateNormal(u) {
 		
-		var ug = u * this.stretches.length;
-
-		var integer = Math.floor(ug);
-		var fracc = ug - integer;
-
 		var b = this._calculateBinormal(u);
 		var t = this._calculateTangent(u);
 
@@ -105,13 +117,18 @@ export class CuadCurve extends Curve {
 
 	_calculateBinormal(u) {
 
-		var ug = u * this.stretches.length;
+		var s;
 
-		var integer = Math.floor(ug);
-		var fracc = ug - integer;
+		if (u < 1) {
+			var ug = u * this.stretches.length;
 
-		var s = this.stretches[integer];
+			var integer = Math.floor(ug);
 
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+		}
+	
 		var sod = s.getSecOrdCoeff();
 
 		var b = [];
@@ -131,26 +148,40 @@ export class CubicCurve extends Curve {
 	}
 
 	_calculate(u) {
-	
-		u = u * this.stretches.length;
+
+		var s, fracc;
+
+		if (u < 1) {
+			u = u * this.stretches.length;
+			
+			var integer = Math.floor(u);
+			fracc = u - integer;
+
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+			fracc = u;
+		}
 		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
 		return this._cubic(s.getPosCoeff(), fracc);
 	}
 
 	_calculateTangent(u) {
 	
-		u = u * this.stretches.length;
+		var s, fracc;
+
+		if (u < 1) {
+			u = u * this.stretches.length;
+			
+			var integer = Math.floor(u);
+			fracc = u - integer;
+
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+			fracc = u;
+		}
 		
-		var integer = Math.floor(u);
-		var fracc = u - integer;
-
-		var s = this.stretches[integer];
-
 		var t = this._cuad(s.getTangCoeff(), fracc);
 
 		var norm = Math.sqrt(t[0]*t[0] + t[1]*t[1] + t[2]*t[2]);
@@ -160,11 +191,6 @@ export class CubicCurve extends Curve {
 
 	_calculateNormal(u) {
 		
-		var ug = u * this.stretches.length;
-
-		var integer = Math.floor(ug);
-		var fracc = ug - integer;
-
 		var b = this._calculateBinormal(u);
 		var t = this._calculateTangent(u);
 
@@ -178,14 +204,21 @@ export class CubicCurve extends Curve {
 	}
 
 	_calculateBinormal(u) {
+	
+		var s, fracc;
+
+		if (u < 1) {
+			var ug = u * this.stretches.length;
+
+			var integer = Math.floor(ug);
+			fracc = ug - integer;
+
+			s = this.stretches[integer];
+		} else {
+			s = this.stretches[this.stretches.length - 1];
+			fracc = u;
+		}
 		
-		var ug = u * this.stretches.length;
-
-		var integer = Math.floor(ug);
-		var fracc = ug - integer;
-
-		var s = this.stretches[integer];
-
 		var sod = s.getSecOrdCoeff();
 
 		var b = [];

@@ -1,8 +1,11 @@
-import {SolarSystemApp} from './solar-system.js';
-import {ToroidSweepApp} from './toroid-sweep.js';
-import {ToroidRevApp} from './toroid-rev.js';
-import {CurveApp} from './curve-test.js';
-import {CurveSweepApp} from './curve-sweep.js';
+import {SolarSystemApp} from './tests/solar-system.js';
+
+import {ToroidSweepApp} from './tests/toroid-sweep.js';
+import {ToroidRevApp} from './tests/toroid-rev.js';
+
+import {CurveApp} from './tests/curve-calc.js';
+import {BezierQuadCurveSweepApp, BezierCubicCurveSweepApp} from './tests/curve-bezier-sweep.js';
+import {BSplineQuadCurveSweepApp, BSplineCubicCurveSweepApp} from './tests/curve-bspline-sweep.js';
 
 //
 // main function
@@ -24,7 +27,7 @@ function main() {
 	//app = new ToroidSweepApp(gl, canvas);
 	//app = new ToroidRevApp(gl, canvas);
 	//app = new CurveApp(gl, canvas);
-	app = new CurveSweepApp(gl, canvas);
+	app = new BezierQuadCurveSweepApp(gl, canvas);
 
 	app.start();
 }

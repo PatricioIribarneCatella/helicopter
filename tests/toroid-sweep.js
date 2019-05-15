@@ -1,16 +1,16 @@
-import {App} from './scene/app.js';
-import {Scene} from './scene/scene.js';
-import {Camera} from './scene/camera.js';
+import {App} from '../scene/app.js';
+import {Scene} from '../scene/scene.js';
+import {Camera} from '../scene/camera.js';
 
-import {ShaderProgram} from './shaders/program.js';
+import {ShaderProgram} from '../shaders/program.js';
 
-import {SweepSurface} from './surfaces/sweeping.js';
-import {Circle} from './shapes/circle.js';
+import {SweepSurface} from '../surfaces/sweeping.js';
+import {Circle} from '../shapes/circle.js';
 
-import {Rotation} from './transformations/rotation.js';
+import {Rotation} from '../transformations/rotation.js';
 
-import {Graphic} from './3d/graphic.js';
-import {World} from './3d/world.js';
+import {Graphic} from '../3d/graphic.js';
+import {World} from '../3d/world.js';
 
 export class ToroidSweepApp extends App {
 
