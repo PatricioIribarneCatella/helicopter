@@ -58,7 +58,9 @@ export class CuadCurve extends Curve {
 
 	_calculate(u) {
 	
-		//console.log(u);
+		if (this.stretches.length > 2) {
+			console.log(u);
+		}
 		//console.log(this.stretches);
 		//console.log(this.stretches.length);
 
