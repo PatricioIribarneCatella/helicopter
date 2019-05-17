@@ -96,8 +96,7 @@ export class BSplineCubic extends CubicCurve {
 			ad = [-p0[0]+3*p1[0]-3*p2[0]+p3[0], -p0[1]+3*p1[1]-3*p2[1]+p3[1], -p0[2]+3*p1[2]-3*p2[2]+p3[2]];
 			ad = [(1/6)*ad[0], (1/6)*ad[1], (1/6)*ad[2]];
 			bd = [p0[0]-2*p1[0]+p2[0], p0[1]-2*p1[1]+p2[1], p0[2]-2*p1[2]+p2[2]];
-			bd = [(1/6)*bd[0], (1/6)*bd[1], (1/6)*bd[2]];
-			
+
 			var s = new CubicStretch([a, b, c, d], [at, bt, ct], [ad, bd]);
 
 			this.stretches.push(s);
