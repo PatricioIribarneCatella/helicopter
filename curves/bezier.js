@@ -36,11 +36,11 @@ export class BezierCuad extends CuadCurve {
 			c = p0;
 
 			// tangent coefficients
-			at = [2*p0[0]-2*p1[0]+2*p2[0], 2*p0[1]-2*p1[1]+2*p2[1], 2*p0[2]-2*p1[2]+2*p2[2]];
+			at = [2*p0[0]-4*p1[0]+2*p2[0], 2*p0[1]-4*p1[1]+2*p2[1], 2*p0[2]-4*p1[2]+2*p2[2]];
 			bt = [-2*p0[0]+2*p1[0], -2*p0[1]+2*p1[1], -2*p0[2]+2*p1[2]];
 
 			// second order derivate
-			ad = [2*p0[0]-2*p1[0]+p2[0], 2*p0[1]-2*p1[1]+p2[1], 2*p0[2]-2*p1[2]+p2[2]];
+			ad = [2*p0[0]-4*p1[0]+p2[0], 2*p0[1]-4*p1[1]+p2[1], 2*p0[2]-4*p1[2]+p2[2]];
 
 			var s = new CuadStretch([a, b, c], [at, bt], ad);
 
