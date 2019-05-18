@@ -58,12 +58,6 @@ export class CuadCurve extends Curve {
 
 	_calculate(u) {
 	
-		if (this.stretches.length > 2) {
-			console.log(u);
-		}
-		//console.log(this.stretches);
-		//console.log(this.stretches.length);
-
 		var s, fracc;
 
 		if (u < 1) {
@@ -104,13 +98,9 @@ export class CuadCurve extends Curve {
 	}
 
 	_calculateNormal(u) {
-		
-		var b = this._calculateBinormal(u);
+
 		var t = this._calculateTangent(u);
-
-		var n = [];
-
-		vec3.cross(n, b, t);
+		var n = [-t[1], t[0], t[2]];
 
 		var norm = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
 
@@ -118,28 +108,8 @@ export class CuadCurve extends Curve {
 	}
 
 	_calculateBinormal(u) {
-
-		var s;
-
-		if (u < 1) {
-			var ug = u * this.stretches.length;
-
-			var integer = Math.floor(ug);
-
-			s = this.stretches[integer];
-		} else {
-			s = this.stretches[this.stretches.length - 1];
-		}
-	
-		var sod = s.getSecOrdCoeff();
-
-		var b = [];
-
-		vec3.cross(b, this._calculateTangent(u), sod.a);
-
-		var norm = Math.sqrt(b[0]*b[0] + b[1]*b[1] + b[2]*b[2]);
-
-		return [b[0] / norm, b[1] / norm, b[2] / norm];
+		
+		return [0.0, 0.0, 1.0];
 	}
 }
 
@@ -192,13 +162,9 @@ export class CubicCurve extends Curve {
 	}
 
 	_calculateNormal(u) {
-		
-		var b = this._calculateBinormal(u);
+
 		var t = this._calculateTangent(u);
-
-		var n = [];
-
-		vec3.cross(n, b, t);
+		var n = [-t[1], t[0], t[2]];
 
 		var norm = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
 
@@ -206,29 +172,7 @@ export class CubicCurve extends Curve {
 	}
 
 	_calculateBinormal(u) {
-	
-		var s, fracc;
 
-		if (u < 1) {
-			var ug = u * this.stretches.length;
-
-			var integer = Math.floor(ug);
-			fracc = ug - integer;
-
-			s = this.stretches[integer];
-		} else {
-			s = this.stretches[this.stretches.length - 1];
-			fracc = u;
-		}
-		
-		var sod = s.getSecOrdCoeff();
-
-		var b = [];
-
-		vec3.cross(b, this._calculateTangent(u), this._linear(sod, fracc));
-
-		var norm = Math.sqrt(b[0]*b[0] + b[1]*b[1] + b[2]*b[2]);
-
-		return [b[0] / norm, b[1] / norm, b[2] / norm];
+		return [0.0, 0.0, 1.0];
 	}
 }

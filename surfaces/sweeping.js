@@ -37,7 +37,11 @@ export class SweepSurface extends Surface {
 			b = this.path.getBinormal(u);
 			n = this.path.getNormal(u);
 			pos = this.path.get(u);
-			
+	
+			console.log("t: " + t);
+			console.log("n: " + n);
+			console.log("pos: " + pos);
+
 			for (var k = 0; k < 4; k++) {
 			
 				if (k == 3 || k == 7 || k == 11) {
