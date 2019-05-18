@@ -22,7 +22,6 @@ export class BezierCuad extends CuadCurve {
 		var p0, p1, p2;
 		var a, b, c;
 		var at, bt;
-		var ad;
 
 		for (var i = 0; i < this.points.length - 1; i += 2) {
 			
@@ -39,10 +38,7 @@ export class BezierCuad extends CuadCurve {
 			at = [2*p0[0]-4*p1[0]+2*p2[0], 2*p0[1]-4*p1[1]+2*p2[1], 2*p0[2]-4*p1[2]+2*p2[2]];
 			bt = [-2*p0[0]+2*p1[0], -2*p0[1]+2*p1[1], -2*p0[2]+2*p1[2]];
 
-			// second order derivate
-			ad = [2*p0[0]-4*p1[0]+2*p2[0], 2*p0[1]-4*p1[1]+2*p2[1], 2*p0[2]-4*p1[2]+2*p2[2]];
-
-			var s = new CuadStretch([a, b, c], [at, bt], ad);
+			var s = new CuadStretch([a, b, c], [at, bt]);
 
 			this.stretches.push(s);
 		}
@@ -66,7 +62,6 @@ export class BezierCubic extends CubicCurve {
 		var p0, p1, p2, p3;
 		var a, b, c, d;
 		var at, bt, ct;
-		var ad, bd;
 
 		for (var i = 0; i < this.points.length - 1; i += 3) {
 			
@@ -86,11 +81,7 @@ export class BezierCubic extends CubicCurve {
 			bt = [6*p0[0]-12*p1[0]+6*p2[0], 6*p0[1]-12*p1[1]+6*p2[1], 6*p0[2]-12*p1[2]+6*p2[2]];
 			ct = [-3*p0[0]+3*p1[0], -3*p0[1]+3*p1[1], -3*p0[2]+3*p1[2]];
 
-			// second order derivate
-			ad = [-6*p0[0]+18*p1[0]-18*p2[0]+6*p3[0], -6*p0[1]+18*p1[1]-18*p2[1]+6*p3[1], -6*p0[2]+18*p1[2]-18*p2[2]+6*p3[2]];
-			bd = [6*p0[0]-12*p1[0]+6*p2[0], 6*p0[1]-12*p1[1]+6*p2[1], 6*p0[2]-12*p1[2]+6*p2[2]];
-
-			var s = new CubicStretch([a, b, c, d], [at, bt, ct], [ad, bd]);
+			var s = new CubicStretch([a, b, c, d], [at, bt, ct]);
 
 			this.stretches.push(s);
 		}

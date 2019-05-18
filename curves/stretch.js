@@ -11,15 +11,11 @@ class Stretch {
 	getTangCoeff() {
 		return this.tcoeffs;
 	}
-
-	getSecOrdCoeff() {
-		return this.sdcoeffs;
-	}
 }
 
 export class CuadStretch extends Stretch {
 
-	constructor(c, tc, sdc) {
+	constructor(c, tc) {
 
 		super();
 
@@ -33,16 +29,12 @@ export class CuadStretch extends Stretch {
 			"a": tc[0],
 			"b": tc[1]
 		};
-
-		this.sdcoeffs = {
-			"a": sdc
-		};
 	}
 }
 
 export class CubicStretch extends Stretch {
 
-	constructor(c, tc, sdc) {
+	constructor(c, tc) {
 	
 		super();
 
@@ -57,11 +49,6 @@ export class CubicStretch extends Stretch {
 			"a": tc[0],
 			"b": tc[1],
 			"c": tc[2]
-		};
-
-		this.sdcoeffs = {
-			"a": sdc[0],
-			"b": sdc[1]
 		};
 	}
 }

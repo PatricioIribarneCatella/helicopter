@@ -29,6 +29,9 @@ export class SweepSurface extends Surface {
 
 		matrix = mat4.create(matrix);
 
+		matrix[3] = 0.0; matrix[7] = 0.0; matrix[11] = 0.0;
+		matrix[15] = 1.0;
+
 		for (var i = 0.0; i < this.rows; i++) {
 		
 			u = i / (this.rows - 1);
@@ -37,33 +40,32 @@ export class SweepSurface extends Surface {
 			b = this.path.getBinormal(u);
 			n = this.path.getNormal(u);
 			pos = this.path.get(u);
-	
+
+			console.log("i: " + i);
 			console.log("t: " + t);
-			console.log("n: " + n);
+			//console.log("n: " + n);
 			console.log("pos: " + pos);
 
-			for (var k = 0; k < 4; k++) {
+			for (var k = 0; k < 3; k++) {
 			
-				if (k == 3 || k == 7 || k == 11) {
-					matrix[k] = 0;
-				} else if (k == 15) {
-					matrix[k] = 1;
-				} else {
-					matrix[k] = b[k];
-					matrix[k+4] = n[k];
-					matrix[k+8] = t[k];
-					matrix[k+12] = pos[k];
-				}
+				matrix[k] = b[k];
+				matrix[k+4] = n[k];
+				matrix[k+8] = t[k];
+				matrix[k+12] = pos[k];
 			}
+
+			//console.log(mat4.str(matrix));
 
 			for (var j = 0.0; j < this.cols; j++) {
 
 				v = j / (this.cols - 1);
 
 				pos = this.shape.get(v);
-				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 
+				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				p = vec4.transformMat4(p, p, matrix);
+
+				//console.log("level: " + i  + " point: " + p);
 
 				this.position_buffer.push(p[0]);
 				this.position_buffer.push(p[1]);

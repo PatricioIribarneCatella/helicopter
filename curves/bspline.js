@@ -20,7 +20,6 @@ export class BSplineCuad extends CuadCurve {
 		var p0, p1, p2;
 		var a, b, c;
 		var at, bt;
-		var ad;
 
 		for (var i = 0; i <= this.points.length - 3; i++) {
 			
@@ -41,10 +40,7 @@ export class BSplineCuad extends CuadCurve {
 			bt = [-2*p0[0]+p1[0], -2*p0[1]+p1[1], -2*p0[2]+p1[2]];
 			bt = [0.5*bt[0], 0.5*bt[1], 0.5*bt[2]];
 
-			// second order derivate
-			ad = [p0[0]-p1[0]+p2[0], p0[1]-p1[1]+p2[1], p0[2]-p1[2]+p2[2]];
-
-			var s = new CuadStretch([a, b, c], [at, bt], ad);
+			var s = new CuadStretch([a, b, c], [at, bt]);
 
 			this.stretches.push(s);
 		}
@@ -65,7 +61,6 @@ export class BSplineCubic extends CubicCurve {
 		var p0, p1, p2, p3;
 		var a, b, c, d;
 		var at, bt, ct;
-		var ad, bd;
 
 		for (var i = 0; i <= this.points.length - 4; i++) {
 			
@@ -86,18 +81,10 @@ export class BSplineCubic extends CubicCurve {
 
 			// tangent coefficients
 			at = [-3*p0[0]+9*p1[0]-9*p2[0]+3*p3[0], -3*p0[1]+9*p1[1]-9*p2[1]+3*p3[1], -3*p0[2]+9*p1[2]-9*p2[2]+3*p3[2]];
-			at = [(1/6)*at[0], (1/6)*at[1], (1/6)*at[2]];
 			bt = [6*p0[0]-12*p1[0]+6*p2[0], 6*p0[1]-12*p1[1]+6*p2[1], 6*p0[2]-12*p1[2]+6*p2[2]];
-			bt = [(1/6)*bt[0], (1/6)*bt[1], (1/6)*bt[2]];
 			ct = [-3*p0[0]+3*p2[0], -3*p0[1]+3*p2[1], -3*p0[2]+3*p2[2]];
-			ct = [(1/6)*ct[0], (1/6)*ct[1], (1/6)*ct[2]];
 
-			// second order derivate
-			ad = [-p0[0]+3*p1[0]-3*p2[0]+p3[0], -p0[1]+3*p1[1]-3*p2[1]+p3[1], -p0[2]+3*p1[2]-3*p2[2]+p3[2]];
-			ad = [(1/6)*ad[0], (1/6)*ad[1], (1/6)*ad[2]];
-			bd = [p0[0]-2*p1[0]+p2[0], p0[1]-2*p1[1]+p2[1], p0[2]-2*p1[2]+p2[2]];
-
-			var s = new CubicStretch([a, b, c, d], [at, bt, ct], [ad, bd]);
+			var s = new CubicStretch([a, b, c, d], [at, bt, ct]);
 
 			this.stretches.push(s);
 		}
