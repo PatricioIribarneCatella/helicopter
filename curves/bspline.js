@@ -88,7 +88,6 @@ export class BSplineCubic extends CubicCurve {
 
 			this.stretches.push(s);
 		}
-		console.log(this.stretches);
 	}
 }
 

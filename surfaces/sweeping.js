@@ -41,11 +41,6 @@ export class SweepSurface extends Surface {
 			n = this.path.getNormal(u);
 			pos = this.path.get(u);
 
-			console.log("i: " + i);
-			console.log("t: " + t);
-			//console.log("n: " + n);
-			console.log("pos: " + pos);
-
 			for (var k = 0; k < 3; k++) {
 			
 				matrix[k] = b[k];
@@ -53,8 +48,6 @@ export class SweepSurface extends Surface {
 				matrix[k+8] = t[k];
 				matrix[k+12] = pos[k];
 			}
-
-			//console.log(mat4.str(matrix));
 
 			for (var j = 0.0; j < this.cols; j++) {
 
@@ -64,8 +57,6 @@ export class SweepSurface extends Surface {
 
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				p = vec4.transformMat4(p, p, matrix);
-
-				//console.log("level: " + i  + " point: " + p);
 
 				this.position_buffer.push(p[0]);
 				this.position_buffer.push(p[1]);
