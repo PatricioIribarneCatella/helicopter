@@ -124,10 +124,10 @@ export class CubicCurve extends Curve {
 		var s, fracc;
 
 		if (u < 1) {
-			u = u * this.stretches.length;
+			var ux = u * this.stretches.length;
 			
-			var integer = Math.floor(u);
-			fracc = u - integer;
+			var integer = Math.floor(ux);
+			fracc = ux - integer;
 
 			s = this.stretches[integer];
 		} else {
@@ -143,10 +143,10 @@ export class CubicCurve extends Curve {
 		var s, fracc;
 
 		if (u < 1) {
-			u = u * this.stretches.length;
+			var ux = u * this.stretches.length;
 			
-			var integer = Math.floor(u);
-			fracc = u - integer;
+			var integer = Math.floor(ux);
+			fracc = ux - integer;
 
 			s = this.stretches[integer];
 		} else {
