@@ -29,6 +29,21 @@ export class Curve {
 			coeffs.a[2]*u*u*u + coeffs.b[2]*u*u + coeffs.c[2]*u + coeffs.d[2]];
 	}
 
+	_calculateNormal(u) {
+	
+		var t = this._calculateTangent(u);
+		var n = [-t[1], t[0], t[2]];
+
+		var norm = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
+
+		return [n[0] / norm, n[1] / norm, n[2] / norm];
+	}
+
+	_calculateBinormal(u) {
+		
+		return [0.0, 0.0, 1.0];
+	}
+
 	/* public methods */
 
 	get(u) {
@@ -96,21 +111,6 @@ export class CuadCurve extends Curve {
 
 		return [t[0] / norm, t[1] / norm, t[2] / norm];
 	}
-
-	_calculateNormal(u) {
-
-		var t = this._calculateTangent(u);
-		var n = [-t[1], t[0], t[2]];
-
-		var norm = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-
-		return [n[0] / norm, n[1] / norm, n[2] / norm];
-	}
-
-	_calculateBinormal(u) {
-		
-		return [0.0, 0.0, 1.0];
-	}
 }
 
 export class CubicCurve extends Curve {
@@ -159,20 +159,5 @@ export class CubicCurve extends Curve {
 		var norm = Math.sqrt(t[0]*t[0] + t[1]*t[1] + t[2]*t[2]);
 
 		return [t[0] / norm, t[1] / norm, t[2] / norm];
-	}
-
-	_calculateNormal(u) {
-
-		var t = this._calculateTangent(u);
-		var n = [-t[1], t[0], t[2]];
-
-		var norm = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-
-		return [n[0] / norm, n[1] / norm, n[2] / norm];
-	}
-
-	_calculateBinormal(u) {
-
-		return [0.0, 0.0, 1.0];
 	}
 }

@@ -101,7 +101,7 @@ export class BSplineCubicCurveSweepApp extends App {
 					     [4.0, 3.0, 0.0],
 					     [5.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 10, 10);
+		var model = new SweepSurface(shape, path, 10, 5);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
