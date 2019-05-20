@@ -31,8 +31,8 @@ function main() {
 	//app = new BezierQuadCurveSweepApp(gl, canvas);
 	//app = new BezierCubicCurveSweepApp(gl, canvas);
 	//app = new BSplineQuadCurveSweepApp(gl, canvas);
-	//app = new BSplineCubicCurveSweepApp(gl, canvas);
-	app = new BSplineQuadCurveRevApp(gl, canvas);
+	app = new BSplineCubicCurveSweepApp(gl, canvas);
+	//app = new BSplineQuadCurveRevApp(gl, canvas);
 
 	app.start();
 }
