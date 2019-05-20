@@ -5,6 +5,7 @@ import {Camera} from '../scene/camera.js';
 import {ShaderProgram} from '../shaders/program.js';
 
 import {RevolutionSurface} from '../surfaces/revolution.js';
+import {SweepSurface} from '../surfaces/sweeping.js';
 import {BSplineCuad, BSplineCubic} from '../curves/bspline.js';
 
 import {Rotation} from '../transformations/rotation.js';
@@ -58,7 +59,7 @@ export class BSplineQuadCurveRevApp extends App {
 	}
 }
 
-export class BSplineCubicCurveSweepApp extends App {
+export class BSplineQuadSweepHeliApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -80,6 +81,30 @@ export class BSplineCubicCurveSweepApp extends App {
 
 		// World
 		var world = new World();
+
+		var shape = new BSplineCuad([[3.0, 6.0, 0.0],
+					[5.0, 6.0, 0.0],
+					[6.0, 4.0, 0.0],
+					[8.0, 4.0, 0.0],
+					[8.0, 2.0, 0.0],
+					[6.0, 2.0, 0.0],
+					[5.0, 0.0, 0.0],
+					[3.0, 0.0, 0.0],
+					[2.0, 2.0, 0.0],
+					[0.0, 2.0, 0.0],
+					[0.0, 4.0, 0.0],
+					[2.0, 4.0, 0.0],
+					[3.0, 6.0, 0.0],
+					[5.0, 6.0, 0.0]]);
+
+		var path = new BSplineCuad([[0.0, 0.0, 0.0],
+					[1.0, 0.0, 0.0],
+					[2.0, 0.0, 0.0],
+					[3.0, 0.0, 0.0],
+					[4.0, 0.0, 0.0]]);
+
+		var model = new SweepSurface(shape, path, 100, 100);
+
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
 
