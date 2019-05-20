@@ -41,10 +41,6 @@ export class SweepSurface extends Surface {
 			n = this.path.getNormal(u);
 			pos = this.path.get(u);
 
-			console.log("i: " + i);
-			console.log("u: " + u);
-			console.log("pos: " + pos);
-
 			for (var k = 0; k < 3; k++) {
 			
 				matrix[k] = b[k];
