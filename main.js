@@ -6,6 +6,7 @@ import {ToroidRevApp} from './tests/toroid-rev.js';
 import {CurveApp} from './tests/curve-calc.js';
 import {BezierQuadCurveSweepApp, BezierCubicCurveSweepApp} from './tests/curve-bezier-sweep.js';
 import {BSplineQuadCurveSweepApp, BSplineCubicCurveSweepApp} from './tests/curve-bspline-sweep.js';
+import {BSplineQuadCurveRevApp} from './tests/curve-bspline-rev.js';
 
 //
 // main function
@@ -30,9 +31,11 @@ function main() {
 	//app = new BezierQuadCurveSweepApp(gl, canvas);
 	//app = new BezierCubicCurveSweepApp(gl, canvas);
 	//app = new BSplineQuadCurveSweepApp(gl, canvas);
-	app = new BSplineCubicCurveSweepApp(gl, canvas);
+	//app = new BSplineCubicCurveSweepApp(gl, canvas);
+	app = new BSplineQuadCurveRevApp(gl, canvas);
 
 	app.start();
 }
 
 window.onload = main;
+

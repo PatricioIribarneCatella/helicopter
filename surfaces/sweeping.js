@@ -27,7 +27,7 @@ export class SweepSurface extends Surface {
 
 		var u, v, p, t, b, n, pos, matrix;
 
-		matrix = mat4.create(matrix);
+		matrix = mat4.create();
 
 		matrix[3] = 0.0; matrix[7] = 0.0; matrix[11] = 0.0;
 		matrix[15] = 1.0;

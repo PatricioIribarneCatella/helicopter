@@ -4,7 +4,7 @@ import {Camera} from '../scene/camera.js';
 
 import {ShaderProgram} from '../shaders/program.js';
 
-import {SweepSurface} from '../surfaces/sweeping.js';
+import {RevolutionSurface} from '../surfaces/revolution.js';
 import {BSplineCuad, BSplineCubic} from '../curves/bspline.js';
 
 import {Rotation} from '../transformations/rotation.js';
@@ -13,7 +13,7 @@ import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
 
 
-export class BSplineQuadCurveSweepApp extends App {
+export class BSplineQuadCurveRevApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -36,24 +36,18 @@ export class BSplineQuadCurveSweepApp extends App {
 		// World
 		var world = new World();
 
-		var shape = new BSplineCuad([[0.0, 0.0, 0.0],
-					    [2.0, 2.0, 0.0],
+		var shape = new BSplineCuad([[2.0, 2.0, 0.0],
+					    [2.0, 4.0, 0.0],
+					    [4.0, 4.0, 0.0],
+					    [4.0, 2.0, 0.0],
 					    [4.0, 0.0, 0.0],
-					    [6.0, 2.0, 0.0],
-					    [8.0, 0.0, 0.0]]);
+					    [2.0, 0.0, 0.0],
+					    [2.0, 2.0, 0.0],
+					    [2.0, 4.0, 0.0]]);
 
-		var path = new BSplineCubic([[0.0, 0.0, 0.0],
-					      [0.0, 3.0, 0.0],
-					      [3.0, 3.0, 0.0],
-					      [3.0, 0.0, 0.0],
-					      [6.0, 0.0, 0.0],
-					      [6.0, 3.0, 0.0],
-					      [9.0, 3.0, 0.0],
-					      [9.0, 0.0, 0.0]]);
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 16, 100);
 
-		var model = new SweepSurface(shape, path, 100, 100);
-
-		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
 
 		world.add(gt1);
@@ -86,33 +80,6 @@ export class BSplineCubicCurveSweepApp extends App {
 
 		// World
 		var world = new World();
-/*
-		var path = new BSplineCubic([[0.0, 0.0, 0.0],
-					      [0.0, 3.0, 0.0],
-					      [3.0, 3.0, 0.0],
-					      [3.0, 0.0, 0.0],
-					      [6.0, 0.0, 0.0],
-					      [6.0, 3.0, 0.0],
-					      [9.0, 3.0, 0.0],
-					      [9.0, 0.0, 0.0]]);
-*/
-
-		var path = new BSplineCubic([[0.0, 2.0, 0.0],
-					      [2.0, 5.0, 0.0],
-					      [4.0, 0.0, 0.0],
-					      [7.0, 2.0, 0.0],
-					      [4.0, 7.0, 0.0],
-					      [7.0, 6.0, 0.0],
-					      [8.0, 9.0, 0.0]]);
-
-
-		var shape = new BSplineCubic([[0.0, 0.0, 0.0],
-					     [1.0, 3.0, 0.0],
-					     [4.0, 3.0, 0.0],
-					     [5.0, 0.0, 0.0]]);
-
-		var model = new SweepSurface(shape, path, 100, 5);
-
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
 

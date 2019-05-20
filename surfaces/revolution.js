@@ -27,7 +27,7 @@ export class RevolutionSurface extends Surface {
 
 		var p, v, ang, pos, matrix;
 		
-		matrix = mat4.create(matrix);
+		matrix = mat4.create();
 
 		for (var i = 0.0; i < this.rows; i++) {
 		
@@ -50,6 +50,19 @@ export class RevolutionSurface extends Surface {
 				this.position_buffer.push(p[2]);
 			}
 		}
+
+		for (var j = 0.0; j < this.cols; j++) {
+			
+			v = j / (this.cols - 1);
+
+			pos = this.shape.get(v);
+
+			this.position_buffer.push(pos[0]);
+			this.position_buffer.push(pos[1]);
+			this.position_buffer.push(pos[2]);
+		}
+
+		this.rows += 1;
 	}
 
 	_createColor() {
