@@ -108,7 +108,7 @@ export class BSplineQuadSweepHeliApp extends App {
 					[3.0, 0.0, 0.0],
 					[4.0, 0.0, 0.0]]);
 
-		var c = new Color([1.0, 0.0, 0.0]);
+		var c = new Color([]);
 
 		var model = new SweepSurface(shape, path, 100, 100, 0.2, c);
 
