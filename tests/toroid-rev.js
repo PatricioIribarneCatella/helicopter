@@ -11,6 +11,7 @@ import {Rotation} from '../transformations/rotation.js';
 
 import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
+import {Color} from '../3d/color.js';
 
 export class ToroidRevApp extends App {
 
@@ -39,7 +40,8 @@ export class ToroidRevApp extends App {
 		shape.move([3.0, 0.0, 0.0]);
 		
 		// Toroid model 1
-		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 500, 50);
+		var c = new Color([]);
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 500, 50, c);
 
 		// Toroid graphic 1
 		var t = [new Rotation([1.0, 0.0, 0.0], 0.0, 0.01)];

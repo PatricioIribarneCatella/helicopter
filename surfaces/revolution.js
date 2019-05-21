@@ -11,12 +11,13 @@ import {Surface} from './surface.js';
 //
 export class RevolutionSurface extends Surface {
 
-	constructor(shape, axis, rows, res) {
+	constructor(shape, axis, rows, res, color) {
 		
 		super(res, rows);
 
 		this.shape = shape;
 		this.axis = axis;
+		this.color = color;
 
 		this._init();
 	}
@@ -67,11 +68,16 @@ export class RevolutionSurface extends Surface {
 
 	_createColor() {
 	
+		var c;
+
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
-				this.color_buffer.push(1.0 / this.rows * i);
-				this.color_buffer.push(0.2);
-				this.color_buffer.push(1.0 / this.cols * j);
+
+				c = this.color.get(this.rows, this.cols, i, j);
+
+				this.color_buffer.push(c.r);
+				this.color_buffer.push(c.g);
+				this.color_buffer.push(c.b);
 			};
 		};
 	}

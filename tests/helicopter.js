@@ -13,7 +13,7 @@ import {Rotation} from '../transformations/rotation.js';
 
 import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
-
+import {Color} from '../3d/color.js';
 
 export class BSplineQuadRevHelixApp extends App {
 
@@ -47,7 +47,9 @@ export class BSplineQuadRevHelixApp extends App {
 					    [2.0, 2.0, 0.0],
 					    [2.0, 4.0, 0.0]]);
 
-		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 16, 100);
+		var c = new Color([]);
+		
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 16, 100, c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -106,7 +108,9 @@ export class BSplineQuadSweepHeliApp extends App {
 					[3.0, 0.0, 0.0],
 					[4.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 0.2);
+		var c = new Color([1.0, 0.0, 0.0]);
+
+		var model = new SweepSurface(shape, path, 100, 100, 0.2, c);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -173,7 +177,9 @@ export class BSplineQuadSweepHeliCenterApp extends App {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 1);
+		var c = new Color([]);
+
+		var model = new SweepSurface(shape, path, 100, 100, 1, c);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -231,7 +237,9 @@ export class BezierQuadSweepHeliCenterApp extends App {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 1);
+		var c = new Color([]);
+
+		var model = new SweepSurface(shape, path, 100, 100, 1, c);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);

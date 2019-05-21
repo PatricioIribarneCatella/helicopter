@@ -15,12 +15,13 @@ import {Surface} from './surface.js';
 //
 export class SweepSurface extends Surface {
 
-	constructor(shape, path, levels, res, endScale) {
+	constructor(shape, path, levels, res, endScale, color) {
 		
 		super(res, levels);
 
 		this.shape = shape;
 		this.path = path;
+		this.color = color;
 		this.endScale = endScale;
 
 		this._init();
@@ -78,12 +79,17 @@ export class SweepSurface extends Surface {
 	}
 
 	_createColor() {
-	
+
+		var c;
+
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
-				this.color_buffer.push(1.0 / this.rows * i);
-				this.color_buffer.push(0.2);
-				this.color_buffer.push(1.0 / this.cols * j);
+		
+				c = this.color.get(this.rows, this.cols, i, j);
+
+				this.color_buffer.push(c.r);
+				this.color_buffer.push(c.g);
+				this.color_buffer.push(c.b);
 			};
 		};
 	}
