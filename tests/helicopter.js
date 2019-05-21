@@ -83,20 +83,20 @@ export class BSplineQuadSweepHeliApp extends App {
 		// World
 		var world = new World();
 
-		var shape = new BSplineCuad([[3.0, 6.0, 0.0],
-					[5.0, 6.0, 0.0],
-					[6.0, 4.0, 0.0],
-					[8.0, 4.0, 0.0],
-					[8.0, 2.0, 0.0],
-					[6.0, 2.0, 0.0],
-					[5.0, 0.0, 0.0],
-					[3.0, 0.0, 0.0],
-					[2.0, 2.0, 0.0],
-					[0.0, 2.0, 0.0],
-					[0.0, 4.0, 0.0],
-					[2.0, 4.0, 0.0],
-					[3.0, 6.0, 0.0],
-					[5.0, 6.0, 0.0]]);
+		var shape = new BSplineCuad([[-1.0, 3.0, 0.0],
+					[1.0, 3.0, 0.0],
+					[2.0, 1.0, 0.0],
+					[4.0, 1.0, 0.0],
+					[4.0, -1.0, 0.0],
+					[2.0, -1.0, 0.0],
+					[1.0, -3.0, 0.0],
+					[-1.0, -3.0, 0.0],
+					[-2.0, -1.0, 0.0],
+					[-4.0, -1.0, 0.0],
+					[-4.0, 1.0, 0.0],
+					[-2.0, 1.0, 0.0],
+					[-1.0, 3.0, 0.0],
+					[1.0, 3.0, 0.0]]);
 
 		var path = new BSplineCuad([[0.0, 0.0, 0.0],
 					[1.0, 0.0, 0.0],
@@ -104,7 +104,7 @@ export class BSplineQuadSweepHeliApp extends App {
 					[3.0, 0.0, 0.0],
 					[4.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100);
+		var model = new SweepSurface(shape, path, 100, 100, 0.2);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -171,7 +171,7 @@ export class BSplineQuadSweepHeliCenterApp extends App {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100);
+		var model = new SweepSurface(shape, path, 100, 100, 1);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -229,7 +229,7 @@ export class BezierQuadSweepHeliCenterApp extends App {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100);
+		var model = new SweepSurface(shape, path, 100, 100, 1);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);

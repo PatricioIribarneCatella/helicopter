@@ -49,7 +49,7 @@ export class BezierQuadCurveSweepApp extends App {
 					   [11.0, 2.0, 0.0],
 					   [10.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100);
+		var model = new SweepSurface(shape, path, 100, 100, 1);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -98,7 +98,7 @@ export class BezierCubicCurveSweepApp extends App {
 					    [4.0, 3.0, 0.0],
 					    [5.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 100, 100);
+		var model = new SweepSurface(shape, path, 100, 100, 1);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);

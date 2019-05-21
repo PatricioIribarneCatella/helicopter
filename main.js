@@ -46,7 +46,7 @@ function main() {
 	//
 	//app = new BSplineQuadCurveSweepApp(gl, canvas);
 	//app = new BSplineCubicCurveLinePathSweepApp(gl, canvas);
-	app = new BSplineCubicCurveSweepApp(gl, canvas);
+	//app = new BSplineCubicCurveSweepApp(gl, canvas);
 	//
 	//app = new BezierQuadCurveRevApp(gl, canvas);
 	//app = new BezierCubicCurveRevApp(gl, canvas);
@@ -57,7 +57,7 @@ function main() {
 	// Helicopter tests
 	//
 	//app = new BSplineQuadRevHelixApp(gl, canvas);
-	//app = new BSplineQuadSweepHeliApp(gl, canvas);
+	app = new BSplineQuadSweepHeliApp(gl, canvas);
 	//app = new BSplineQuadSweepHeliCenterApp(gl, canvas);
 	//app = new BezierQuadSweepHeliCenterApp(gl, canvas);
 

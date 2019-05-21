@@ -9,14 +9,19 @@ import {Surface} from './surface.js';
 // by levels and res (a.k.a vertical 
 // 	resolution)
 //
+// 'endScale' must be zero if
+// the object has to mantain its original
+// shape's size
+//
 export class SweepSurface extends Surface {
 
-	constructor(shape, path, levels, res) {
+	constructor(shape, path, levels, res, endScale) {
 		
 		super(res, levels);
 
 		this.shape = shape;
 		this.path = path;
+		this.endScale = endScale;
 
 		this._init();
 	}
@@ -25,7 +30,9 @@ export class SweepSurface extends Surface {
 	
 	_createModel() {
 
-		var u, v, p, t, b, n, pos, matrix;
+		var u, v, p, t, b, n, scale, pos, matrix;
+
+		var gradientScale = (this.endScale - 1) / (this.rows - 1);
 
 		matrix = mat4.create();
 
@@ -35,6 +42,8 @@ export class SweepSurface extends Surface {
 		for (var i = 0.0; i < this.rows; i++) {
 		
 			u = i / (this.rows - 1);
+
+			scale = 1 + i * gradientScale;
 
 			t = this.path.getTangent(u);
 			b = this.path.getBinormal(u);
@@ -54,6 +63,9 @@ export class SweepSurface extends Surface {
 				v = j / (this.cols - 1);
 
 				pos = this.shape.get(v);
+
+				// scale shape
+				pos = [pos[0]*scale, pos[1]*scale, pos[2]*scale];
 
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				p = vec4.transformMat4(p, p, matrix);
