@@ -1,0 +1,103 @@
+import {App} from '../scene/app.js';
+import {Scene} from '../scene/scene.js';
+import {Camera} from '../scene/camera.js';
+
+import {ShaderProgram} from '../shaders/program.js';
+
+import {RevolutionSurface} from '../surfaces/revolution.js';
+import {BSplineCuad, BSplineCubic} from '../curves/bspline.js';
+
+import {Rotation} from '../transformations/rotation.js';
+
+import {Graphic} from '../3d/graphic.js';
+import {World} from '../3d/world.js';
+
+export class BSplineQuadCurveRevApp extends App {
+
+	constructor(gl, canvas) {
+		super(gl, canvas);
+	}
+
+	/* public methods */
+
+	start() {
+	
+		var scene = new Scene(this.gl);
+
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+
+		// Perspective camera moved 7 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		scene.addCamera(camera);
+
+		// World
+		var world = new World();
+
+		var shape = new BSplineCuad([[2.0, 2.0, 0.0],
+					    [2.0, 4.0, 0.0],
+					    [4.0, 4.0, 0.0],
+					    [4.0, 2.0, 0.0],
+					    [4.0, 0.0, 0.0],
+					    [2.0, 0.0, 0.0],
+					    [2.0, 2.0, 0.0],
+					    [2.0, 4.0, 0.0]]);
+
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 16, 100);
+
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
+		var gt1 = new Graphic(this.gl, model, t1, shader);
+
+		world.add(gt1);
+
+		scene.add(world);
+
+		scene.draw();
+	}
+}
+
+export class BSplineCubicCurveRevApp extends App {
+	
+	constructor(gl, canvas) {
+		super(gl, canvas);
+	}
+
+	/* public methods */
+
+	start() {
+	
+		var scene = new Scene(this.gl);
+
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+
+		// Perspective camera moved 7 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		scene.addCamera(camera);
+
+		// World
+		var world = new World();
+	
+		var shape = new BSplineCubic([[2.0, 8.0, 0.0],
+					[6.0, 8.0, 0.0],
+					[6.0, 6.0, 0.0],
+					[2.0, 6.0, 0.0],
+					[2.0, 4.0, 0.0],
+					[2.0, 2.0, 0.0],
+					[6.0, 2.0, 0.0],
+					[6.0, 0.0, 0.0]]);
+
+		var model = new RevolutionSurface(shape, [0.0, 1.0, 0.0], 100, 100);
+
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
+		var gt1 = new Graphic(this.gl, model, t1, shader);
+
+		world.add(gt1);
+
+		scene.add(world);
+
+		scene.draw();
+	}
+}

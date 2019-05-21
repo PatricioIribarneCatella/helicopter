@@ -9,7 +9,10 @@ export class Grid {
 		
 		this.rows = rows;
 		this.cols = cols;
-		
+
+		this.position_buffer = [];
+		this.color_buffer = [];
+
 		this._init();
 	}
 
@@ -17,42 +20,29 @@ export class Grid {
 
 	_createModel() {
 
-		this.position_buffer = [];
-		this.color_buffer = [];
+		for (var i = 0.0; i < this.rows; i++) {
+			for (var j = 0.0; j < this.cols; j++) {
+			
+				var x = j - (this.cols - 1.0) / 2.0;
+				var y = i - (this.rows - 1.0) / 2.0;
+				var z = 0;
+				
+				this.position_buffer.push(x);
+				this.position_buffer.push(y);
+				this.position_buffer.push(z);
+			};
+		};
+	}
+
+	_createColor() {
 
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
-				// position = (x, y, z = 0)
-				this.position_buffer.push(j - (this.cols - 1.0) / 2.0);
-				this.position_buffer.push(i - (this.rows - 1.0) / 2.0);
-				this.position_buffer.push(0);
-
 				this.color_buffer.push(1.0 / this.rows * i);
 				this.color_buffer.push(0.2);
 				this.color_buffer.push(1.0 / this.cols * j);
 			};
 		};
-	}
-
-	_createIndexes() {
-		
-		this.index_buffer = [];
-
-		for (var i = 0.0; i < (this.rows - 1); i++) {
-			if ((i % 2) == 0) {
-				// even rows stay normal
-				for (var j = 0; j < this.cols; j++) {
-					this.index_buffer.push(i * this.cols + j);
-					this.index_buffer.push((i + 1) * this.cols + j);
-				}
-			} else {
-				// odd rows get flipped
-				for (var j = (this.cols - 1); j >= 0; j--) {
-					this.index_buffer.push(i * this.cols + j);
-					this.index_buffer.push((i + 1) * this.cols + j);
-				}
-			}
-		}
 	}
 
 	_init() {
@@ -62,7 +52,7 @@ export class Grid {
 		// and indexes to render it
 		
 		this._createModel();
-		this._createIndexes();
+		this._createColor();
 	}
 
 	/* public methods */
@@ -77,6 +67,14 @@ export class Grid {
 
 	getIndexes() {
 		return this.index_buffer;
+	}
+
+	getCols() {
+		return this.cols;
+	}
+
+	getRows() {
+		return this.rows;
 	}
 }
 
