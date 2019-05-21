@@ -12,7 +12,6 @@ import {Rotation} from '../transformations/rotation.js';
 import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
 
-
 export class BSplineQuadCurveSweepApp extends App {
 
 	constructor(gl, canvas) {
