@@ -31,9 +31,10 @@ export class SweepSurface extends Surface {
 	
 	_createModel() {
 
-		var u, v, p, t, b, n, scale, pos, matrix;
+		var u, v, p, t, b, n, scaleX, scaleY, pos, matrix;
 
-		var gradientScale = (this.endScale - 1) / (this.rows - 1);
+		var gradientScaleX = (this.endScale[0] - 1) / (this.rows - 1);
+		var gradientScaleY = (this.endScale[1] - 1) / (this.rows - 1);
 
 		matrix = mat4.create();
 
@@ -44,7 +45,8 @@ export class SweepSurface extends Surface {
 		
 			u = i / (this.rows - 1);
 
-			scale = 1 + i * gradientScale;
+			scaleX = 1 + (i * gradientScaleX);
+			scaleY = 1 + (i * gradientScaleY);
 
 			t = this.path.getTangent(u);
 			b = this.path.getBinormal(u);
@@ -66,7 +68,7 @@ export class SweepSurface extends Surface {
 				pos = this.shape.get(v);
 
 				// scale shape
-				pos = [pos[0]*scale, pos[1]*scale, pos[2]*scale];
+				pos = [pos[0]*scaleX, pos[1]*scaleY, pos[2]];
 
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				p = vec4.transformMat4(p, p, matrix);

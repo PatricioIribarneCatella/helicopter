@@ -12,7 +12,8 @@ import {BSplineQuadCurveRevApp, BSplineCubicCurveRevApp} from './tests/curve-bsp
 import {HelixCirclePartApp,
 	HelixScaledPartApp,
 	HelicopterCenterPartApp,
-	HelicopterCenterHexagonPartApp} from './tests/helicopter.js';
+	HelicopterCenterHexagonPartApp,
+	HelicopterCenterHexagonScaledPartApp} from './tests/helicopter.js';
 
 //
 // main function
@@ -59,7 +60,8 @@ function main() {
 	//app = new HelixCirclePartApp(gl, canvas);
 	//app = new HelixScaledPartApp(gl, canvas);
 	//app = new HelicopterCenterPartApp(gl, canvas);
-	app = new HelicopterCenterHexagonPartApp(gl, canvas);
+	//app = new HelicopterCenterHexagonPartApp(gl, canvas);
+	app = new HelicopterCenterHexagonScaledPartApp(gl, canvas);
 
 	app.start();
 }

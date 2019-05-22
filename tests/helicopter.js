@@ -110,7 +110,7 @@ export class HelixScaledPartApp extends App {
 
 		var c = new Color([]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 0.2, c);
+		var model = new SweepSurface(shape, path, 100, 100, [0.2, 0.2], c);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -181,7 +181,7 @@ export class HelicopterCenterPartApp extends App {
 
 		var c = new Color([]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 1, c);
+		var model = new SweepSurface(shape, path, 100, 100, [1, 1], c);
 
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -243,7 +243,7 @@ export class HelicopterCenterHexagonPartApp extends App {
 
 		var c = new Color([]);
 
-		var model = new SweepSurface(shape, path, 100, 100, 1, c);
+		var model = new SweepSurface(shape, path, 100, 100, [1, 1], c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -255,4 +255,67 @@ export class HelicopterCenterHexagonPartApp extends App {
 		scene.draw();
 	}
 }
+
+export class HelicopterCenterHexagonScaledPartApp extends App {
+
+	constructor(gl, canvas) {
+		super(gl, canvas);
+	}
+
+	/* public methods */
+	
+	start() {
+	
+		var scene = new Scene(this.gl);
+
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+
+		// Perspective camera moved 7 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
+		scene.addCamera(camera);
+
+		// World
+		var world = new World();
+
+		var shape = new BezierCuad([[2.0, 4.0, 0.0],
+					[3.0, 4.0, 0.0],
+					[4.0, 4.0, 0.0],
+					[5.0, 3.0, 0.0],
+					[6.0, 2.0, 0.0],
+					[5.0, 1.0, 0.0],
+					[4.0, 0.0, 0.0],
+					[3.0, 0.0, 0.0],
+					[2.0, 0.0, 0.0],
+					[1.0, 1.0, 0.0],
+					[0.0, 2.0, 0.0],
+					[1.0, 3.0, 0.0],
+					[2.0, 4.0, 0.0]]);
+
+		shape.move([-3.0, -2.0, 0.0]);
+
+		var path = new BezierCuad([[0.0, 0.0, 0.0],
+					[1.0, 0.0, 0.0],
+					[2.0, 0.0, 0.0],
+					[3.0, 0.0, 0.0],
+					[4.0, 0.0, 0.0],
+					[5.0, 0.0, 0.0],
+					[6.0, 0.0, 0.0]]);
+
+		var c = new Color([]);
+
+		var model = new SweepSurface(shape, path, 100, 100, [0.6, 0.3], c);
+
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
+		var gt1 = new Graphic(this.gl, model, t1, shader);
+
+		world.add(gt1);
+
+		scene.add(world);
+
+		scene.draw();
+	}
+}
+
 
