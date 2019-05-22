@@ -17,7 +17,8 @@ import {HelixCirclePartApp,
 	HelicopterLandingGearPartApp,
 	HelicopterLandingGearBasePartApp,
 	HelicopterStairwayStepsPartApp,
-	HelicopterStairwayPartApp} from './tests/helicopter.js';
+	HelicopterStairwayPartApp,
+	HelicopterHelixBladePartApp} from './tests/helicopter.js';
 
 //
 // main function
@@ -69,7 +70,8 @@ function main() {
 	//app = new HelicopterLandingGearPartApp(gl, canvas);
 	//app = new HelicopterLandingGearBasePartApp(gl, canvas);
 	//app = new HelicopterStairwayStepsPartApp(gl, canvas);
-	app = new HelicopterStairwayPartApp(gl, canvas);
+	//app = new HelicopterStairwayPartApp(gl, canvas);
+	app = new HelicopterHelixBladePartApp(gl, canvas);
 
 	app.start();
 }

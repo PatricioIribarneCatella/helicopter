@@ -501,12 +501,12 @@ export class HelicopterStairwayPartApp extends App {
 		shape.move([-1.0, -2.0, 0.0]);
 
 		var path = new BezierCuad([[0.0, 0.0, 0.0],
-					[1.0, 0.0, 0.0],
-					[2.0, 0.0, 0.0]]);
+					[0.25, 0.0, 0.0],
+					[0.5, 0.0, 0.0]]);
 
 		var c = new Color([]);
 		
-		var model = new SweepSurface(shape, path, 10, 10, [1, 1], c);
+		var model = new SweepSurface(shape, path, 10, 5, [1, 1], c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -517,4 +517,53 @@ export class HelicopterStairwayPartApp extends App {
 
 		scene.draw();
 	}
+}
+
+export class HelicopterHelixBladePartApp extends App {
+
+	constructor(gl, canvas) {
+		super(gl, canvas);
+	}
+
+	/* public methods */
+
+	start() {
+	
+		var scene = new Scene(this.gl);
+
+		var shader = new ShaderProgram(this.gl,
+					       matrix_vertex_shader,
+					       simple_fragment_shader);
+
+		// Perspective camera moved 7 units from the origin
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
+		scene.addCamera(camera);
+
+		// World
+		var world = new World();
+
+		var shape = new BezierCuad([[0.0, 0.0, 0.0],
+					    [1.0, 0.0, 0.0],
+					    [2.0, 0.0, 0.0]]);
+		
+		shape.move([-1.0, 0.0, 0.0]);
+
+		var path = new BezierCuad([[0.0, 0.0, 0.0],
+					[2.0, 0.0, 0.0],
+					[4.0, 0.0, 0.0]]);
+
+		var c = new Color([]);
+		
+		var model = new SweepSurface(shape, path, 2, 2, [0.5, 0.5], c);
+
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
+		var gt1 = new Graphic(this.gl, model, t1, shader);
+
+		world.add(gt1);
+
+		scene.add(world);
+
+		scene.draw();
+	}
+
 }
