@@ -15,7 +15,7 @@ import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
 
-export class BSplineQuadRevHelixApp extends App {
+export class HelixCirclePartApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -32,7 +32,7 @@ export class BSplineQuadRevHelixApp extends App {
 					       simple_fragment_shader);
 
 		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
 		scene.addCamera(camera);
 
 		// World
@@ -62,7 +62,7 @@ export class BSplineQuadRevHelixApp extends App {
 	}
 }
 
-export class BSplineQuadSweepHeliApp extends App {
+export class HelixScaledPartApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -79,7 +79,7 @@ export class BSplineQuadSweepHeliApp extends App {
 					       simple_fragment_shader);
 
 		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
 		scene.addCamera(camera);
 
 		// World
@@ -123,7 +123,7 @@ export class BSplineQuadSweepHeliApp extends App {
 	}
 }
 
-export class BSplineQuadSweepHeliCenterApp extends App {
+export class HelicopterCenterPartApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -140,7 +140,7 @@ export class BSplineQuadSweepHeliCenterApp extends App {
 					       simple_fragment_shader);
 
 		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 20.0]);
 		scene.addCamera(camera);
 
 		// World
@@ -169,6 +169,8 @@ export class BSplineQuadSweepHeliCenterApp extends App {
 					[4.0, 9.0, 0.0],
 					[5.0, 9.0, 0.0]]);
 
+		shape.move([-6.0, -6.0, 0.0]);
+
 		var path = new BSplineCuad([[0.0, 0.0, 0.0],
 					[1.0, 0.0, 0.0],
 					[2.0, 0.0, 0.0],
@@ -192,7 +194,7 @@ export class BSplineQuadSweepHeliCenterApp extends App {
 	}
 }
 
-export class BezierQuadSweepHeliCenterApp extends App {
+export class HelicopterCenterHexagonPartApp extends App {
 
 	constructor(gl, canvas) {
 		super(gl, canvas);
@@ -209,7 +211,7 @@ export class BezierQuadSweepHeliCenterApp extends App {
 					       simple_fragment_shader);
 
 		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, -5.0, 15.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
 		scene.addCamera(camera);
 
 		// World
@@ -229,6 +231,8 @@ export class BezierQuadSweepHeliCenterApp extends App {
 					[1.0, 3.0, 0.0],
 					[2.0, 4.0, 0.0]]);
 
+		shape.move([-3.0, -2.0, 0.0]);
+
 		var path = new BezierCuad([[0.0, 0.0, 0.0],
 					[1.0, 0.0, 0.0],
 					[2.0, 0.0, 0.0],
@@ -241,7 +245,7 @@ export class BezierQuadSweepHeliCenterApp extends App {
 
 		var model = new SweepSurface(shape, path, 100, 100, 1, c);
 
-		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
+		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
 
 		world.add(gt1);
