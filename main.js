@@ -13,7 +13,11 @@ import {HelixCirclePartApp,
 	HelixScaledPartApp,
 	HelicopterCenterPartApp,
 	HelicopterCenterHexagonPartApp,
-	HelicopterCenterHexagonScaledPartApp} from './tests/helicopter.js';
+	HelicopterCenterHexagonScaledPartApp,
+	HelicopterLandingGearPartApp,
+	HelicopterLandingGearBasePartApp,
+	HelicopterStairwayStepsPartApp,
+	HelicopterStairwayPartApp} from './tests/helicopter.js';
 
 //
 // main function
@@ -61,7 +65,11 @@ function main() {
 	//app = new HelixScaledPartApp(gl, canvas);
 	//app = new HelicopterCenterPartApp(gl, canvas);
 	//app = new HelicopterCenterHexagonPartApp(gl, canvas);
-	app = new HelicopterCenterHexagonScaledPartApp(gl, canvas);
+	//app = new HelicopterCenterHexagonScaledPartApp(gl, canvas);
+	//app = new HelicopterLandingGearPartApp(gl, canvas);
+	//app = new HelicopterLandingGearBasePartApp(gl, canvas);
+	//app = new HelicopterStairwayStepsPartApp(gl, canvas);
+	app = new HelicopterStairwayPartApp(gl, canvas);
 
 	app.start();
 }
