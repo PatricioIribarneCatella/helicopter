@@ -592,7 +592,9 @@ export class HelicopterCylinderPartsApp extends App {
 		// World
 		var world = new World();
 
-		var model = new Cylinder(1, 5, 20, 20);
+		var c = new Color([]);
+
+		var model = new Cylinder(1, 5, 20, 20, c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);

@@ -66,22 +66,6 @@ export class RevolutionSurface extends Surface {
 		this.rows += 1;
 	}
 
-	_createColor() {
-	
-		var c;
-
-		for (var i = 0.0; i < this.rows; i++) {
-			for (var j = 0.0; j < this.cols; j++) {
-
-				c = this.color.get(this.rows, this.cols, i, j);
-
-				this.color_buffer.push(c.r);
-				this.color_buffer.push(c.g);
-				this.color_buffer.push(c.b);
-			};
-		};
-	}
-
 	_init() {
 		this._createModel();
 		this._createColor();
