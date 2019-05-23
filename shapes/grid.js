@@ -1,17 +1,15 @@
+import {Surface} from '../surfaces/surface.js';
+
 //
 // Represents a Grid made up 
 // of triangles and drawn it 
 // by TRIANGLE_STRIP
 //
-export class Grid {
+export class Grid extends Surface {
 
-	constructor(rows, cols) {
+	constructor(rows, cols, color) {
 		
-		this.rows = rows;
-		this.cols = cols;
-
-		this.position_buffer = [];
-		this.color_buffer = [];
+		super(cols, rows, color);
 
 		this._init();
 	}
@@ -34,17 +32,6 @@ export class Grid {
 		};
 	}
 
-	_createColor() {
-
-		for (var i = 0.0; i < this.rows; i++) {
-			for (var j = 0.0; j < this.cols; j++) {
-				this.color_buffer.push(1.0 / this.rows * i);
-				this.color_buffer.push(0.2);
-				this.color_buffer.push(1.0 / this.cols * j);
-			};
-		};
-	}
-
 	_init() {
 		// generates a GRID defined by
 		// 'cols' and 'rows'
@@ -53,28 +40,6 @@ export class Grid {
 		
 		this._createModel();
 		this._createColor();
-	}
-
-	/* public methods */
-
-	getPosition() {
-		return this.position_buffer;
-	}
-
-	getColor() {
-		return this.color_buffer;
-	}
-
-	getIndexes() {
-		return this.index_buffer;
-	}
-
-	getCols() {
-		return this.cols;
-	}
-
-	getRows() {
-		return this.rows;
 	}
 }
 

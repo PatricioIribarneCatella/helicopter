@@ -9,14 +9,20 @@ import {Surface} from './surface.js';
 // by levels and res (a.k.a vertical 
 // 	resolution)
 //
+// 'endScale' must be zero if
+// the object has to mantain its original
+// shape's size
+//
 export class SweepSurface extends Surface {
 
-	constructor(shape, path, levels, res) {
+	constructor(shape, path, levels, res, endScale, color) {
 		
 		super(res, levels);
 
 		this.shape = shape;
 		this.path = path;
+		this.color = color;
+		this.endScale = endScale;
 
 		this._init();
 	}
@@ -25,7 +31,10 @@ export class SweepSurface extends Surface {
 	
 	_createModel() {
 
-		var u, v, p, t, b, n, pos, matrix;
+		var u, v, p, t, b, n, scaleX, scaleY, pos, matrix;
+
+		var gradientScaleX = (this.endScale[0] - 1) / (this.rows - 1);
+		var gradientScaleY = (this.endScale[1] - 1) / (this.rows - 1);
 
 		matrix = mat4.create();
 
@@ -35,6 +44,9 @@ export class SweepSurface extends Surface {
 		for (var i = 0.0; i < this.rows; i++) {
 		
 			u = i / (this.rows - 1);
+
+			scaleX = 1 + (i * gradientScaleX);
+			scaleY = 1 + (i * gradientScaleY);
 
 			t = this.path.getTangent(u);
 			b = this.path.getBinormal(u);
@@ -55,6 +67,9 @@ export class SweepSurface extends Surface {
 
 				pos = this.shape.get(v);
 
+				// scale shape
+				pos = [pos[0]*scaleX, pos[1]*scaleY, pos[2]];
+
 				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				p = vec4.transformMat4(p, p, matrix);
 
@@ -63,17 +78,6 @@ export class SweepSurface extends Surface {
 				this.position_buffer.push(p[2]);
 			}
 		}
-	}
-
-	_createColor() {
-	
-		for (var i = 0.0; i < this.rows; i++) {
-			for (var j = 0.0; j < this.cols; j++) {
-				this.color_buffer.push(1.0 / this.rows * i);
-				this.color_buffer.push(0.2);
-				this.color_buffer.push(1.0 / this.cols * j);
-			};
-		};
 	}
 
 	_init() {

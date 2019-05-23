@@ -5,6 +5,7 @@
 export class Curve {
 
 	constructor(points) {
+		this.pos = [0.0, 0.0, 0.0];
 		this.points = points;
 		this.stretches = [];
 	}
@@ -46,8 +47,16 @@ export class Curve {
 
 	/* public methods */
 
+	move(pos) {
+		this.pos = pos;
+	}
+
 	get(u) {
-		return this._calculate(u)
+		var v = this._calculate(u);
+
+		return [v[0] + this.pos[0],
+			v[1] + this.pos[1],
+			v[2] + this.pos[2]];
 	}
 
 	getTangent(u) {

@@ -11,6 +11,7 @@ import {Rotation} from '../transformations/rotation.js';
 
 import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
+import {Color} from '../3d/color.js';
 
 export class ToroidSweepApp extends App {
 
@@ -37,9 +38,11 @@ export class ToroidSweepApp extends App {
 
 		var shape = new Circle(1);
 		
+		var c = new Color([]);
+		
 		// Toroid model 1
 		var path = new Circle(5);
-		var model = new SweepSurface(shape, path, 100, 50);
+		var model = new SweepSurface(shape, path, 100, 50, [1, 1], c);
 
 		// Toroid graphic 1
 		var t1 = [new Rotation([0.0, 1.0, 0.0], 0.0, 0.01)];
@@ -49,7 +52,7 @@ export class ToroidSweepApp extends App {
 		
 		// Toroid model 2
 		var path = new Circle(7);
-		var model2 = new SweepSurface(shape, path, 100, 50);
+		var model2 = new SweepSurface(shape, path, 100, 50, [1, 1], c);
 
 		// Toroid graphic 2
 		var t2 = [new Rotation([1.0, 0.0, 0.0], 0.0, 0.01)];

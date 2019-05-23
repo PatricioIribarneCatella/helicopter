@@ -9,10 +9,17 @@ import {BSplineQuadCurveSweepApp, BSplineCubicCurveSweepApp,
 import {BezierQuadCurveRevApp, BezierCubicCurveRevApp} from './tests/curve-bezier-rev.js';
 import {BSplineQuadCurveRevApp, BSplineCubicCurveRevApp} from './tests/curve-bspline-rev.js';
 
-import {BSplineQuadRevHelixApp,
-	BSplineQuadSweepHeliApp,
-	BSplineQuadSweepHeliCenterApp,
-	BezierQuadSweepHeliCenterApp} from './tests/helicopter.js';
+import {HelixCirclePartApp,
+	HelixScaledPartApp,
+	HelicopterCenterPartApp,
+	HelicopterCenterHexagonPartApp,
+	HelicopterCenterHexagonScaledPartApp,
+	HelicopterLandingGearPartApp,
+	HelicopterLandingGearBasePartApp,
+	HelicopterStairwayStepsPartApp,
+	HelicopterStairwayPartApp,
+	HelicopterHelixBladePartApp,
+	HelicopterCylinderPartsApp} from './tests/helicopter.js';
 
 //
 // main function
@@ -46,7 +53,7 @@ function main() {
 	//
 	//app = new BSplineQuadCurveSweepApp(gl, canvas);
 	//app = new BSplineCubicCurveLinePathSweepApp(gl, canvas);
-	app = new BSplineCubicCurveSweepApp(gl, canvas);
+	//app = new BSplineCubicCurveSweepApp(gl, canvas);
 	//
 	//app = new BezierQuadCurveRevApp(gl, canvas);
 	//app = new BezierCubicCurveRevApp(gl, canvas);
@@ -56,10 +63,17 @@ function main() {
 
 	// Helicopter tests
 	//
-	//app = new BSplineQuadRevHelixApp(gl, canvas);
-	//app = new BSplineQuadSweepHeliApp(gl, canvas);
-	//app = new BSplineQuadSweepHeliCenterApp(gl, canvas);
-	//app = new BezierQuadSweepHeliCenterApp(gl, canvas);
+	//app = new HelixCirclePartApp(gl, canvas);
+	//app = new HelixScaledPartApp(gl, canvas);
+	//app = new HelicopterCenterPartApp(gl, canvas);
+	//app = new HelicopterCenterHexagonPartApp(gl, canvas);
+	//app = new HelicopterCenterHexagonScaledPartApp(gl, canvas);
+	//app = new HelicopterLandingGearPartApp(gl, canvas);
+	//app = new HelicopterLandingGearBasePartApp(gl, canvas);
+	//app = new HelicopterStairwayStepsPartApp(gl, canvas);
+	//app = new HelicopterStairwayPartApp(gl, canvas);
+	//app = new HelicopterHelixBladePartApp(gl, canvas);
+	app = new HelicopterCylinderPartsApp(gl, canvas);
 
 	app.start();
 }

@@ -14,6 +14,7 @@ import {Identity} from '../transformations/identity.js';
 import {Graphic} from '../3d/graphic.js';
 import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
+import {Color} from '../3d/color.js';
 
 export class SolarSystemApp extends App {
 
@@ -38,7 +39,8 @@ export class SolarSystemApp extends App {
 		var world = new World();
 		
 		// Sphere model for all the solar system objects
-		var model = new Sphere(30, 30);
+		var c = new Color([]);
+		var model = new Sphere(30, 30, c);
 
 		// Sun
 		var gs = new Graphic(this.gl, model, [new Identity()], shader);
