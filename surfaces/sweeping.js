@@ -17,11 +17,10 @@ export class SweepSurface extends Surface {
 
 	constructor(shape, path, levels, res, endScale, color) {
 		
-		super(res, levels);
+		super(res, levels, color);
 
 		this.shape = shape;
 		this.path = path;
-		this.color = color;
 		this.endScale = endScale;
 
 		this._init();

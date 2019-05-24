@@ -13,11 +13,10 @@ export class RevolutionSurface extends Surface {
 
 	constructor(shape, axis, rows, res, color) {
 		
-		super(res, rows);
+		super(res, rows, color);
 
 		this.shape = shape;
 		this.axis = axis;
-		this.color = color;
 
 		this._init();
 	}
