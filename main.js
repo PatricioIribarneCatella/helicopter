@@ -3,11 +3,19 @@ import {ToroidSweepApp} from './tests/toroid-sweep.js';
 import {ToroidRevApp} from './tests/toroid-rev.js';
 
 import {CurveApp} from './tests/curve-calc.js';
-import {BezierQuadCurveSweepApp, BezierCubicCurveSweepApp} from './tests/curve-bezier-sweep.js';
-import {BSplineQuadCurveSweepApp, BSplineCubicCurveSweepApp,
+
+import {BezierQuadCurveSweepApp,
+	BezierCubicCurveSweepApp} from './tests/curve-bezier-sweep.js';
+
+import {BSplineQuadCurveSweepApp,
+	BSplineCubicCurveSweepApp,
 	BSplineCubicCurveLinePathSweepApp} from './tests/curve-bspline-sweep.js';
-import {BezierQuadCurveRevApp, BezierCubicCurveRevApp} from './tests/curve-bezier-rev.js';
-import {BSplineQuadCurveRevApp, BSplineCubicCurveRevApp} from './tests/curve-bspline-rev.js';
+
+import {BezierQuadCurveRevApp,
+	BezierCubicCurveRevApp} from './tests/curve-bezier-rev.js';
+
+import {BSplineQuadCurveRevApp,
+	BSplineCubicCurveRevApp} from './tests/curve-bspline-rev.js';
 
 import {HelixCirclePartApp,
 	HelixScaledPartApp,

@@ -11,6 +11,7 @@ import {Rotation} from '../transformations/rotation.js';
 
 import {Graphic} from '../3d/graphic.js';
 import {World} from '../3d/world.js';
+import {Color} from '../3d/color.js';
 
 export class BSplineQuadCurveSweepApp extends App {
 
@@ -88,10 +89,11 @@ export class BSplineCubicCurveSweepApp extends App {
 		var world = new World();
 
 		var shape = new BSplineCubic([[0.0, 0.0, 0.0],
-					      [1.0, 0.0, 0.0],
-					      [2.0, 0.0, 0.0],
-					      [3.0, 0.0, 0.0],
-					      [4.0, 0.0, 0.0]]);
+					[1.0, 2.0, 0.0],
+					[3.0, 2.0, 0.0],
+					[4.0, 0.0, 0.0]]);
+
+		shape.move([-2.0, -1.77083, 0.0]);
 
 		var path = new BSplineCubic([[0.0, 0.0, 0.0],
 					      [0.0, 3.0, 0.0],
@@ -102,7 +104,8 @@ export class BSplineCubicCurveSweepApp extends App {
 					      [9.0, 3.0, 0.0],
 					      [9.0, 0.0, 0.0]]);
 
-		var model = new SweepSurface(shape, path, 10, 10, [1, 1], c);
+		var c = new Color([]);
+		var model = new SweepSurface(shape, path, 100, 100, [1, 1], c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
 		var gt1 = new Graphic(this.gl, model, t1, shader);
@@ -155,6 +158,7 @@ export class BSplineCubicCurveLinePathSweepApp extends App {
 					      [9.0, 3.0, 0.0],
 					      [9.0, 0.0, 0.0]]);
 
+		var c = new Color([]);
 		var model = new SweepSurface(shape, path, 10, 100, [1, 1], c);
 
 		var t1 = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
