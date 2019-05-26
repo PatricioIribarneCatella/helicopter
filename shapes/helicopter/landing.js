@@ -8,14 +8,14 @@ export class LandingGear extends SweepSurface {
 
 	constructor() {
 
-		var shape = new BSplineCuad([[2.0, 2.0, 0.0],
+		var shape = new BSplineCuad([[0.0, 2.0, 0.0],
+					[0.0, 4.0, 0.0],
 					[2.0, 4.0, 0.0],
-					[4.0, 4.0, 0.0],
-					[4.0, 2.0, 0.0],
-					[4.0, 0.0, 0.0],
-					[2.0, 0.0, 0.0],
 					[2.0, 2.0, 0.0],
-					[2.0, 4.0, 0.0]]);
+					[2.0, 0.0, 0.0],
+					[0.0, 0.0, 0.0],
+					[0.0, 2.0, 0.0],
+					[0.0, 4.0, 0.0]]);
 
 		shape.move([-1.0, -2.0, 0.0]);
 
@@ -71,15 +71,19 @@ export class LandingGearBase extends RevolutionSurface {
 
 	constructor() {
 		
-		var shape = new BezierCuad([[1.0, 4.0, 0.0],
+		var shape = new BezierCuad([[0.0, 4.0, 0.0],
+					[0.5, 4.0, 0.0],
+					[1.0, 4.0, 0.0],
 					[3.0, 3.0, 0.0],
 					[5.0, 2.0, 0.0],
 					[5.0, 1.0, 0.0],
-					[5.0, 0.0, 0.0]]);
+					[5.0, 0.0, 0.0],
+					[2.5, 0.0, 0.0],
+					[0.0, 0.0, 0.0]]);
 
 		var c = new Color([]);
 
-		super(shape, [0.0, 1.0, 0.0], 4, 10, c);
+		super(shape, [0.0, 1.0, 0.0], 4, 20, c);
 	}
 }
 
