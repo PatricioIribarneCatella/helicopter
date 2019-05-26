@@ -29,6 +29,8 @@ import {HelixCirclePartApp,
 	HelicopterHelixBladePartApp,
 	HelicopterCylinderPartsApp} from './tests/helicopter.js';
 
+import {HelicopterCenterBack} from './tests/helicopter-center.js';
+
 //
 // main function
 //
@@ -81,7 +83,10 @@ function main() {
 	//app = new HelicopterStairwayStepsPartApp(gl, canvas);
 	//app = new HelicopterStairwayPartApp(gl, canvas);
 	//app = new HelicopterHelixBladePartApp(gl, canvas);
-	app = new HelicopterCylinderPartsApp(gl, canvas);
+	//app = new HelicopterCylinderPartsApp(gl, canvas);
+
+	// Helicopter shapes
+	app = new HelicopterCenterBack(gl, canvas);
 
 	app.start();
 }
