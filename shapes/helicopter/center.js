@@ -31,7 +31,7 @@ export class HexagonCenter extends SweepSurface {
                                         [5.0, 0.0, 0.0],
                                         [6.0, 0.0, 0.0]]);
 
-                var c = new Color([]);
+                var c = new Color([0.0, 1.0, 1.0]);
 
                 super(shape, path, rows, cols, [1, 1], c);
 	
@@ -111,7 +111,7 @@ export class CurveCenter extends SweepSurface {
                                         [5.0, 0.0, 0.0],
                                         [6.0, 0.0, 0.0]]);
 
-                var c = new Color([]);
+                var c = new Color([0.29, 0.0, 0.50]);
 
                 super(shape, path, rows, cols, [1, 1], c);
 

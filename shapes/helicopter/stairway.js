@@ -23,7 +23,7 @@ export class Stairway extends SweepSurface {
 					[0.25, 0.0, 0.0],
 					[0.5, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.27, 0.50, 0.70]);
 
 		super(shape, path, 10, 5, [1, 1], c);
 
@@ -82,7 +82,7 @@ export class StairwayStep extends SweepSurface {
 					[2.0, 0.0, 0.0],
 					[4.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.94, 0.50, 0.50]);
 
 		super(shape, path, 10, 10, [1, 1], c);
 

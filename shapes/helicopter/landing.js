@@ -23,7 +23,7 @@ export class LandingGear extends SweepSurface {
 					[1.0, 0.0, 0.0],
 					[2.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.0, 0.50, 0.0]);
 
 		super(shape, path, 16, 100, [1, 1], c);
 
@@ -81,7 +81,7 @@ export class LandingGearBase extends RevolutionSurface {
 					[2.5, 0.0, 0.0],
 					[0.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.9, 0.9, 0.9]);
 
 		super(shape, [0.0, 1.0, 0.0], 4, 20, c);
 	}
