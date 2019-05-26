@@ -17,19 +17,20 @@ import {BezierQuadCurveRevApp,
 import {BSplineQuadCurveRevApp,
 	BSplineCubicCurveRevApp} from './tests/curve-bspline-rev.js';
 
-import {HelixCirclePartApp,
-	HelixScaledPartApp,
-	HelicopterCenterPartApp,
-	HelicopterCenterHexagonPartApp,
-	HelicopterCenterHexagonScaledPartApp,
-	HelicopterLandingGearPartApp,
-	HelicopterLandingGearBasePartApp,
-	HelicopterStairwayStepsPartApp,
-	HelicopterStairwayPartApp,
-	HelicopterHelixBladePartApp,
-	HelicopterCylinderPartsApp} from './tests/helicopter.js';
+import {HelicopterCenterBack,
+	HelicopterCenterFront, 
+	HelicopterCenterHexagon,
+	HelicopterCenterCurve} from './tests/helicopter-center.js';
 
-import {HelicopterCenterBack} from './tests/helicopter-center.js';
+import {HelicopterHelixBlade,
+	HelicopterHelixContainer,
+	HelicopterHelixConnector} from './tests/helicopter-helix.js';
+
+import {HelicopterLandingGear,
+	HelicopterLandingGearBase} from './tests/helicopter-landing.js';
+
+import {HelicopterStairway,
+	HelicopterStairwaySteps} from './tests/helicopter-stairway.js';
 
 //
 // main function
@@ -71,22 +72,18 @@ function main() {
 	//app = new BSplineQuadCurveRevApp(gl, canvas);
 	//app = new BSplineCubicCurveRevApp(gl, canvas);
 
-	// Helicopter tests
-	//
-	//app = new HelixCirclePartApp(gl, canvas);
-	//app = new HelixScaledPartApp(gl, canvas);
-	//app = new HelicopterCenterPartApp(gl, canvas);
-	//app = new HelicopterCenterHexagonPartApp(gl, canvas);
-	//app = new HelicopterCenterHexagonScaledPartApp(gl, canvas);
-	//app = new HelicopterLandingGearPartApp(gl, canvas);
-	//app = new HelicopterLandingGearBasePartApp(gl, canvas);
-	//app = new HelicopterStairwayStepsPartApp(gl, canvas);
-	//app = new HelicopterStairwayPartApp(gl, canvas);
-	//app = new HelicopterHelixBladePartApp(gl, canvas);
-	//app = new HelicopterCylinderPartsApp(gl, canvas);
-
 	// Helicopter shapes
-	app = new HelicopterCenterBack(gl, canvas);
+	//app = new HelicopterCenterBack(gl, canvas);
+	//app = new HelicopterCenterFront(gl, canvas);
+	//app = new HelicopterCenterHexagon(gl, canvas);
+	//app = new HelicopterCenterCurve(gl, canvas);
+	//app = new HelicopterHelixBlade(gl, canvas);
+	//app = new HelicopterHelixContainer(gl, canvas);
+	//app = new HelicopterHelixConnector(gl, canvas);
+	//app = new HelicopterLandingGear(gl, canvas);
+	//app = new HelicopterLandingGearBase(gl, canvas);
+	//app = new HelicopterStairway(gl, canvas);
+	app = new HelicopterStairwaySteps(gl, canvas);
 
 	app.start();
 }
