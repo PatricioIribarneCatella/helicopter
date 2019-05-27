@@ -17,7 +17,7 @@ export class HelixContainer extends RevolutionSurface {
                                             [2.0, 2.0, 0.0],
                                             [2.0, 4.0, 0.0]]);
 
-		shape.move([4.0, 0.0, 0.0]);
+		shape.move([4.0, -2.0, 0.0]);
 
                 var c = new Color([1.0, 0.84, 0.0]);
 
