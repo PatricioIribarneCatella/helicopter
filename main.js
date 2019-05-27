@@ -76,14 +76,14 @@ function main() {
 	//app = new HelicopterCenterBack(gl, canvas);
 	//app = new HelicopterCenterFront(gl, canvas);
 	//app = new HelicopterCenterHexagon(gl, canvas);
-	//app = new HelicopterCenterCurve(gl, canvas);
+	app = new HelicopterCenterCurve(gl, canvas);
 	//app = new HelicopterHelixBlade(gl, canvas);
 	//app = new HelicopterHelixContainer(gl, canvas);
 	//app = new HelicopterHelixConnector(gl, canvas);
 	//app = new HelicopterLandingGear(gl, canvas);
 	//app = new HelicopterLandingGearBase(gl, canvas);
 	//app = new HelicopterStairway(gl, canvas);
-	app = new HelicopterStairwaySteps(gl, canvas);
+	//app = new HelicopterStairwaySteps(gl, canvas);
 
 	app.start();
 }

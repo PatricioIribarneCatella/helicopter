@@ -103,13 +103,9 @@ export class CurveCenter extends SweepSurface {
 
                 shape.move([-6.0, -6.0, 0.0]);
 
-                var path = new BSplineCuad([[0.0, 0.0, 0.0],
+                var path = new BezierCuad([[0.0, 0.0, 0.0],
                                         [1.0, 0.0, 0.0],
-                                        [2.0, 0.0, 0.0],
-                                        [3.0, 0.0, 0.0],
-                                        [4.0, 0.0, 0.0],
-                                        [5.0, 0.0, 0.0],
-                                        [6.0, 0.0, 0.0]]);
+                                        [2.0, 0.0, 0.0]]);
 
                 var c = new Color([0.29, 0.0, 0.50]);
 
