@@ -233,10 +233,16 @@ export class HelicopterApp extends App {
 
 		var door = new Stairway();
 
-		var t17 = [];
+		var t17 = [new Translation([3.0, 1.25, 2.25]),
+			   new Rotation([1.0, 0.0, 0.0], -Math.PI/4, 0.0),
+			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
+			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5])];
 		var gstair1 = new Graphic(this.gl, door, t17, shader);
 
-		var t18 = [];
+		var t18 = [new Translation([3.0, -1.25, 2.25]),
+			   new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0),
+			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
+			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5])];
 		var gstair2 = new Graphic(this.gl, door, t18, shader);
 
 		hexaCenterAndDoor.add(gstair1);
