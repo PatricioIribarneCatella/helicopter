@@ -14,12 +14,14 @@ import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
 
+import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
 import {HexagonCenter, CurveCenter} from '../shapes/helicopter/center.js';
-import {HelixContainer, HelixConnector} from '../shapes/helicopter/helix.js';
 import {Blade} from '../shapes/helicopter/blade.js';
-import {Cylinder} from '../shapes/cylinder.js';
+import {HelixContainer, HelixConnector} from '../shapes/helicopter/helix.js';
+import {LandingGear, LandingGearBase} from '../shapes/helicopter/landing.js';
+import {Stairway} from '../shapes/helicopter/stairway.js';
 
 export class HelicopterApp extends App {
 
@@ -71,11 +73,14 @@ export class HelicopterApp extends App {
 		helicopter.add(frontHelixAndLegs);
 
 		// Hexagon center
-		var hexa = new HexagonCenter(50, 50);
 		var t3 = [new Translation([2.0, 0.0, 0.0])];
-		var ghexa = new Graphic(this.gl, hexa, t3, shader);
+		var hexaCenterAndDoor = new Container3D(t3);
+		var hexa = new HexagonCenter(50, 50);
+		var ghexa = new Graphic(this.gl, hexa, [new Identity()], shader);
 
-		helicopter.add(ghexa);
+		hexaCenterAndDoor.add(ghexa);
+
+		helicopter.add(hexaCenterAndDoor);
 
 		// Second curve center
 		var backHelixAndLegs = new Container3D([new Translation([8.0, 0.0, 0.0])]);
@@ -130,14 +135,13 @@ export class HelicopterApp extends App {
 		var rightFrontHelix = new Container3D(t9);
 		rightFrontHelix.add(helix);
 
-		frontHelixAndLegs.add(rightFrontHelix);
-		
 		var t10 = [new Translation([1.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftFrontHelix = new Container3D(t10);
 		leftFrontHelix.add(helix);
 
+		frontHelixAndLegs.add(rightFrontHelix);
 		frontHelixAndLegs.add(leftFrontHelix);
 
 		////// Back helixes //////
@@ -148,23 +152,95 @@ export class HelicopterApp extends App {
 		var rightBackHelix = new Container3D(t11);
 		rightBackHelix.add(helix);
 
-		backHelixAndLegs.add(rightBackHelix);
-
 		var t12 = [new Translation([2.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftBackHelix = new Container3D(t12);
 		leftBackHelix.add(helix);
 
+		backHelixAndLegs.add(rightBackHelix);
 		backHelixAndLegs.add(leftBackHelix);
 
 		//////////////////////
 		//   Landing legs   //
 		//////////////////////
 
+		var leg = new Container3D([new Identity()]);
+
+		var gear = new LandingGear();
+
+		var tgUp = [new Translation([-0.25, -1.0, 0.0]),
+			    new Scale([0.25, 0.5, 0.25])];
+		var up = new Graphic(this.gl, gear, tgUp, shader);
+
+		leg.add(up);
+
+		var tgDown = [new Translation([0.0, -2.0, 0.0]),
+			      new Scale([0.25, 0.5, 0.25])];
+		var down = new Graphic(this.gl, gear, tgDown, shader);
+
+		leg.add(down);
+
+		var union = new Cylinder(0.125, 0.6, 20, 20, new Color([0.0, 0.0, 1.0]));
+		var tuni = [new Translation([0.0, -1.5, 0.0]),
+			    new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
+			    new Translation([0.0, 0.0, -0.30])];
+		var gunion = new Graphic(this.gl, union, tuni, shader);
+
+		leg.add(gunion);
+
+		var base = new LandingGearBase();
+		var tbase = [new Translation([0.0, -3.8, 0.0]),
+		     	     new Scale([2.0/5.0, 1.0/4.0, 2.0/5.0]),
+			     new Rotation([0.0, 1.0, 0.0], Math.PI/4, 0.0)];
+		var gbase = new Graphic(this.gl, base, tbase, shader);
+
+		leg.add(gbase);
+
+		////// Front legs //////
+
+		var t13 = [new Translation([1.0, -2.8, -2.0]),
+			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
+		var rightFrontLeg = new Container3D(t13);
+		rightFrontLeg.add(leg);
+
+		var t14 = [new Translation([1.0, -2.8, 2.0]),
+			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
+		var leftFrontLeg = new Container3D(t14);
+		leftFrontLeg.add(leg);
+
+		frontHelixAndLegs.add(rightFrontLeg);
+		frontHelixAndLegs.add(leftFrontLeg);
+
+		////// Back legs //////
+
+		var t15 = [new Translation([2.0, -2.8, -2.0]),
+			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
+		var rightBackLeg = new Container3D(t15);
+		rightBackLeg.add(leg);
+
+		var t16 = [new Translation([2.0, -2.8, 2.0]),
+			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
+		var leftBackLeg = new Container3D(t16);
+		leftBackLeg.add(leg);
+
+		backHelixAndLegs.add(rightBackLeg);
+		backHelixAndLegs.add(leftBackLeg);
+
 		///////////////////////
 		//  Door & Stairway  //
 		///////////////////////
+
+		var door = new Stairway();
+
+		var t17 = [];
+		var gstair1 = new Graphic(this.gl, door, t17, shader);
+
+		var t18 = [];
+		var gstair2 = new Graphic(this.gl, door, t18, shader);
+
+		hexaCenterAndDoor.add(gstair1);
+		hexaCenterAndDoor.add(gstair2);
 
 		world.add(helicopter);
 

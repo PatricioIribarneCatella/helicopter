@@ -1,6 +1,5 @@
 import {BezierCuad} from '../../curves/bezier.js';
 import {SweepSurface} from '../../surfaces/sweeping.js';
-import {RevolutionSurface} from '../../surfaces/revolution.js';
 import {Color} from '../../3d/color.js';
 
 export class Stairway extends SweepSurface {
