@@ -119,13 +119,47 @@ export class HelicopterApp extends App {
 
 		helix.add(gconn);
 
-		var container = new HelixContainer(50, 50);
+		//// Blades + Cylinder + Container ////
+		
+		// Container
 		var t8 = [new Translation([9.0, 0.0, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0),
-			  new Scale([0.4, 0.4, 0.4])];
-		var gcontainer = new Graphic(this.gl, container, t8, shader);
+			  new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
+		var containerAndBlades = new Container3D(t8);
 
-		helix.add(gcontainer);
+		var container = new HelixContainer(50, 50);
+		var gcontainer = new Graphic(this.gl, container, [new Scale([0.4, 0.4, 0.4])], shader);
+
+		containerAndBlades.add(gcontainer);
+
+		// Add all the 'blades'
+		var blade = new Blade();
+
+		var blades = new Container3D([new Rotation([0.0, 1.0, 0.0], 0.0, 0.02)]);
+
+		var t;
+		var ang_rate = 2*Math.PI / 12;
+		for (var ang = 0.0; ang < 2*Math.PI; ang += ang_rate) {
+		
+			t = [new Rotation([0.0, 1.0, 0.0], ang, 0.0),
+			     new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0),
+			     new Scale([0.5, 1.0, 1.0]),
+			     new Translation([-4.0, 0.0, 0.0])];
+
+			var gb = new Graphic(this.gl, blade, t, shader);
+			blades.add(gb);
+		}
+
+		containerAndBlades.add(blades);
+
+		// Cylinder
+		var thc = [new Translation([0.0, -1.25, 0.0]),
+			  new Rotation([1.0, 0.0, 0.0], -Math.PI/2, 0.0),
+			  new Scale([0.6, 0.6, 2.0])];
+		var helixCylinder = new Graphic(this.gl, cylinder, thc, shader);
+
+		containerAndBlades.add(helixCylinder);
+
+		helix.add(containerAndBlades);
 
 		////// Front helixes //////
 
