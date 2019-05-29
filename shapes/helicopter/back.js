@@ -26,7 +26,7 @@ export class BackCenter extends SweepSurface {
 					[1.0, 0.0, 0.0],
 					[2.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.0, 1.0, 1.0]);
 
 		super(shape, path, rows, cols, [0.5, 0.5], c);
 

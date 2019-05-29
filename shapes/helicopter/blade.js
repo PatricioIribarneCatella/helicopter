@@ -16,7 +16,7 @@ export class Blade extends SweepSurface {
 					[2.0, 0.0, 0.0],
 					[4.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.5, 0.5, 0.5]);
 
 		super(shape, path, 2, 2, [0.5, 0.5], c);
 

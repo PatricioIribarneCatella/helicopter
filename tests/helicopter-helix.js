@@ -66,7 +66,7 @@ export class HelicopterHelixContainer extends App {
 					       simple_fragment_shader);
 
 		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 15.0]);
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 20.0]);
 		scene.addCamera(camera);
 
 		// World

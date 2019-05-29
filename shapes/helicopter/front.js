@@ -30,7 +30,7 @@ export class FrontCenter extends SweepSurface {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var c = new Color([]);
+		var c = new Color([0.0, 1.0, 1.0]);
 
 		super(shape, path, rows, cols, [0.6, 0.3], c);
 
