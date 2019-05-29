@@ -8,7 +8,7 @@ import {Rotation} from '../transformations/rotation.js';
 import {Identity} from '../transformations/identity.js';
 import {Translation} from '../transformations/translation.js';
 import {Scale} from '../transformations/scaling.js';
-import {HelicopterRotation} from '../transformations/helicopter/rotation.js';
+import {HelicopterRotation, HelixRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
 import {Graphic} from '../3d/graphic.js';
@@ -21,7 +21,7 @@ import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
 import {HexagonCenter, CurveCenter} from '../shapes/helicopter/center.js';
 import {Blade} from '../shapes/helicopter/blade.js';
-import {HelixContainer, HelixConnector} from '../shapes/helicopter/helix.js';
+import {HelixContainer, HelixConnector, Helix} from '../shapes/helicopter/helix.js';
 import {LandingGear, LandingGearBase} from '../shapes/helicopter/landing.js';
 import {Stairway} from '../shapes/helicopter/stairway.js';
 
@@ -111,64 +111,8 @@ export class HelicopterApp extends App {
 		//     Helixes    //
 		////////////////////
 
-		var helix = new Container3D([new Identity()]);
-		
-		var cylinder = new Cylinder(1, 1, 50, 50, new Color([1.0, 0.84, 0.0]));
-		var t6 = [new Translation([0.0, -1.25, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], -Math.PI/2, 0.0),
-			  new Scale([1.0, 1.0, 2.5])];
-		var gc = new Graphic(this.gl, cylinder, t6, shader);
-
-		helix.add(gc);
-
-		var connector = new HelixConnector(50, 50);
-		var t7 = [new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0),
-			  new Scale([1.0, 1.0/6.0, 3.0/16.0])];
-		var gconn = new Graphic(this.gl, connector, t7, shader);
-
-		helix.add(gconn);
-
-		//// Blades + Cylinder + Container ////
-		
-		// Container
-		var t8 = [new Translation([9.0, 0.0, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
-		var containerAndBlades = new Container3D(t8);
-
-		var container = new HelixContainer(50, 50);
-		var gcontainer = new Graphic(this.gl, container, [new Scale([0.4, 0.4, 0.4])], shader);
-
-		containerAndBlades.add(gcontainer);
-
-		// Add all the 'blades'
-		var blade = new Blade();
-
-		var blades = new Container3D([new Rotation([0.0, 1.0, 0.0], 0.0, 0.02)]);
-
-		var t;
-		var ang_rate = 2*Math.PI / 12;
-		for (var ang = 0.0; ang < 2*Math.PI; ang += ang_rate) {
-		
-			t = [new Rotation([0.0, 1.0, 0.0], ang, 0.0),
-			     new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0),
-			     new Scale([0.5, 1.0, 1.0]),
-			     new Translation([-4.0, 0.0, 0.0])];
-
-			var gb = new Graphic(this.gl, blade, t, shader);
-			blades.add(gb);
-		}
-
-		containerAndBlades.add(blades);
-
-		// Cylinder
-		var thc = [new Translation([0.0, -1.25, 0.0]),
-			  new Rotation([1.0, 0.0, 0.0], -Math.PI/2, 0.0),
-			  new Scale([0.6, 0.6, 2.0])];
-		var helixCylinder = new Graphic(this.gl, cylinder, thc, shader);
-
-		containerAndBlades.add(helixCylinder);
-
-		helix.add(containerAndBlades);
+		var leftHelix = new Helix("left", this.gl, shader);
+		var rightHelix = new Helix("right", this.gl, shader);
 
 		////// Front helixes //////
 
@@ -176,13 +120,13 @@ export class HelicopterApp extends App {
 			  new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
 		var rightFrontHelix = new Container3D(t9);
-		rightFrontHelix.add(helix);
+		rightFrontHelix.add(rightHelix);
 
 		var t10 = [new Translation([1.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftFrontHelix = new Container3D(t10);
-		leftFrontHelix.add(helix);
+		leftFrontHelix.add(leftHelix);
 
 		frontHelixAndLegs.add(rightFrontHelix);
 		frontHelixAndLegs.add(leftFrontHelix);
@@ -193,13 +137,13 @@ export class HelicopterApp extends App {
 			  new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
 		var rightBackHelix = new Container3D(t11);
-		rightBackHelix.add(helix);
+		rightBackHelix.add(rightHelix);
 
 		var t12 = [new Translation([2.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftBackHelix = new Container3D(t12);
-		leftBackHelix.add(helix);
+		leftBackHelix.add(leftHelix);
 
 		backHelixAndLegs.add(rightBackHelix);
 		backHelixAndLegs.add(leftBackHelix);

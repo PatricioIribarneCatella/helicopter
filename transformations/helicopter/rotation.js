@@ -42,3 +42,37 @@ export class HelicopterRotation {
 	}
 }
 
+//
+// Represents a Rotation
+// using the 'Pitch' angle
+//
+export class HelixRotation {
+
+	constructor(position) {
+		
+		this.position = position;
+		this.modelMatrix = mat4.create();
+	}
+
+	/* public methods */
+
+	update(controller) {
+		
+		var angle = controller.getPitch();
+
+		mat4.identity(this.modelMatrix);
+		
+		if (this.position === "left") {
+			angle = -angle;
+		}
+
+		mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    angle,
+			    [1.0, 0.0, 0.0]);
+	}
+
+	getMatrix() {
+		return this.modelMatrix;
+	}
+}
