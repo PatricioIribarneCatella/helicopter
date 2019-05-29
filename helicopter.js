@@ -8,7 +8,9 @@ import {Rotation} from '../transformations/rotation.js';
 import {Identity} from '../transformations/identity.js';
 import {Translation} from '../transformations/translation.js';
 import {Scale} from '../transformations/scaling.js';
-import {HelicopterRotation, HelixRotation} from '../transformations/helicopter/rotation.js';
+import {HelicopterRotation,
+	HelixRotation,
+	MotorRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
 import {Graphic} from '../3d/graphic.js';
@@ -118,13 +120,15 @@ export class HelicopterApp extends App {
 
 		var t9 = [new Translation([1.0, 2.0, -2.0]),
 			  new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
-			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
+			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
+			  new MotorRotation("right")];
 		var rightFrontHelix = new Container3D(t9);
 		rightFrontHelix.add(rightHelix);
 
 		var t10 = [new Translation([1.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
-			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
+			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
+			   new MotorRotation("left")];
 		var leftFrontHelix = new Container3D(t10);
 		leftFrontHelix.add(leftHelix);
 
@@ -135,13 +139,15 @@ export class HelicopterApp extends App {
 
 		var t11 = [new Translation([2.0, 2.0, -2.0]),
 			  new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
-			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
+			  new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
+			  new MotorRotation("right")];
 		var rightBackHelix = new Container3D(t11);
 		rightBackHelix.add(rightHelix);
 
 		var t12 = [new Translation([2.0, 2.0, 2.0]),
 			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
-			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
+			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
+			   new MotorRotation("left")];
 		var leftBackHelix = new Container3D(t12);
 		leftBackHelix.add(leftHelix);
 

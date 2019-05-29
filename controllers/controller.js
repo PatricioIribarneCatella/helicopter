@@ -5,6 +5,8 @@ function HeliController() {
     var yArrow = 0;
     var zArrow = 0;
 
+    var motorChanged = false;
+
     var altitudeInertia = 0.01;
     var speedInertia = 0.1;
     var angleInertia = 0.02;
@@ -60,6 +62,10 @@ function HeliController() {
             case "PageDown":
                 yArrow = -1;
                 break;
+
+	    case "h":
+	        motorChanged = !motorChanged;
+	        break;
 	}
     });
 
@@ -147,6 +153,10 @@ function HeliController() {
 
     this.getSpeed = function() {
         return speed;
+    }
+
+    this.getMotorPosChanged = function() {
+    	return motorChanged;
     }
 
     this.getInfo = function() {
