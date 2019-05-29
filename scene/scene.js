@@ -6,7 +6,6 @@ export class Scene {
 
 	constructor(gl) {
 		this.gl = gl;
-		this.elements = [];
 	}
 
 	/* public methods */
