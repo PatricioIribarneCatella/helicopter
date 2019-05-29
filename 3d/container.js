@@ -37,6 +37,7 @@ export class Container3D {
 	}
 
 	_animate() {
+
 		var i;
 		for (i = 0; i < this.ts.length; i++) {
 			this.ts[i].update();
