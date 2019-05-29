@@ -34,50 +34,62 @@ function HeliController() {
 
     $("body").keydown(function(e) {
         switch(e.key) {
+	    case "w":
             case "ArrowUp":
                 xArrow = 1;
                 break;
+	    case "s":
             case "ArrowDown":
                 xArrow = -1;
                 break;       
 
+	    case "a":
             case "ArrowLeft":
                 zArrow = 1;
-                break;                                
+                break;
+	    case "d":
             case "ArrowRight":
                 zArrow = -1;
                 break;
 
+	    case "q":
             case "PageUp":
                 yArrow = 1;
-                break;                
+                break;
+	    case "e":
             case "PageDown":
                 yArrow = -1;
-                break;                
-        }
+                break;
+	}
     });
 
     $("body").keyup(function(e) {
         switch(e.key) {
+	    case "w":
+	    case "s":
             case "ArrowUp":
             case "ArrowDown":
                 xArrow = 0;
-                break;                
+                break;
+	    case "a":
+	    case "d":
             case "ArrowLeft":
             case "ArrowRight":
                 zArrow = 0;
                 break;
-            case "PageUp":                         
+	    case "q":
+	    case "e":
+            case "PageUp":
             case "PageDown":
                 yArrow = 0;
-                break;                
+                break;
         }
     });
 
     this.update = function() {
 
         if (xArrow != 0) {
-            speedTarget += xArrow*deltaSpeed;            
+            speedTarget += xArrow*deltaSpeed;
         } else {
             speedTarget += (0-speedTarget)*deltaSpeed;
         }
@@ -87,11 +99,11 @@ function HeliController() {
         var speedSign = 1;
         
 	if (speed < 0)
-	    speedSign =- 1
+	    speedSign =- 1;
 
         if (zArrow != 0) {
-            angleTarget += zArrow*deltaAngle*speedSign;            
-        }        
+            angleTarget += zArrow*deltaAngle*speedSign;
+        }
 
         if (yArrow != 0) {
             altitudeTarget += yArrow*deltaAltitude;
@@ -109,7 +121,7 @@ function HeliController() {
         var directionZ = Math.sin(-angle)*speed;
 
         positionX += directionX;
-        positionZ += directionZ;        
+        positionZ += directionZ;
         positionY = altitude;
     }
 
@@ -143,19 +155,19 @@ function HeliController() {
 
         out += " speedTarget: "+speedTarget.toFixed(2)+"<br>";
         out += " altitudeTarget: "+altitudeTarget.toFixed(2)+"<br>";
-        out += " angleTarget: "+angleTarget.toFixed(2)+"<br><br>";        
+        out += " angleTarget: "+angleTarget.toFixed(2)+"<br><br>";
 
         out += " speed: "+speed.toFixed(2)+"<br>";
-        out += " altitude: "+altitude.toFixed(2)+"<br><br>";        
+        out += " altitude: "+altitude.toFixed(2)+"<br><br>";
 
 
         out += " xArrow: "+xArrow.toFixed(2)+"<br>";
         out += " yArrow: "+yArrow.toFixed(2)+"<br>";
-        out += " zArrow: "+zArrow.toFixed(2)+"<br><br>";                
+        out += " zArrow: "+zArrow.toFixed(2)+"<br><br>";
 
-        out += " yaw: "+angle.toFixed(2)+"<br>";    
-        out += " pitch: "+pitch.toFixed(2)+"<br>";    
-        out += " roll: "+roll.toFixed(2)+"<br>";    
+        out += " yaw: "+angle.toFixed(2)+"<br>";
+        out += " pitch: "+pitch.toFixed(2)+"<br>";
+        out += " roll: "+roll.toFixed(2)+"<br>";
 
         return out;
     }
