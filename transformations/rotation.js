@@ -27,7 +27,8 @@ export class Rotation {
 
 	/* public methods */
 
-	update() {
+	update(controller) {
+
 		this.angle += this.increment;
 
 		mat4.identity(this.modelMatrix);

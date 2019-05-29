@@ -11,7 +11,7 @@ export class Identity {
 	/* public methods */
 
 	// it does not need to be updated
-	update() {}
+	update(controller) {}
 
 	getMatrix() {
 		return this.modelMatrix;

@@ -110,11 +110,11 @@ export class Graphic {
 		mat4.multiply(this.matrix, matrix, this.matrix);
 	}
 
-	_animate() {
+	_animate(controller) {
 
 		var i;	
 		for (i = 0; i < this.ts.length; i++) {
-			this.ts[i].update();
+			this.ts[i].update(controller);
 		}
 	}
 
@@ -129,7 +129,7 @@ export class Graphic {
 
 	/* public methods */
 
-	draw(camera, matrix) {
+	draw(camera, controller, matrix) {
 		
 		camera.update(this.program);
 
@@ -139,7 +139,7 @@ export class Graphic {
 		
 		this._draw();
 
-		this._animate();
+		this._animate(controller);
 	}
 }
 

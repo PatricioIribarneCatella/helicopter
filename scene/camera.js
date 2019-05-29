@@ -25,7 +25,7 @@ export class Camera {
 		// initialize perspective matrix
 		mat4.perspective(this.projMatrix, 45,
 				 this.canvas.width / this.canvas.height,
-				 0.1, 100.0);
+				 0.1, 10000.0);
 
 		// initialize translation matrix
 		mat4.translate(this.viewMatrix, this.viewMatrix, this.position);

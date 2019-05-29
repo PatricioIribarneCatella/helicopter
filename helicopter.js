@@ -8,6 +8,8 @@ import {Rotation} from '../transformations/rotation.js';
 import {Identity} from '../transformations/identity.js';
 import {Translation} from '../transformations/translation.js';
 import {Scale} from '../transformations/scaling.js';
+import {HelicopterRotation} from '../transformations/helicopter/rotation.js';
+import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
 import {Graphic} from '../3d/graphic.js';
 import {Container3D} from '../3d/container.js';
@@ -39,16 +41,23 @@ export class HelicopterApp extends App {
 					       matrix_vertex_shader,
 					       simple_fragment_shader);
 
-		// Perspective camera moved 7 units from the origin
-		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 20.0]);
+		// Perspective camera
+		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
 		scene.addCamera(camera);
+
+		// Keyboard controller
+		var controller = new HeliController();
+		scene.addController(controller);
 
 		// World
 		var world = new World();
 
 		// Helicopter Tree
 
-		var t = [new Rotation([1.0, 1.0, 0.0], 0.0, 0.01)];
+		var t = [new HelicopterTranslation(),
+			 new HelicopterRotation(),
+			 new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0),
+			 new Translation([-4.0, 0.0, 0.0])];
 		var helicopter = new Container3D(t);
 
 		////////////////////
