@@ -135,7 +135,6 @@ export class LegRotation {
 
 	constructor(angle) {
 		
-		//this.position = position;
 		this.angle = angle;
 		this.extended = false;
 		this.prevState = false;
@@ -173,5 +172,62 @@ export class LegRotation {
 	getMatrix() {
 		return this.modelMatrix;
 	}
-
 }
+
+//
+// Represents a Rotation
+// that opens the stairway
+// (z axis)
+export class StairwayRotation {
+
+	constructor(angle) {
+		
+		this.angle = angle;
+		this.opened = false;
+		this.prevState = false;
+		this.modelMatrix = mat4.create();
+
+		this._init();
+	}
+
+	_init() {
+	
+		mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    this.angle,
+			    [0.0, 0.0, 1.0]);
+	}
+
+	/* public methods */
+
+	update(controller) {
+		
+		var state = controller.getDoorChanged();
+	
+		if (state === this.prevState)
+			return;
+
+		mat4.identity(this.modelMatrix);
+		
+		var angle;
+		this.prevState = state;
+
+		if (this.opened) {
+			angle = this.angle;
+			this.opened = false;
+		} else {
+			angle = this.angle - Math.PI/2;
+			this.opened = true;
+		}
+
+		mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    angle,
+			    [0.0, 0.0, 1.0]);
+	}
+
+	getMatrix() {
+		return this.modelMatrix;
+	}
+}
+

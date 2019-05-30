@@ -7,6 +7,7 @@ function HeliController() {
 
     var motorChanged = false;
     var legChanged = false;
+    var doorChanged = false;
 
     var altitudeInertia = 0.01;
     var speedInertia = 0.1;
@@ -69,6 +70,9 @@ function HeliController() {
 	        break;
 	    case "t":
 		legChanged = !legChanged;
+		break;
+	    case "p":
+		doorChanged = !doorChanged;
 		break;
 	}
     });
@@ -165,6 +169,10 @@ function HeliController() {
    
     this.getLegPosChanged = function() {
     	return legChanged;
+    }
+
+    this.getDoorChanged = function() {
+	return doorChanged;
     }
 
     this.getInfo = function() {

@@ -9,7 +9,8 @@ import {Identity} from '../transformations/identity.js';
 import {Translation} from '../transformations/translation.js';
 import {Scale} from '../transformations/scaling.js';
 import {HelicopterRotation,
-	MotorRotation} from '../transformations/helicopter/rotation.js';
+	MotorRotation,
+	StairwayRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
 import {Graphic} from '../3d/graphic.js';
@@ -195,11 +196,9 @@ export class HelicopterApp extends App {
 		
 		var door = new Stairway();
 
-		//new StairwayRotation(-Math.PI/4)
-
 		var tdoor = [new Translation([3.0, -2.0, 1.0]),
 			     new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
-			     new Rotation([0.0, 0.0, 1.0], -Math.PI/4, 0.0)];
+			     new StairwayRotation(-Math.PI/4)];
 		var cdoor = new Container3D(tdoor);
 
 		var t17 = [new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
@@ -208,10 +207,8 @@ export class HelicopterApp extends App {
 
 		cdoor.add(gstair1);
 
-		//new StairwayRotation(Math.PI/2)
-
 		var t18 = [new Translation([0.0, 2*Math.sqrt(2), 0.0]),
-			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
+			   new StairwayRotation(Math.PI/2),
 			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
 			   new Translation([0.0, 2.0, 0.0])];
 		var gstair2 = new Graphic(this.gl, door, t18, shader);
