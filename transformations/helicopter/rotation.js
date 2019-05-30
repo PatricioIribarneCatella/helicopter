@@ -126,3 +126,52 @@ export class MotorRotation {
 	}
 
 }
+
+//
+// Represents a Rotation
+// applied to the landing gear legs
+//
+export class LegRotation {
+
+	constructor(angle) {
+		
+		//this.position = position;
+		this.angle = angle;
+		this.extended = false;
+		this.prevState = false;
+		this.modelMatrix = mat4.create();
+	}
+
+	/* public methods */
+
+	update(controller) {
+		
+		var state = controller.getLegPosChanged();
+	
+		if (state === this.prevState)
+			return;
+
+		mat4.identity(this.modelMatrix);
+		
+		var angle;
+		this.prevState = state;
+
+		if (this.extended) {
+			angle = 0.0;
+			this.extended = false;
+		} else {
+			angle = this.angle;
+			this.extended = true;
+		}
+
+		mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    angle,
+			    [1.0, 0.0, 0.0]);
+	}
+
+	getMatrix() {
+		return this.modelMatrix;
+	}
+
+}

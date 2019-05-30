@@ -9,7 +9,6 @@ import {Identity} from '../transformations/identity.js';
 import {Translation} from '../transformations/translation.js';
 import {Scale} from '../transformations/scaling.js';
 import {HelicopterRotation,
-	HelixRotation,
 	MotorRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
@@ -22,9 +21,8 @@ import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
 import {HexagonCenter, CurveCenter} from '../shapes/helicopter/center.js';
-import {Blade} from '../shapes/helicopter/blade.js';
-import {HelixContainer, HelixConnector, Helix} from '../shapes/helicopter/helix.js';
-import {LandingGear, LandingGearBase} from '../shapes/helicopter/landing.js';
+import {Helix} from '../shapes/helicopter/helix.js';
+import {LandingLeg} from '../shapes/helicopter/landing.js';
 import {Stairway} from '../shapes/helicopter/stairway.js';
 
 export class HelicopterApp extends App {
@@ -158,49 +156,20 @@ export class HelicopterApp extends App {
 		//   Landing legs   //
 		//////////////////////
 
-		var leg = new Container3D([new Identity()]);
-
-		var gear = new LandingGear();
-
-		var tgUp = [new Translation([-0.25, -1.0, 0.0]),
-			    new Scale([0.25, 0.5, 0.25])];
-		var up = new Graphic(this.gl, gear, tgUp, shader);
-
-		leg.add(up);
-
-		var tgDown = [new Translation([0.0, -2.0, 0.0]),
-			      new Scale([0.25, 0.5, 0.25])];
-		var down = new Graphic(this.gl, gear, tgDown, shader);
-
-		leg.add(down);
-
-		var union = new Cylinder(0.125, 0.6, 20, 20, new Color([0.0, 0.0, 1.0]));
-		var tuni = [new Translation([0.0, -1.5, 0.0]),
-			    new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
-			    new Translation([0.0, 0.0, -0.30])];
-		var gunion = new Graphic(this.gl, union, tuni, shader);
-
-		leg.add(gunion);
-
-		var base = new LandingGearBase();
-		var tbase = [new Translation([0.0, -3.8, 0.0]),
-		     	     new Scale([2.0/5.0, 1.0/4.0, 2.0/5.0]),
-			     new Rotation([0.0, 1.0, 0.0], Math.PI/4, 0.0)];
-		var gbase = new Graphic(this.gl, base, tbase, shader);
-
-		leg.add(gbase);
-
+		var leftLeg = new LandingLeg("left", this.gl, shader);
+		var rightLeg = new LandingLeg("right", this.gl, shader);
+		
 		////// Front legs //////
 
 		var t13 = [new Translation([1.0, -2.8, -2.0]),
 			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
 		var rightFrontLeg = new Container3D(t13);
-		rightFrontLeg.add(leg);
+		rightFrontLeg.add(rightLeg);
 
 		var t14 = [new Translation([1.0, -2.8, 2.0]),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftFrontLeg = new Container3D(t14);
-		leftFrontLeg.add(leg);
+		leftFrontLeg.add(leftLeg);
 
 		frontHelixAndLegs.add(rightFrontLeg);
 		frontHelixAndLegs.add(leftFrontLeg);
@@ -210,12 +179,12 @@ export class HelicopterApp extends App {
 		var t15 = [new Translation([2.0, -2.8, -2.0]),
 			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0)];
 		var rightBackLeg = new Container3D(t15);
-		rightBackLeg.add(leg);
+		rightBackLeg.add(rightLeg);
 
 		var t16 = [new Translation([2.0, -2.8, 2.0]),
 			   new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0)];
 		var leftBackLeg = new Container3D(t16);
-		leftBackLeg.add(leg);
+		leftBackLeg.add(leftLeg);
 
 		backHelixAndLegs.add(rightBackLeg);
 		backHelixAndLegs.add(leftBackLeg);

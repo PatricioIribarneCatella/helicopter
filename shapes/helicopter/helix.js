@@ -2,8 +2,8 @@ import {BSplineCuad} from '../../curves/bspline.js';
 import {BezierCuad} from '../../curves/bezier.js';
 import {SweepSurface} from '../../surfaces/sweeping.js';
 import {RevolutionSurface} from '../../surfaces/revolution.js';
-import {Color} from '../../3d/color.js';
 
+import {Color} from '../../3d/color.js';
 import {Container3D} from '../../3d/container.js';
 import {Graphic} from '../../3d/graphic.js';
 
