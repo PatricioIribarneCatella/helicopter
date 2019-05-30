@@ -47,24 +47,27 @@ export class Camera {
 		var p = controller.getPosition();
 		var c = controller.getCamera();
 
-		var center = p;
+		var center = [p.x, p.y, p.z];
 		var eye;
-/*
-		if (c === "global") {
-			eye = [0.0, 0.0, 25.0];
-		} else if (c === "lateral") {
-			eye = [p.x, p.y, p.z + 30.0];
-		} else if (c === "up") {
-			eye = [p.x, p.y + 30.0, p.z];
-		} else if (c === "back") {
-			eye = [p.x - 30.0, p.y, p.z];
-		} else {
-			eye = [0.0, 0.0, 25.0];
+
+		switch (c) {
+		
+			case "global":
+				eye = [0.0, 0.0, 25.0];
+				break;
+			case "lateral":
+				eye = [p.x, p.y, p.z + 30.0];
+				break;
+			case "up":
+				eye = [p.x, p.y + 30.0, p.z];
+				break;
+			case "back":
+				eye = [p.x - 30.0, p.y, p.z];
+				break;
 		}
 
-		mat4.lookAt(this.matrix, eye, center, [0.0, 1.0, 0.0]);
+		mat4.lookAt(this.viewMatrix, eye, center, [0.0, 1.0, 0.0]);
 
-		mat4.multiply(this.matrix, this.projMatrix, this.matrix);
-*/
+		mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
 	}
 }

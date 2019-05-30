@@ -38,7 +38,7 @@ function HeliController() {
     var speedTarget = 0;
 
     $("body").keydown(function(e) {
-        switch(e.key) {
+        switch (e.key) {
 	    case "w":
             case "ArrowUp":
                 xArrow = 1;
@@ -92,7 +92,7 @@ function HeliController() {
     });
 
     $("body").keyup(function(e) {
-        switch(e.key) {
+        switch (e.key) {
 	    case "w":
 	    case "s":
             case "ArrowUp":
@@ -162,14 +162,16 @@ function HeliController() {
     }
 
     this.getCamera = function () {
-	if (camera === 1) {
-	    return "global";
-	} else if (camera === 2) {
-	    return "lateral";
-	} else if (camera === 3) {
-	    return "up";
-	} else if (camera === 4) {
-	    return "back";
+	
+	switch (camera) {
+	    case 1:
+		return "global";
+	    case 2:
+		return "lateral";
+	    case 3:
+		return "up";
+	    case 4:
+		return "back";
 	}
     }
 
