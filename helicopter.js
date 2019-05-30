@@ -192,23 +192,33 @@ export class HelicopterApp extends App {
 		///////////////////////
 		//  Door & Stairway  //
 		///////////////////////
-
+		
 		var door = new Stairway();
 
-		var t17 = [new Translation([3.0, 1.25, 2.25]),
-			   new Rotation([1.0, 0.0, 0.0], -Math.PI/4, 0.0),
-			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
-			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5])];
+		//new StairwayRotation(-Math.PI/4)
+
+		var tdoor = [new Translation([3.0, -2.0, 1.0]),
+			     new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
+			     new Rotation([0.0, 0.0, 1.0], -Math.PI/4, 0.0)];
+		var cdoor = new Container3D(tdoor);
+
+		var t17 = [new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
+			   new Translation([0.0, 2.0, 0.0])];
 		var gstair1 = new Graphic(this.gl, door, t17, shader);
 
-		var t18 = [new Translation([3.0, -1.25, 2.25]),
-			   new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0),
-			   new Rotation([0.0, 1.0, 0.0], Math.PI/2, 0.0),
-			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5])];
+		cdoor.add(gstair1);
+
+		//new StairwayRotation(Math.PI/2)
+
+		var t18 = [new Translation([0.0, 2*Math.sqrt(2), 0.0]),
+			   new Rotation([0.0, 0.0, 1.0], Math.PI/2, 0.0),
+			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
+			   new Translation([0.0, 2.0, 0.0])];
 		var gstair2 = new Graphic(this.gl, door, t18, shader);
 
-		hexaCenterAndDoor.add(gstair1);
-		hexaCenterAndDoor.add(gstair2);
+		cdoor.add(gstair2);
+
+		hexaCenterAndDoor.add(cdoor);
 
 		world.add(helicopter);
 
