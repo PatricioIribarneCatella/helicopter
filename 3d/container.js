@@ -36,11 +36,16 @@ export class Container3D {
 		mat4.multiply(this.matrix, matrix, this.matrix);
 	}
 
-	_animate() {
+	_animate(controller) {
+
 		var i;
 		for (i = 0; i < this.ts.length; i++) {
-			this.ts[i].update();
+			this.ts[i].update(controller);
 		}
+	}
+
+	_isVisible(controller) {
+		return true;
 	}
 
 	/* public methods */
@@ -49,16 +54,19 @@ export class Container3D {
 		this.childrens.push(e);
 	}
 
-	draw(camera, matrix) {
+	draw(camera, controller, matrix) {
 
 		this._updateTransformations(matrix);
 
-		var i;
-		for (i = 0; i < this.childrens.length; i++) {
-			this.childrens[i].draw(camera, this.matrix);
-		}
+		if (this._isVisible(controller)) {
 
-		this._animate();
+			var i;
+			for (i = 0; i < this.childrens.length; i++) {
+				this.childrens[i].draw(camera, controller, this.matrix);
+			}
+
+			this._animate(controller);
+		}
 	}
 }
 

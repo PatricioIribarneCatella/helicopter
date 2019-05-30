@@ -6,7 +6,6 @@ export class Scene {
 
 	constructor(gl) {
 		this.gl = gl;
-		this.elements = [];
 	}
 
 	/* public methods */
@@ -19,12 +18,20 @@ export class Scene {
 		this.camera = camera;
 	}
 
+	addController(controller) {
+		this.controller = controller;
+	}
+
 	draw() {
 		window.requestAnimationFrame(() => this.draw());
 		
+		this.controller.update();
+
+		this.camera.update(this.controller);
+
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-		this.world.draw(this.camera);
+		this.world.draw(this.camera, this.controller);
 	}
 }
 

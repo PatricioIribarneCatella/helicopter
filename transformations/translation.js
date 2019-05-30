@@ -26,7 +26,7 @@ export class Translation {
 	
 	// translation does not need to be updated
 	// in every animation frame as a rotation does
-	update() {}
+	update(controller) {}
 
 	getMatrix() {
 		return this.modelMatrix;

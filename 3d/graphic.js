@@ -69,17 +69,6 @@ export class Graphic {
 		this._initBuffers();
 	}
 
-	_updateTransformations(matrix) {
-
-		var i;
-		mat4.identity(this.matrix);
-
-		for (i = 0; i < this.ts.length; i++) {
-			mat4.multiply(this.matrix, this.matrix, this.ts[i].getMatrix());
-		}
-
-		mat4.multiply(this.matrix, matrix, this.matrix);
-	}
 	
 	_bindTransformations() {
 
@@ -109,12 +98,23 @@ export class Graphic {
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
 	}
 
-	_animate() {
-		
+	_updateTransformations(matrix) {
+
 		var i;
-		
+		mat4.identity(this.matrix);
+
 		for (i = 0; i < this.ts.length; i++) {
-			this.ts[i].update();
+			mat4.multiply(this.matrix, this.matrix, this.ts[i].getMatrix());
+		}
+
+		mat4.multiply(this.matrix, matrix, this.matrix);
+	}
+
+	_animate(controller) {
+
+		var i;	
+		for (i = 0; i < this.ts.length; i++) {
+			this.ts[i].update(controller);
 		}
 	}
 
@@ -129,9 +129,9 @@ export class Graphic {
 
 	/* public methods */
 
-	draw(camera, matrix) {
+	draw(camera, controller, matrix) {
 		
-		camera.update(this.program);
+		camera.bind(this.program);
 
 		this._updateTransformations(matrix);
 
@@ -139,7 +139,7 @@ export class Graphic {
 		
 		this._draw();
 
-		this._animate();
+		this._animate(controller);
 	}
 }
 
