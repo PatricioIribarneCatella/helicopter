@@ -48,10 +48,10 @@ export class Camera {
 		var c = controller.getCamera();
 
 		var center = [p.x, p.y, p.z];
+		var up = [0.0, 1.0, 0.0];
 		var eye;
 
 		switch (c) {
-		
 			case "global":
 				eye = [0.0, 0.0, 25.0];
 				break;
@@ -60,13 +60,14 @@ export class Camera {
 				break;
 			case "up":
 				eye = [p.x, p.y + 30.0, p.z];
+				up = [1.0, 0.0, 0.0];
 				break;
 			case "back":
 				eye = [p.x - 30.0, p.y, p.z];
 				break;
 		}
 
-		mat4.lookAt(this.viewMatrix, eye, center, [0.0, 1.0, 0.0]);
+		mat4.lookAt(this.viewMatrix, eye, center, up);
 
 		mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
 	}
