@@ -8,6 +8,7 @@ function HeliController() {
     var motorChanged = false;
     var legChanged = false;
     var doorChanged = false;
+    var camera = 1;
 
     var altitudeInertia = 0.01;
     var speedInertia = 0.1;
@@ -73,6 +74,19 @@ function HeliController() {
 		break;
 	    case "p":
 		doorChanged = !doorChanged;
+		break;
+	    
+	    case "1":
+		camera = 1;
+		break;
+	    case "2":
+		camera = 2;
+		break;
+	    case "3":
+		camera = 3;
+		break;
+	    case "4":
+		camera = 4;
 		break;
 	}
     });
@@ -145,6 +159,18 @@ function HeliController() {
             y:positionY,
             z:positionZ,
         };
+    }
+
+    this.getCamera = function () {
+	if (camera === 1) {
+	    return "global";
+	} else if (camera === 2) {
+	    return "lateral";
+	} else if (camera === 3) {
+	    return "up";
+	} else if (camera === 4) {
+	    return "back";
+	}
     }
 
     this.getYaw = function() {

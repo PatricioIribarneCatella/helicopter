@@ -131,7 +131,7 @@ export class Graphic {
 
 	draw(camera, controller, matrix) {
 		
-		camera.update(this.program);
+		camera.bind(this.program);
 
 		this._updateTransformations(matrix);
 

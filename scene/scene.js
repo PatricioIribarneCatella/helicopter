@@ -27,6 +27,8 @@ export class Scene {
 		
 		this.controller.update();
 
+		this.camera.update(this.controller);
+
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
 		this.world.draw(this.camera, this.controller);
