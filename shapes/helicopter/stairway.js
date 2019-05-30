@@ -1,6 +1,13 @@
 import {BezierCuad} from '../../curves/bezier.js';
 import {SweepSurface} from '../../surfaces/sweeping.js';
+
 import {Color} from '../../3d/color.js';
+import {Container3D} from '../../3d/container.js';
+import {Graphic} from '../../3d/graphic.js';
+
+import {Rotation} from '../../transformations/rotation.js';
+import {Translation} from '../../transformations/translation.js';
+import {Scale} from '../../transformations/scaling.js';
 
 export class Stairway extends SweepSurface {
 
@@ -121,5 +128,56 @@ export class StairwayStep extends SweepSurface {
 		this.position_buffer = pos_buffer;
 
 		this.rows += 2;
+	}
+}
+
+export class Steps extends Container3D {
+
+	constructor(gl, shader) {
+
+		super([new Translation([2.0, -2.0, 1.0]),
+		       new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0)]);
+
+		this.gl = gl;
+		this.shader = shader;
+		this.visibility = false;
+		this.prevState = false;
+
+		this._initialize();
+	}
+
+	/* private methods */
+
+	_initialize() {
+	
+		var step = new StairwayStep();
+		var t;
+
+		for (var i = 0; i < 6; i++) {
+			
+			t = [new Translation([0.0, 0.0, 2*(Math.sqrt(2)/3.0)*i]),
+			     new Scale([1.0, 0.5, Math.sqrt(2)/3.0])];
+			var gstep = new Graphic(this.gl, step, t, this.shader);
+
+			this.add(gstep);
+		}
+	}
+
+	_isVisible(controller) {
+
+		var state = controller.getDoorChanged();
+
+		if (state === this.prevState)
+			return this.visibility;
+
+		this.prevState = state;
+
+		if (this.visibility) {
+			this.visibility = false;
+		} else {
+			this.visibility = true;
+		}
+
+		return this.visibility;
 	}
 }

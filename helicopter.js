@@ -24,7 +24,7 @@ import {FrontCenter} from '../shapes/helicopter/front.js';
 import {HexagonCenter, CurveCenter} from '../shapes/helicopter/center.js';
 import {Helix} from '../shapes/helicopter/helix.js';
 import {LandingLeg} from '../shapes/helicopter/landing.js';
-import {Stairway, StairwayStep} from '../shapes/helicopter/stairway.js';
+import {Stairway, Steps} from '../shapes/helicopter/stairway.js';
 
 export class HelicopterApp extends App {
 
@@ -216,20 +216,8 @@ export class HelicopterApp extends App {
 		cdoor.add(gstair2);
 
 		hexaCenterAndDoor.add(cdoor);
-		
-		var step = new StairwayStep();
-	
-		var t19;
-		var steps = new Container3D([new Translation([2.0, -2.0, 1.0]),
-					     new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0)]);
 
-		for (var i = 0; i < 6; i++) {
-			t19 = [new Translation([0.0, 0.0, 2*(Math.sqrt(2)/3.0)*i]),
-			       new Scale([1.0, 0.5, Math.sqrt(2)/3.0])];
-			var gstep = new Graphic(this.gl, step, t19, shader);
-
-			steps.add(gstep);
-		}
+		var steps = new Steps(this.gl, shader);
 
 		hexaCenterAndDoor.add(steps);
 

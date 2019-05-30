@@ -44,6 +44,10 @@ export class Container3D {
 		}
 	}
 
+	_isVisible(controller) {
+		return true;
+	}
+
 	/* public methods */
 
 	add(e) {
@@ -54,12 +58,15 @@ export class Container3D {
 
 		this._updateTransformations(matrix);
 
-		var i;
-		for (i = 0; i < this.childrens.length; i++) {
-			this.childrens[i].draw(camera, controller, this.matrix);
-		}
+		if (this._isVisible(controller)) {
 
-		this._animate(controller);
+			var i;
+			for (i = 0; i < this.childrens.length; i++) {
+				this.childrens[i].draw(camera, controller, this.matrix);
+			}
+
+			this._animate(controller);
+		}
 	}
 }
 
