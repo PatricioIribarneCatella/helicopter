@@ -207,21 +207,21 @@ function HeliController() {
 
         var out = "";
 
-        out += " speedTarget: "+speedTarget.toFixed(2)+"<br>";
-        out += " altitudeTarget: "+altitudeTarget.toFixed(2)+"<br>";
-        out += " angleTarget: "+angleTarget.toFixed(2)+"<br><br>";
+	out += " <b>Target:</b><br>";
+        out += " <t>speed: " + speedTarget.toFixed(2) + "<br>";
+        out += " <t>altitude: " + altitudeTarget.toFixed(2) + "<br>";
+        out += " <t>angle: " + angleTarget.toFixed(2) + "<br><br>";
 
-        out += " speed: "+speed.toFixed(2)+"<br>";
-        out += " altitude: "+altitude.toFixed(2)+"<br><br>";
+	out += " <b>Current:</b><br>";
+        out += " <t>speed: " + speed.toFixed(2) + "<br>";
+        out += " <t>altitude: " + altitude.toFixed(2) + "<br><br>";
 
+	out += " <b>Camera:</b> " + this.getCamera() + "<br><br>";
 
-        out += " xArrow: "+xArrow.toFixed(2)+"<br>";
-        out += " yArrow: "+yArrow.toFixed(2)+"<br>";
-        out += " zArrow: "+zArrow.toFixed(2)+"<br><br>";
-
-        out += " yaw: "+angle.toFixed(2)+"<br>";
-        out += " pitch: "+pitch.toFixed(2)+"<br>";
-        out += " roll: "+roll.toFixed(2)+"<br>";
+	out += " <b>Angles:</b><br>"
+        out += " <t>yaw: " + angle.toFixed(2) + "<br>";
+        out += " <t>pitch: " + pitch.toFixed(2) + "<br>";
+        out += " <t>roll: " + roll.toFixed(2) + "<br>";
 
         return out;
     }

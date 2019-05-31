@@ -10,13 +10,27 @@
 			canvas{ background-color: white; }
 			textarea{ background-color: black; foreground-color: white;}
 			h1{color: white;}
-		</style>
 
+			#display{
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				border: 1px solid white;
+				padding: 10px;
+				color: white;
+				background-color: rgba(0,0,0,0.3);
+				min-height: 300px;
+				min-width: 400px;
+				text-align: left;
+			}
+		</style>
 	</head>
 
 	<body>
+		<div id="display"></div>
+
 		<center>
-			<canvas id="canvas" width="1300" height="800"></canvas>
+			<canvas id="canvas"></canvas>
 		</center>
 
 		<!-- shaders !-->
