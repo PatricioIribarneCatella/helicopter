@@ -3,30 +3,31 @@
 <html lang="en">
 
 	<head>
-		<title>WebGL</title>
+		<title>Helicopter</title>
 
 		<style>
-			body{ background-color: grey; }
+			body{ background-color: #222222; }
 			canvas{ background-color: white; }
 			textarea{ background-color: black; foreground-color: white;}
+			h1{color: white;}
 		</style>
 
 	</head>
 
 	<body>
 		<center>
-			<h1>Helicopter</h1>
-
-			<canvas id="canvas" width="900" height="500"></canvas>
+			<canvas id="canvas" width="1300" height="800"></canvas>
 		</center>
 
 		<!-- shaders !-->
 		
 		<script src="shaders/simple-vertex.js"></script>
 		
-		<script src="shaders/simple-fragment.js"></script>
-		
 		<script src="shaders/matrix-vertex.js"></script>
+
+		<script src="shaders/bitmap-vertex.js"></script>
+		
+		<script src="shaders/simple-fragment.js"></script>
 		
 		<!-- src !-->
 

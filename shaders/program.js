@@ -34,12 +34,14 @@ export class ShaderProgram {
 		if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
 			alert("Unable to initialize the shader program.");
 		}
-
-		// use the program
-		this.gl.useProgram(this.program);
 	}
 
 	/* public methods  */
+
+	use() {
+		// use the program
+		this.gl.useProgram(this.program);
+	}
 
 	findAttribute(id) {
 		return this.gl.getAttribLocation(this.program, id);
