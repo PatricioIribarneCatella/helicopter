@@ -11,6 +11,7 @@ export class Surface {
 		
 		this.position_buffer = [];
 		this.color_buffer = [];
+		this.coord_buffer = [];
 	}
 
 	/* private methods */
@@ -39,6 +40,10 @@ export class Surface {
 
 	getColor() {
 		return this.color_buffer;
+	}
+
+	getCoord() {
+		return this.coord_buffer;
 	}
 
 	getCols() {

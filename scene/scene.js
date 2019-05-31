@@ -32,6 +32,8 @@ export class Scene {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
 		this.world.draw(this.camera, this.controller);
+
+		$("#display").html(this.controller.getInfo());
 	}
 }
 

@@ -10,7 +10,7 @@ export class Grid extends Surface {
 	constructor(rows, cols, color) {
 		
 		super(cols, rows, color);
-
+		
 		this._init();
 	}
 
@@ -21,6 +21,7 @@ export class Grid extends Surface {
 		for (var i = 0.0; i < this.rows; i++) {
 			for (var j = 0.0; j < this.cols; j++) {
 			
+				// position buffer
 				var x = j - (this.cols - 1.0) / 2.0;
 				var y = i - (this.rows - 1.0) / 2.0;
 				var z = 0;
@@ -28,6 +29,13 @@ export class Grid extends Surface {
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
+
+				// uv texture buffer
+				var u = i * 1/(this.rows - 1);
+				var v = j * 1/(this.cols - 1);
+
+				this.coord_buffer.push(u);
+				this.coord_buffer.push(v);
 			};
 		};
 	}

@@ -11,11 +11,34 @@ export class Graphic {
 		this.model = element;
 		this.ts = transformations;
 		this.program = shader;
+		this.texture = null;
 
 		this._init();
 	}
 
 	/* private methods */
+
+	_handleLoadedTexture() {
+		
+		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+		this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
+				   this.gl.RGBA, this.gl.RGBA,
+				   this.gl.UNSIGNED_BYTE, this.texture.image);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_S,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_T,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MIN_FILTER,
+				      this.gl.NEAREST);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MAG_FILTER,
+				      this.gl.NEAREST);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+	}
 
 	_createIndexes() {
 		
@@ -54,6 +77,12 @@ export class Graphic {
 				   new Float32Array(this.model.getColor()),
 				   this.gl.STATIC_DRAW);
 
+		this.webgl_coord_buffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_coord_buffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER,
+				   new Float32Array(this.model.getCoord()),
+				   this.gl.STATIC_DRAW);
+
 		this.webgl_index_buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
 		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,
@@ -69,6 +98,17 @@ export class Graphic {
 		this._initBuffers();
 	}
 
+	_bindTexture() {
+
+		if (this.texture) {
+			
+			var uniformSampler = this.program.findUniform("uSampler");
+
+			this.gl.activeTexture(this.gl.TEXTURE0);
+			this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+			this.gl.uniform1i(uniformSampler, 0);
+		}
+	}
 	
 	_bindTransformations() {
 
@@ -92,6 +132,17 @@ export class Graphic {
 		this.gl.enableVertexAttribArray(vertexColorAttribute);
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
 		this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
+
+		if (this.texture) {
+		
+			// connect texture data in local buffers
+			// with shader vertex texture buffer
+			var vertexTextureAttribute = this.program.findAttribute("aTextureCoord");
+
+			this.gl.enableVertexAttribArray(vertexTextureAttribute);
+			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_coord_buffer);
+			this.gl.vertexAttribPointer(vertexTextureAttribute, 2, this.gl.FLOAT, false, 0, 0);
+		}
 
 		// connect indexes data in local buffers
 		// with GPU index buffer
@@ -131,15 +182,30 @@ export class Graphic {
 
 	draw(camera, controller, matrix) {
 		
+		this.program.use();
+		
 		camera.bind(this.program);
 
 		this._updateTransformations(matrix);
 
 		this._bindTransformations();
+
+		this._bindTexture();
 		
 		this._draw();
 
 		this._animate(controller);
+	}
+
+	loadTexture(path) {
+	
+		this.texture = this.gl.createTexture();
+
+		this.texture.image = new Image();
+
+		this.texture.image.onload = () => this._handleLoadedTexture();
+
+		this.texture.image.src = path;
 	}
 }
 

@@ -18,6 +18,7 @@ import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
 
+import {Grid} from "../shapes/grid.js";
 import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
@@ -42,6 +43,10 @@ export class HelicopterApp extends App {
 					       matrix_vertex_shader,
 					       simple_fragment_shader);
 
+		var landShader = new ShaderProgram(this.gl,
+						   bitmap_vertex_shader,
+						   simple_fragment_shader);
+
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
 		scene.addCamera(camera);
@@ -52,6 +57,16 @@ export class HelicopterApp extends App {
 
 		// World
 		var world = new World();
+
+		// Lanscape
+
+		var land = new Grid(200, 200, new Color([0.4, 0.4, 0.4]));
+		var tland = [new Translation([0.0, -2.0, 0.0]),
+			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
+		var gland = new Graphic(this.gl, land, tland, landShader);
+		gland.loadTexture("img/land-bitmap.jpg");
+
+		world.add(gland);
 
 		// Helicopter Tree
 
