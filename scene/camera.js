@@ -45,26 +45,30 @@ export class Camera {
 	update(controller) {
 	
 		var p = controller.getPosition();
+		var angle = controller.getYaw();
+
 		var c = controller.getCamera();
 
 		var center = [p.x, p.y, p.z];
 		var up = [0.0, 1.0, 0.0];
-		var eye;
+		var eye, aux;
 
 		switch (c) {
 			case "global":
-				eye = [0.0, 10.0, 25.0];
 				center = [0.0, 0.0, 0.0];
+				eye = [0.0, 10.0, 25.0];
 				break;
 			case "lateral":
-				eye = [p.x, p.y, p.z + 30.0];
+				aux = [-30.0*Math.sin(angle), 0.0, -30.0*Math.cos(angle)];
+				eye = [p.x + aux[0], p.y, p.z + aux[2]];
 				break;
 			case "up":
-				eye = [p.x, p.y + 30.0, p.z];
 				up = [1.0, 0.0, 0.0];
+				eye = [p.x, p.y + 30.0, p.z];
 				break;
 			case "back":
-				eye = [p.x - 30.0, p.y, p.z];
+				aux = [-30.0*Math.cos(angle), 0.0, 30.0*Math.sin(angle)];
+				eye = [p.x + aux[0], p.y, p.z + aux[2]];
 				break;
 		}
 

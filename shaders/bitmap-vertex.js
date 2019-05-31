@@ -11,10 +11,15 @@ var bitmap_vertex_shader = 'attribute vec3 aVertexPosition; 								\
 			    varying highp vec4 vColor; 									\
 															\
 			    void main(void) { 										\
-				vec4 position = pv * model * vec4(aVertexPosition, 1.0); 				\
 				vec4 textureColor = texture2D(uSampler, vec2(aTextureCoord.s, aTextureCoord.t)); 	\
-				position.y += 5.0 * max(max(textureColor.x, textureColor.y), textureColor.z); 		\
+				float scale = max(max(textureColor.x, textureColor.y), textureColor.z); 		\
+				vec4 position = pv * model * vec4(aVertexPosition, 1.0); 				\
+				position.y += 10.0 * scale; 								\
 				gl_Position = position; 								\
-				vColor = vec4(aVertexColor, 1.0); 							\
+				vec3 color = aVertexColor; 								\
+				color.x = color.x * scale; 								\
+				color.y = color.y * scale; 								\
+				color.z = color.z * scale; 								\
+				vColor = vec4(color, 1.0); 								\
 			    }';
 

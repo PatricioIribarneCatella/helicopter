@@ -61,7 +61,7 @@ export class HelicopterApp extends App {
 		// Lanscape
 
 		var land = new Grid(200, 200, new Color([0.4, 0.4, 0.4]));
-		var tland = [new Translation([0.0, -2.0, 0.0]),
+		var tland = [new Translation([0.0, -5.0, 0.0]),
 			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
 		var gland = new Graphic(this.gl, land, tland, landShader);
 		gland.loadTexture("img/land-bitmap.jpg");
