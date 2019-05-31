@@ -45,6 +45,8 @@ export class Camera {
 	update(controller) {
 	
 		var p = controller.getPosition();
+		var angle = controller.getYaw();
+
 		var c = controller.getCamera();
 
 		var center = [p.x, p.y, p.z];
