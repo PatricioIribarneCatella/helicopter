@@ -64,7 +64,7 @@ export class HelicopterApp extends App {
 		var tland = [new Translation([0.0, -5.0, 0.0]),
 			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
 		var gland = new Graphic(this.gl, land, tland, landShader);
-		gland.loadTexture("img/land-bitmap.jpg");
+		gland.loadTexture("img/land-perlin-2.png");
 
 		world.add(gland);
 
