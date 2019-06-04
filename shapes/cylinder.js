@@ -28,9 +28,14 @@ export class Cylinder extends Surface {
 		
 		// create the base at zero plane (z = 0)
 		for (k = 0; k < this.cols; k++) {
+
 			this.position_buffer.push(0.0);
 			this.position_buffer.push(0.0);
 			this.position_buffer.push(0.0);
+
+			this.normal_buffer.push(0.0);
+			this.normal_buffer.push(0.0);
+			this.normal_buffer.push(-1.0);
 		}
 
 		for (var i = 0.0; i < this.rows; i++) {
@@ -43,14 +48,23 @@ export class Cylinder extends Surface {
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
+
+				this.normal_buffer.push(x);
+				this.normal_buffer.push(y);
+				this.normal_buffer.push(0.0);
 			};
 		};
 
 		// create the base at 'height' plane (z = this.height)
 		for (k = 0; k < this.cols; k++) {
+
 			this.position_buffer.push(0.0);
 			this.position_buffer.push(0.0);
 			this.position_buffer.push(this.height);
+
+			this.normal_buffer.push(0.0);
+			this.normal_buffer.push(0.0);
+			this.normal_buffer.push(1.0);
 		}
 
 		// update rows

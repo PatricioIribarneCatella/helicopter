@@ -31,6 +31,10 @@ export class Sphere extends Surface {
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
+
+				this.normal_buffer.push(x);
+				this.normal_buffer.push(y);
+				this.normal_buffer.push(z);
 			};
 		};
 	}

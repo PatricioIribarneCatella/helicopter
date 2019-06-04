@@ -25,7 +25,7 @@ export class RevolutionSurface extends Surface {
 	
 	_createModel() {
 
-		var p, v, ang, pos, matrix;
+		var p, v, nS, ang, pos, matrix;
 		
 		matrix = mat4.create();
 
@@ -41,13 +41,23 @@ export class RevolutionSurface extends Surface {
 				v = j / (this.cols - 1);
 
 				pos = this.shape.get(v);
-				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
+				nS = this.shape.getNormal(v);
 
+				// transform position
+				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 				vec4.transformMat4(p, p, matrix);
 
 				this.position_buffer.push(p[0]);
 				this.position_buffer.push(p[1]);
 				this.position_buffer.push(p[2]);
+
+				// transform normal
+				p = vec4.fromValues(nS[0], nS[1], nS[2], 1);
+				vec4.transformMat4(p, p, matrix);
+
+				this.normal_buffer.push(p[0]);
+				this.normal_buffer.push(p[1]);
+				this.normal_buffer.push(p[2]);
 			}
 		}
 
@@ -60,6 +70,12 @@ export class RevolutionSurface extends Surface {
 			this.position_buffer.push(pos[0]);
 			this.position_buffer.push(pos[1]);
 			this.position_buffer.push(pos[2]);
+			
+			nS = this.shape.getNormal(v);
+
+			this.normal_buffer.push(nS[0]);
+			this.normal_buffer.push(nS[1]);
+			this.normal_buffer.push(nS[2]);
 		}
 
 		this.rows += 1;

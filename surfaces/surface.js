@@ -12,6 +12,7 @@ export class Surface {
 		this.position_buffer = [];
 		this.color_buffer = [];
 		this.coord_buffer = [];
+		this.normal_buffer = [];
 	}
 
 	/* private methods */
