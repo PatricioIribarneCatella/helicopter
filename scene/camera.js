@@ -42,6 +42,10 @@ export class Camera {
 		this.gl.uniformMatrix4fv(uniformMatrixPV, false, this.matrix);
 	}
 
+	getView() {
+		return this.viewMatrix;
+	}
+
 	update(controller) {
 	
 		var p = controller.getPosition();

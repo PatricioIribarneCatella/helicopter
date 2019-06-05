@@ -83,6 +83,12 @@ export class Graphic {
 				   new Float32Array(this.model.getCoord()),
 				   this.gl.STATIC_DRAW);
 
+		this.webgl_normal_buffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_normal_buffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER,
+				   new Float32Array(this.model.getNormals()),
+				   this.gl.STATIC_DRAW);
+
 		this.webgl_index_buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
 		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,
@@ -93,6 +99,7 @@ export class Graphic {
 	_init() {
 		// initialize model matrix element
 		this.matrix = mat4.create();
+		this.normalMatrix = mat4.create();
 
 		this._createIndexes();
 		this._initBuffers();
@@ -116,6 +123,12 @@ export class Graphic {
 		this.gl.uniformMatrix4fv(uniformMatrixModel, false, this.matrix);
 	}
 
+	_bindNormals() {
+	
+		var uniformNormalModel = this.program.findUniform("normal");
+		this.gl.uniformMatrix4fv(uniformNormalModel, false, this.normalMatrix);
+	}
+
 	_bindBuffers() {
 		// connect position data in local buffers 
 		// with shader vertex position buffer
@@ -132,6 +145,14 @@ export class Graphic {
 		this.gl.enableVertexAttribArray(vertexColorAttribute);
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
 		this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
+
+		// connect normals data in local buffers
+		// with shader vertex normal buffer
+		var vertexNormalAttribute = this.program.findAttribute("aVertexNormal");
+
+		this.gl.enableVertexAttribArray(vertexNormalAttribute);
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_normal_buffer);
+		this.gl.vertexAttribPointer(vertexNormalAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
 		if (this.texture) {
 		
@@ -159,6 +180,15 @@ export class Graphic {
 		}
 
 		mat4.multiply(this.matrix, matrix, this.matrix);
+	}
+
+	_updateNormals(viewMatrix) {
+	
+		mat4.identity(this.normalMatrix);
+
+		mat4.multiply(this.normalMatrix, viewMatrix, this.matrix);
+		mat4.invert(this.normalMatrix, this.normalMatrix);
+		mat4.transpose(this.normalMatrix, this.normalMatrix);
 	}
 
 	_animate(controller) {
@@ -189,6 +219,10 @@ export class Graphic {
 		this._updateTransformations(matrix);
 
 		this._bindTransformations();
+
+		this._updateNormals(camera.getView());
+
+		this._bindNormals();
 
 		this._bindTexture();
 		

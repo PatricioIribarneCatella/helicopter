@@ -47,6 +47,10 @@ export class Surface {
 		return this.coord_buffer;
 	}
 
+	getNormals() {
+		return this.normal_buffer;
+	}
+
 	getCols() {
 		return this.cols;
 	}

@@ -40,8 +40,8 @@ export class HelicopterApp extends App {
 		var scene = new Scene(this.gl);
 
 		var shader = new ShaderProgram(this.gl,
-					       matrix_vertex_shader,
-					       simple_fragment_shader);
+					       normal_vertex_shader,
+					       normal_fragment_shader);
 
 		var landShader = new ShaderProgram(this.gl,
 						   bitmap_vertex_shader,
