@@ -64,8 +64,8 @@ export class HelicopterApp extends App {
 		var lights = {
 			direct: new DirectLight([0.0, 1.0, 1.0], [1.0, 1.0, 1.0]),
 			spot: new SpotLight([], [], [1.0, 1.0, 1.0]),
-			red: new PointLight([-6.0, -2.0, 1.0], [1.0, 0.0, 0.0]),
-			green: new PointLight([-6.0, -2.0, -1.0], [0.0, 1.0, 0.0])
+			red: new PointLight([-6.0, -2.0, 3.0], [1.0, 0.0, 0.0]),
+			green: new PointLight([-6.0, -2.0, -3.0], [0.0, 1.0, 0.0])
 		};
 		scene.addLights(lights);
 
