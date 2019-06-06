@@ -2,6 +2,7 @@ export class SpotLight {
 
 	constructor(position, direction, color) {
 		this.direction = direction;
+		this.dir = direction;
 		this.offset = position;
 		this.position = position;
 		this.color = color;
@@ -23,9 +24,9 @@ export class SpotLight {
 		
 		this.position = [p.x + aux[0], p.y + aux[1], p.z + aux[2]];
 
-		aux = [this.direction[0]*Math.cos(angle) + this.direction[2]*Math.sin(angle),
-		       this.direction[1],
-		       -this.direction[0]*Math.sin(angle) + this.direction[2]*Math.cos(angle)];
+		aux = [this.dir[0]*Math.cos(angle) + this.dir[2]*Math.sin(angle),
+		       this.dir[1],
+		       -this.dir[0]*Math.sin(angle) + this.dir[2]*Math.cos(angle)];
 
 		this.direction = aux;
 	}

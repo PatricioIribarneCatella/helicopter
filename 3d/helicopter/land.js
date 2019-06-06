@@ -30,6 +30,14 @@ export class GraphicLand extends Graphic {
 		this.gl.uniform3fv(uniformRedColor, lights.red.getColor());
 		this.gl.uniform3fv(uniformGreenColor, lights.green.getColor());
 
+		var uniformSpotPos = this.program.findUniform("spotLightPos");
+		var uniformSpotDir = this.program.findUniform("spotLightDir");
+		var uniformSpotColor = this.program.findUniform("spotColor");
+
+		this.gl.uniform3fv(uniformSpotPos, lights.spot.getPosition());
+		this.gl.uniform3fv(uniformSpotDir, lights.spot.getDirection());
+		this.gl.uniform3fv(uniformSpotColor, lights.spot.getColor());
+
 		var uniformEye = this.program.findUniform("eye");
 		this.gl.uniform3fv(uniformEye, eye);
 	}
