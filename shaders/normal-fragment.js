@@ -5,6 +5,14 @@ var normal_fragment_shader = 'precision highp float; 										\
 			      varying vec3 vPosWorld; 										\
 			      varying highp vec4 vColor; 									\
 																\
+			      uniform vec3 directLight; 									\
+			      uniform vec3 redLightPos; 									\
+			      uniform vec3 greenLightPos; 									\
+																\
+			      uniform vec3 directColor; 									\
+			      uniform vec3 redPointColor; 									\
+			      uniform vec3 greenPointColor; 									\
+																\
 			      void main(void) { 										\
 																\
 				   vec3 surfaceTolight = vec3(0.0, 0.0, 1.0); 							\

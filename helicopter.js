@@ -18,6 +18,10 @@ import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
 
+import {DirectLight} from '../lights/direct.js';
+import {PointLight} from '../lights/point.js';
+import {SpotLight} from '../lights/spot.js';
+
 import {Grid} from "../shapes/grid.js";
 import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
@@ -54,6 +58,15 @@ export class HelicopterApp extends App {
 		// Keyboard controller
 		var controller = new HeliController();
 		scene.addController(controller);
+
+		// Lights
+		var lights = {
+			direct: new DirectLight([0.0, 0.0, 1.0], new Color([1.0, 1.0, 1.0])),
+			spot: new SpotLight([], [], new Color([1.0, 1.0, 1.0])),
+			red: new PointLight([], new Color([1.0, 0.0, 0.0])),
+			green: new PointLight([], new Color([0.0, 1.0, 0.0]))
+		};
+		scene.addLights(lights);
 
 		// World
 		var world = new World();

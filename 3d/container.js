@@ -54,7 +54,7 @@ export class Container3D {
 		this.childrens.push(e);
 	}
 
-	draw(camera, controller, matrix) {
+	draw(camera, controller, lights, matrix) {
 
 		this._updateTransformations(matrix);
 
@@ -62,7 +62,10 @@ export class Container3D {
 
 			var i;
 			for (i = 0; i < this.childrens.length; i++) {
-				this.childrens[i].draw(camera, controller, this.matrix);
+				this.childrens[i].draw(camera,
+							controller,
+							lights,
+							this.matrix);
 			}
 
 			this._animate(controller);
