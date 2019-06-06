@@ -129,23 +129,26 @@ export class Graphic {
 		this.gl.uniformMatrix4fv(uniformNormalModel, false, this.normalMatrix);
 	}
 
-	_bindLights(lights) {
+	_bindLights(lights, eye) {
 	
 		var uniformDirectLight = this.program.findUniform("directLight");
-		var uniformRedLightPos = this.program.findUniform("redLightPos");
-		var uniformGreenLightPos = this.program.findUniform("greenLightPos");
+		var uniformRedLightPos = this.program.findUniform("leftLightPos");
+		var uniformGreenLightPos = this.program.findUniform("rightLightPos");
 
 		this.gl.uniform3fv(uniformDirectLight, lights.direct.getDirection());
 		this.gl.uniform3fv(uniformRedLightPos, lights.red.getPosition());
 		this.gl.uniform3fv(uniformGreenLightPos, lights.green.getPosition());
 
 		var uniformDirectColor = this.program.findUniform("directColor");
-		var uniformRedColor = this.program.findUniform("pointRedColor");
-		var uniformGreenColor = this.program.findUniform("pointGreenColor");
+		var uniformRedColor = this.program.findUniform("pointLeftColor");
+		var uniformGreenColor = this.program.findUniform("pointRightColor");
 
 		this.gl.uniform3fv(uniformDirectColor, lights.direct.getColor());
 		this.gl.uniform3fv(uniformRedColor, lights.red.getColor());
 		this.gl.uniform3fv(uniformGreenColor, lights.green.getColor());
+
+		var uniformEye = this.program.findUniform("eye");
+		this.gl.uniform3fv(uniformEye, eye);
 	}
 	
 	_bindBuffers() {
@@ -243,7 +246,7 @@ export class Graphic {
 
 		this._bindNormals();
 
-		this._bindLights(lights);
+		this._bindLights(lights, camera.getEye());
 
 		this._bindTexture();
 		

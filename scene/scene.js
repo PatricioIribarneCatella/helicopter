@@ -33,7 +33,7 @@ export class Scene {
 
 		this.camera.update(this.controller);
 
-		for (l in this.lights) {
+		for (var l in this.lights) {
 			this.lights[l].update(this.controller);
 		}
 

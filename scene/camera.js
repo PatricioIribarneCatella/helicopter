@@ -46,6 +46,10 @@ export class Camera {
 		return this.viewMatrix;
 	}
 
+	getEye() {
+		return this.position;
+	}
+
 	update(controller) {
 	
 		var p = controller.getPosition();
@@ -75,6 +79,8 @@ export class Camera {
 				eye = [p.x + aux[0], p.y, p.z + aux[2]];
 				break;
 		}
+
+		this.position = eye;
 
 		mat4.lookAt(this.viewMatrix, eye, center, up);
 
