@@ -17,6 +17,7 @@ import {Graphic} from '../3d/graphic.js';
 import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
+import {GraphicLand} from '../3d/helicopter/land.js';
 
 import {DirectLight} from '../lights/direct.js';
 import {PointLight} from '../lights/point.js';
@@ -49,7 +50,7 @@ export class HelicopterApp extends App {
 
 		var landShader = new ShaderProgram(this.gl,
 						   bitmap_vertex_shader,
-						   simple_fragment_shader);
+						   bitmap_fragment_shader);
 
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
@@ -73,10 +74,7 @@ export class HelicopterApp extends App {
 
 		// Lanscape
 
-		var land = new Grid(200, 200, new Color([0.4, 0.4, 0.4]));
-		var tland = [new Translation([0.0, -5.0, 0.0]),
-			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
-		var gland = new Graphic(this.gl, land, tland, landShader);
+		var gland = new GraphicLand(this.gl, landShader);
 		gland.loadTexture("img/land-perlin-2.png");
 
 		world.add(gland);
