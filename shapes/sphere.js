@@ -25,8 +25,8 @@ export class Sphere extends Surface {
 			for (var j = 0.0; j < this.cols; j++) {
 				
 				var x = Math.cos(i * this.theta) * Math.sin(j * this.phi);
-				var y = Math.sin(i * this.theta) * Math.sin(j * this.phi);
-				var z = Math.cos(j * this.phi);
+				var z = Math.sin(i * this.theta) * Math.sin(j * this.phi);
+				var y = Math.cos(j * this.phi);
 				
 				// position buffer
 				this.position_buffer.push(x);

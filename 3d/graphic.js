@@ -160,21 +160,27 @@ export class Graphic {
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_position_buffer);
 		this.gl.vertexAttribPointer(vertexPositionAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
-		// connect color data in local buffers
-		// with shader vertex color buffer
-		var vertexColorAttribute = this.program.findAttribute("aVertexColor");
-		
-		this.gl.enableVertexAttribArray(vertexColorAttribute);
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
-		this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
+		if (this._useColor()) {
+			
+			// connect color data in local buffers
+			// with shader vertex color buffer
+			var vertexColorAttribute = this.program.findAttribute("aVertexColor");
+			
+			this.gl.enableVertexAttribArray(vertexColorAttribute);
+			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_color_buffer);
+			this.gl.vertexAttribPointer(vertexColorAttribute, 3, this.gl.FLOAT, false, 0, 0);
+		}
 
-		// connect normals data in local buffers
-		// with shader vertex normal buffer
-		var vertexNormalAttribute = this.program.findAttribute("aVertexNormal");
+		if (this._isLighting()) {
+			
+			// connect normals data in local buffers
+			// with shader vertex normal buffer
+			var vertexNormalAttribute = this.program.findAttribute("aVertexNormal");
 
-		this.gl.enableVertexAttribArray(vertexNormalAttribute);
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_normal_buffer);
-		this.gl.vertexAttribPointer(vertexNormalAttribute, 3, this.gl.FLOAT, false, 0, 0);
+			this.gl.enableVertexAttribArray(vertexNormalAttribute);
+			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_normal_buffer);
+			this.gl.vertexAttribPointer(vertexNormalAttribute, 3, this.gl.FLOAT, false, 0, 0);
+		}
 
 		if (this.texture) {
 		
@@ -230,6 +236,14 @@ export class Graphic {
 				     this.gl.UNSIGNED_SHORT, 0);
 	}
 
+	_isLighting() {
+		return true;
+	}
+
+	_useColor() {
+		return true;
+	}
+
 	/* public methods */
 
 	draw(camera, controller, lights, matrix) {
@@ -242,11 +256,14 @@ export class Graphic {
 
 		this._bindTransformations();
 
-		this._updateNormals(camera.getView());
+		if (this._isLighting()) {
+			
+			this._updateNormals(camera.getView());
 
-		this._bindNormals();
+			this._bindNormals();
 
-		this._bindLights(lights, camera.getEye());
+			this._bindLights(lights, camera.getEye());
+		}
 
 		this._bindTexture();
 		

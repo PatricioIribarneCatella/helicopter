@@ -18,6 +18,7 @@ import {Color} from '../3d/color.js';
 import {Graphic} from '../3d/graphic.js';
 import {Container3D} from '../3d/container.js';
 import {GraphicLand} from '../3d/helicopter/land.js';
+import {GraphicSky} from '../3d/helicopter/sky.js';
 
 import {DirectLight} from '../lights/direct.js';
 import {PointLight} from '../lights/point.js';
@@ -53,6 +54,10 @@ export class HelicopterApp extends App {
 						   bitmap_vertex_shader,
 						   bitmap_fragment_shader);
 
+		var skyShader = new ShaderProgram(this.gl,
+						  sky_vertex_shader,
+						  sky_fragment_shader);
+
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
 		scene.addCamera(camera);
@@ -76,11 +81,11 @@ export class HelicopterApp extends App {
 		var world = new World();
 
 		// Sky sphere
-		var sky = new Sphere(50, 50, new Color([]));
-		var gsky = new Graphic(this.gl, sky, [new Identity()], skyShader);
+		var gsky = new GraphicSky(this.gl, skyShader);
+		gsky.loadTexture("img/sunset.jpg");
 
 		world.add(gsky);
-
+		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
 		gland.loadTexture("img/land-perlin-2.png");
