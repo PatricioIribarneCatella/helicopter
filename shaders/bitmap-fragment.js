@@ -1,3 +1,5 @@
+// BITMAP FRAGMENT SHADER
+
 var bitmap_fragment_shader = 'precision highp float; 										\
 			      varying vec3 vNormal; 										\
 			      varying vec3 vPosWorld; 										\

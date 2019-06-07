@@ -28,13 +28,24 @@ export class Sphere extends Surface {
 				var y = Math.sin(i * this.theta) * Math.sin(j * this.phi);
 				var z = Math.cos(j * this.phi);
 				
+				// position buffer
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
 
+				// normal buffer
 				this.normal_buffer.push(x);
 				this.normal_buffer.push(y);
 				this.normal_buffer.push(z);
+
+				// uv texture buffer
+				//var u = i * 1/(this.rows - 1);
+				//var v = j * 1/(this.cols - 1);
+				var u = 1.0 - i/(this.rows - 1);
+				var v = 1.0 - j/(this.cols - 1);
+
+				this.coord_buffer.push(u);
+				this.coord_buffer.push(v);
 			};
 		};
 	}

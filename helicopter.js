@@ -13,10 +13,10 @@ import {HelicopterRotation,
 	StairwayRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
-import {Graphic} from '../3d/graphic.js';
-import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
+import {Graphic} from '../3d/graphic.js';
+import {Container3D} from '../3d/container.js';
 import {GraphicLand} from '../3d/helicopter/land.js';
 
 import {DirectLight} from '../lights/direct.js';
@@ -24,6 +24,7 @@ import {PointLight} from '../lights/point.js';
 import {SpotLight} from '../lights/spot.js';
 
 import {Grid} from "../shapes/grid.js";
+import {Sphere} from "../shapes/sphere.js";
 import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
@@ -74,15 +75,19 @@ export class HelicopterApp extends App {
 		// World
 		var world = new World();
 
-		// Lanscape
+		// Sky sphere
+		var sky = new Sphere(50, 50, new Color([]));
+		var gsky = new Graphic(this.gl, sky, [new Identity()], skyShader);
 
+		world.add(gsky);
+
+		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
 		gland.loadTexture("img/land-perlin-2.png");
 
 		world.add(gland);
 
 		// Helicopter Tree
-
 		var t = [new HelicopterTranslation(),
 			 new HelicopterRotation(),
 			 new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0),
