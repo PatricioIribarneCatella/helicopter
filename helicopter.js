@@ -65,7 +65,7 @@ export class HelicopterApp extends App {
 			direct: new DirectLight([0.0, 1.0, 1.0], [1.0, 1.0, 1.0]),
 			spot: new SpotLight([7.0, -1.0, 0.0],
 					    [1.0, -2.0, 0.0],
-					    [0.0, 0.0, 1.0]),
+					    [1.0, 1.0, 1.0]),
 			red: new PointLight([-6.0, -2.0, 3.0], [1.0, 0.0, 0.0]),
 			green: new PointLight([-6.0, -2.0, -3.0], [0.0, 1.0, 0.0])
 		};
