@@ -65,22 +65,24 @@ export class Camera {
 			case "global":
 				center = [0.0, 0.0, 0.0];
 				eye = [0.0, 10.0, 25.0];
+				this.position = eye;
 				break;
 			case "lateral":
 				aux = [-30.0*Math.sin(angle), 0.0, -30.0*Math.cos(angle)];
 				eye = [p.x + aux[0], p.y, p.z + aux[2]];
+				this.position = eye;
 				break;
 			case "up":
 				up = [1.0, 0.0, 0.0];
 				eye = [p.x, p.y + 30.0, p.z];
+				this.position = [0.0, 1.0, 0.0];
 				break;
 			case "back":
 				aux = [-30.0*Math.cos(angle), 0.0, 30.0*Math.sin(angle)];
 				eye = [p.x + aux[0], p.y, p.z + aux[2]];
+				this.position = eye;
 				break;
 		}
-
-		this.position = eye;
 
 		mat4.lookAt(this.viewMatrix, eye, center, up);
 

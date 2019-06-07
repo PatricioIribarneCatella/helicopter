@@ -31,7 +31,7 @@ var normal_fragment_shader = 'precision highp float; 										\
 																\
 																\
 				   float distL = distance(leftLightPos, vPosWorld); 						\
-				   float decayL = (5.0 / (0.2*distL*distL + distL + 5.0)); 					\
+				   float decayL = (5.0 / (0.4*distL*distL + distL + 5.0)); 					\
 																\
 				   vec3 ambientLeftLight = pointLeftColor; 							\
 				   vec3 diffuseLeftLight = pointLeftColor; 							\
@@ -44,7 +44,7 @@ var normal_fragment_shader = 'precision highp float; 										\
 				   vec3 leftSpec = decayL * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight; 	\
 																\
 				   float distR = distance(leftLightPos, vPosWorld); 						\
-				   float decayR = (5.0 / (0.2*distR*distR + distR + 5.0)); 					\
+				   float decayR = (5.0 / (0.4*distR*distR + distR + 5.0)); 					\
 																\
 				   vec3 ambientRightLight = pointRightColor; 							\
 				   vec3 diffuseRightLight = pointRightColor; 							\
@@ -58,10 +58,11 @@ var normal_fragment_shader = 'precision highp float; 										\
 																\
 																\
 				   vec3 kDiffuse = vColor.xyz; 									\
-				   vec3 kAmbient = vec3(0.2, 0.2, 0.2); 							\
 				   vec3 kSpecular = vec3(1.0, 1.0, 1.0); 							\
+				   vec3 kAmbientD = vec3(0.2, 0.2, 0.2); 							\
+				   vec3 kAmbientP = vec3(0.1, 0.1, 0.1); 							\
 																\
-				   vec3 ambientInten = kAmbient * (ambientDirectLight + ambientLeftLight + ambientRightLight); 	\
+				   vec3 ambientInten = kAmbientD * ambientDirectLight + kAmbientP * (ambientLeftLight + ambientRightLight); 	\
 				   vec3 diffInten = kDiffuse * (directDiff + leftDiff + rightDiff); 				\
 				   vec3 specInten = kSpecular * (directSpec + leftSpec + rightSpec); 				\
 																\
