@@ -10,8 +10,7 @@ export class GraphicSky extends Graphic {
 	constructor(gl, shader) {
 	
 		var sky = new Sphere(50, 50, new Color([]));
-		super(gl, sky, [new Scale([150.0, 150.0, 150.0]),
-				new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)],
+		super(gl, sky, [new Scale([250.0, 250.0, 250.0])],
 			shader);
 	}
 

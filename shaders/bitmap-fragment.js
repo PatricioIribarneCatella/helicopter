@@ -68,7 +68,7 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 				   vec3 diffInten = kDiffuse * (vec3(1.0, 1.0, 1.0) + spotDiff); 				\
 				   vec3 specInten = kSpecular * (leftSpec + rightSpec + spotSpec); 				\
 																\
-				   vec3 color = diffInten + specInten; 						\
+				   vec3 color = diffInten + specInten; 								\
 																\
 				   gl_FragColor = vec4(color, 1.0); 								\
 			     }';

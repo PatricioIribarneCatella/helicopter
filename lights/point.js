@@ -1,6 +1,7 @@
 export class PointLight {
 
 	constructor(position, color) {
+
 		this.offset = position;
 		this.position = position;
 		this.color = color;

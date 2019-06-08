@@ -1,6 +1,7 @@
 export class SpotLight {
 
 	constructor(position, direction, color) {
+
 		this.direction = direction;
 		this.dir = direction;
 		this.offset = position;
