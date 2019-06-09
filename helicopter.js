@@ -19,6 +19,7 @@ import {Graphic} from '../3d/graphic.js';
 import {Container3D} from '../3d/container.js';
 import {GraphicLand} from '../3d/helicopter/land.js';
 import {GraphicSky} from '../3d/helicopter/sky.js';
+import {GraphicReflect} from '../3d/helicopter/reflect.js';
 
 import {DirectLight} from '../lights/direct.js';
 import {PointLight} from '../lights/point.js';
@@ -57,6 +58,10 @@ export class HelicopterApp extends App {
 		var skyShader = new ShaderProgram(this.gl,
 						  sky_vertex_shader,
 						  sky_fragment_shader);
+
+		var reflectShader = new ShaderProgram(this.gl,
+						      normal_vertex_shader,
+						      reflect_fragment_shader);
 
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
@@ -106,7 +111,8 @@ export class HelicopterApp extends App {
 		// Front center
 		var front = new FrontCenter(50, 50);
 		var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
-		var gfront = new Graphic(this.gl, front, t1, shader);
+		var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
+		gfront.loadTexture("img/sunset.jpg");
 
 		helicopter.add(gfront);
 
@@ -124,7 +130,9 @@ export class HelicopterApp extends App {
 		var t3 = [new Translation([2.0, 0.0, 0.0])];
 		var hexaCenterAndDoor = new Container3D(t3);
 		var hexa = new HexagonCenter(50, 50);
-		var ghexa = new Graphic(this.gl, hexa, [new Identity()], shader);
+		var ghexa = new GraphicReflect(this.gl,
+					hexa, [new Identity()], reflectShader);
+		ghexa.loadTexture("img/sunset.jpg");
 
 		hexaCenterAndDoor.add(ghexa);
 

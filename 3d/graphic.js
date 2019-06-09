@@ -33,10 +33,10 @@ export class Graphic {
 				      this.gl.CLAMP_TO_EDGE);
 		this.gl.texParameteri(this.gl.TEXTURE_2D,
 				      this.gl.TEXTURE_MIN_FILTER,
-				      this.gl.NEAREST);
+				      this.gl.LINEAR);
 		this.gl.texParameteri(this.gl.TEXTURE_2D,
 				      this.gl.TEXTURE_MAG_FILTER,
-				      this.gl.NEAREST);
+				      this.gl.LINEAR);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 	}
 
@@ -182,7 +182,7 @@ export class Graphic {
 			this.gl.vertexAttribPointer(vertexNormalAttribute, 3, this.gl.FLOAT, false, 0, 0);
 		}
 
-		if (this.texture) {
+		if (this._useUVCoords() && this.texture) {
 		
 			// connect texture data in local buffers
 			// with shader vertex texture buffer
@@ -241,6 +241,10 @@ export class Graphic {
 	}
 
 	_useColor() {
+		return true;
+	}
+
+	_useUVCoords() {
 		return true;
 	}
 
