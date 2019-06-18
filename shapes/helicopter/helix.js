@@ -66,7 +66,7 @@ export class HelixConnector extends SweepSurface {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var c = new Color([1.0, 0.27, 0.0]);
+		var c = new Color([0.4, 0.4, 0.4]);
 
 		super(shape, path, rows, cols, [0.2, 0.2], c);
 
