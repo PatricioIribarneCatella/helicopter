@@ -26,11 +26,8 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 																\
 				   float limit = 0.60; 										\
 				   float dotFromLight = pow(dot(lightDirection, -surfaceTolight), 10.0); 			\
-				   float inLight = 0.0; 									\
-																\
-				   if (dotFromLight >= limit) { 								\
-					inLight = 1.0; 										\
-				   } 												\
+				   float inLight = smoothstep(0.90, 0.50, dotFromLight);					\
+				   inLight = 1.0 - inLight; 									\
 																\
 				   vec3 rVec = reflect(-surfaceTolight, normalize(vNormal)); 					\
 																\
