@@ -24,7 +24,7 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 				   vec3 lightDirection = normalize(spotLightDir); 						\
 				   vec3 surfaceTolight = normalize(spotLightPos - vPosWorld); 					\
 																\
-				   float limit = 0.80; 										\
+				   float limit = 0.60; 										\
 				   float dotFromLight = pow(dot(lightDirection, -surfaceTolight), 10.0); 			\
 				   float inLight = 0.0; 									\
 																\

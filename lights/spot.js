@@ -29,7 +29,7 @@ export class SpotLight {
 		       this.dir[1],
 		       -this.dir[0]*Math.sin(angle) + this.dir[2]*Math.cos(angle)];
 
-		this.direction = aux;
+		this.direction = [aux[0], aux[1], aux[2]];
 	}
 
 	getDirection() {
