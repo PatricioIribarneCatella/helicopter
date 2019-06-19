@@ -13,7 +13,13 @@ export class GraphicLand extends Graphic {
 			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
 
 		super(gl, land, tland, shader);
+
+		this.textures = [];
+		this.uniforms = {};
+		this.texId = 0;
 	}
+
+	/* private methods */
 
 	_bindLights(lights, eye) {
 	
@@ -43,5 +49,64 @@ export class GraphicLand extends Graphic {
 
 	_useColor() {
 		return false;
+	}
+
+	_handleLoadedTexture(id) {
+	
+		console.log("id: " + id);
+		console.log("textures: " + this.textures);
+
+		var t = this.textures[id];
+
+		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, t);
+		this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
+				   this.gl.RGBA, this.gl.RGBA,
+				   this.gl.UNSIGNED_BYTE, t.image);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_S,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_T,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MIN_FILTER,
+				      this.gl.LINEAR);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MAG_FILTER,
+				      this.gl.LINEAR);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+	}
+
+	_bindTexture() {
+		
+		for (var i = 0; i < this.textures.length; i++) {
+			
+			var uniformSampler = this.program.findUniform(this.uniforms[i]);
+
+			this.gl.activeTexture(this.gl.TEXTURE0 + i);
+			this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[i]);
+			this.gl.uniform1i(uniformSampler, i);
+		}
+	}
+
+	_hasTobindCoordBuffer() {
+		return true;
+	}
+	
+	/* public methods */
+
+	loadTexture(path, uniformName) {
+		
+		var texture = this.gl.createTexture();
+		var id = this.texId;
+
+		texture.image = new Image();
+		texture.image.onload = () => this._handleLoadedTexture(id);
+		texture.image.src = path;
+
+		this.textures.push(texture);
+		this.uniforms[id] = uniformName;
+		this.texId++;
 	}
 }

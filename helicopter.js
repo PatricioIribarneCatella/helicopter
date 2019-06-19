@@ -93,7 +93,7 @@ export class HelicopterApp extends App {
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("img/pasto.jpg");
+		gland.loadTexture("img/pasto.jpg", "uSampler");
 
 		world.add(gland);
 

@@ -150,8 +150,13 @@ export class Graphic {
 		var uniformEye = this.program.findUniform("eye");
 		this.gl.uniform3fv(uniformEye, eye);
 	}
-	
+
+	_hasTobindCoordBuffer() {
+		return this._useUVCoords() && this.texture;
+	}
+
 	_bindBuffers() {
+
 		// connect position data in local buffers 
 		// with shader vertex position buffer
 		var vertexPositionAttribute = this.program.findAttribute("aVertexPosition");
@@ -182,8 +187,8 @@ export class Graphic {
 			this.gl.vertexAttribPointer(vertexNormalAttribute, 3, this.gl.FLOAT, false, 0, 0);
 		}
 
-		if (this._useUVCoords() && this.texture) {
-		
+		if (this._hasTobindCoordBuffer()) {
+			
 			// connect texture data in local buffers
 			// with shader vertex texture buffer
 			var vertexTextureAttribute = this.program.findAttribute("aTextureCoord");
@@ -192,7 +197,7 @@ export class Graphic {
 			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.webgl_coord_buffer);
 			this.gl.vertexAttribPointer(vertexTextureAttribute, 2, this.gl.FLOAT, false, 0, 0);
 		}
-
+	
 		// connect indexes data in local buffers
 		// with GPU index buffer
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
