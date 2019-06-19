@@ -60,8 +60,8 @@ export class Terrain extends Grid {
 		for (var j = 0, l = data.length; j < l; j ++) {
 				
 			var x = data[j - 2] - data[j + 2];
-			var y = 2;
-			var z = data[j - this.cols*2] - data[j + this.cols*2];
+			var y = data[j - this.cols*2] - data[j + this.cols*2];
+			var z = 2;
 
 			normals.push(x);
 			normals.push(y);
