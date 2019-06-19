@@ -12,6 +12,7 @@ export class Camera {
 
 		// invert the z index
 		this.position = [pos[0], pos[1], -pos[2]];
+		this.d = 7.0;
 
 		this.projMatrix = mat4.create();
 		this.viewMatrix = mat4.create();
@@ -64,21 +65,21 @@ export class Camera {
 		switch (c) {
 			case "global":
 				center = [0.0, 0.0, 0.0];
-				eye = [0.0, 10.0, 25.0];
+				eye = [0.0, 0.0, this.d*6.0];
 				this.position = eye;
 				break;
 			case "lateral":
-				aux = [-30.0*Math.sin(angle), 0.0, -30.0*Math.cos(angle)];
+				aux = [-this.d*Math.sin(angle), 0.0, -this.d*Math.cos(angle)];
 				eye = [p.x + aux[0], p.y, p.z + aux[2]];
 				this.position = eye;
 				break;
 			case "up":
 				up = [1.0, 0.0, 0.0];
-				eye = [p.x, p.y + 30.0, p.z];
-				this.position = [0.0, 1.0, 0.0];
+				eye = [p.x, p.y + this.d, p.z];
+				this.position = eye;
 				break;
 			case "back":
-				aux = [-30.0*Math.cos(angle), 0.0, 30.0*Math.sin(angle)];
+				aux = [-this.d*Math.cos(angle), 0.0, this.d*Math.sin(angle)];
 				eye = [p.x + aux[0], p.y, p.z + aux[2]];
 				this.position = eye;
 				break;

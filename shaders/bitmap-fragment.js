@@ -3,7 +3,7 @@
 var bitmap_fragment_shader = 'precision highp float; 										\
 			      varying vec3 vNormal; 										\
 			      varying vec3 vPosWorld; 										\
-			      varying highp vec4 vColor; 									\
+			      varying vec2 vTextureCoord; 									\
 																\
 			      uniform vec3 leftLightPos; 									\
 			      uniform vec3 rightLightPos; 									\
@@ -13,6 +13,8 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 			      uniform vec3 pointLeftColor; 									\
 			      uniform vec3 pointRightColor; 									\
 			      uniform vec3 spotColor; 										\
+																\
+			      uniform sampler2D uSampler; 									\
 																\
 			      uniform vec3 eye; 										\
 																\
@@ -57,7 +59,7 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 				   vec3 rightSpec = decayR * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight; 	\
 																\
 																\
-				   vec3 kDiffuse = vColor.xyz; 									\
+				   vec3 kDiffuse = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 		\
 				   vec3 kAmbient = vec3(0.2, 0.2, 0.2); 							\
 				   vec3 kSpecular = vec3(1.0, 1.0, 1.0); 							\
 																\

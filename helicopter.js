@@ -74,11 +74,11 @@ export class HelicopterApp extends App {
 		// Lights
 		var lights = {
 			direct: new DirectLight([0.0, 1.0, 1.0], [1.0, 1.0, 1.0]),
-			spot: new SpotLight([7.0, -1.0, 0.0],
+			spot: new SpotLight([1.75, -0.25, 0.0],
 					    [1.0, -2.0, 0.0],
 					    [1.0, 1.0, 1.0]),
-			red: new PointLight([-6.0, -2.0, 3.0], [1.0, 0.0, 0.0]),
-			green: new PointLight([-6.0, -2.0, -3.0], [0.0, 1.0, 0.0])
+			red: new PointLight([-1.5, -0.5, 0.75], [1.0, 0.0, 0.0]),
+			green: new PointLight([-1.5, -0.5, -0.75], [0.0, 1.0, 0.0])
 		};
 		scene.addLights(lights);
 
@@ -93,7 +93,7 @@ export class HelicopterApp extends App {
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("img/land-perlin.png");
+		gland.loadTexture("img/pasto.jpg");
 
 		world.add(gland);
 
@@ -101,6 +101,7 @@ export class HelicopterApp extends App {
 		var t = [new HelicopterTranslation(),
 			 new HelicopterRotation(),
 			 new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0),
+			 new Scale([0.25, 0.25, 0.25]),
 			 new Translation([-4.0, 0.0, 0.0])];
 		var helicopter = new Container3D(t);
 

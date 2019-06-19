@@ -20,7 +20,7 @@ function HeliController() {
 
 	var maxSpeed = 2;
 	var maxAltitude = 300;
-	var minAltitude = 5;
+	var minAltitude = -15.0;
 
 	var positionX = 0;
 	var positionY = 0;

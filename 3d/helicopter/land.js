@@ -1,16 +1,15 @@
 import {Translation} from '../../transformations/translation.js';
 import {Rotation} from '../../transformations/rotation.js';
-import {Grid} from '../../shapes/grid.js';
+import {Terrain} from '../../shapes/helicopter/terrain.js';
 
 import {Graphic} from '../graphic.js';
-import {Color} from '../color.js';
 
 export class GraphicLand extends Graphic {
 
 	constructor(gl, shader) {
 	
-		var land = new Grid(200, 200, new Color([0.4, 0.4, 0.4]));
-		var tland = [new Translation([0.0, -5.0, 0.0]),
+		var land = new Terrain();
+		var tland = [new Translation([0.0, 0.0, 0.0]),
 			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
 
 		super(gl, land, tland, shader);
@@ -40,5 +39,9 @@ export class GraphicLand extends Graphic {
 
 		var uniformEye = this.program.findUniform("eye");
 		this.gl.uniform3fv(uniformEye, eye);
+	}
+
+	_useColor() {
+		return false;
 	}
 }
