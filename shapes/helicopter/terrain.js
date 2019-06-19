@@ -49,8 +49,25 @@ export class Terrain extends Grid {
 		
 		var data = this._generateHeight(this.cols, this.rows);
 
+		// update z index in the position buffer
 		for (var i = 0, j = 0, l = data.length; i < l; i++, j += 3) {
 			this.position_buffer[j + 2] = data[i] * 0.5;
 		}
+
+		var normals = [];
+
+		// update normal buffer calculus
+		for (var j = 0, l = data.length; j < l; j ++) {
+				
+			var x = data[j - 2] - data[j + 2];
+			var y = 2;
+			var z = data[j - this.cols*2] - data[j + this.cols*2];
+
+			normals.push(x);
+			normals.push(y);
+			normals.push(z);
+		}
+
+		this.normal_buffer = normals;
 	}
 }
