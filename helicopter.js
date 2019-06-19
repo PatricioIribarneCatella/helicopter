@@ -93,7 +93,10 @@ export class HelicopterApp extends App {
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("img/pasto.jpg", "uSampler");
+		gland.loadTexture("img/pasto.jpg", "uSPasto");
+		gland.loadTexture("img/piedras.jpg", "uSPiedras");
+		gland.loadTexture("img/tierra.jpg", "uSTierra");
+		gland.loadTexture("img/tierraseca.jpg", "uSTierraSeca");
 
 		world.add(gland);
 

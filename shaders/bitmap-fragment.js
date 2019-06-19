@@ -14,7 +14,10 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 			      uniform vec3 pointRightColor; 									\
 			      uniform vec3 spotColor; 										\
 																\
-			      uniform sampler2D uSampler; 									\
+			      uniform sampler2D uSPasto; 									\
+			      uniform sampler2D uSPiedras; 									\
+			      uniform sampler2D uSTierra; 									\
+			      uniform sampler2D uSTierraSeca; 									\
 																\
 			      uniform vec3 eye; 										\
 																\
@@ -59,7 +62,12 @@ var bitmap_fragment_shader = 'precision highp float; 										\
 				   vec3 rightSpec = decayR * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight; 	\
 																\
 																\
-				   vec3 kDiffuse = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 		\
+				   vec3 pasto = texture2D(uSPasto, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 		\
+				   vec3 piedras = texture2D(uSPiedras, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 		\
+				   vec3 tierra = texture2D(uSTierra, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 		\
+				   vec3 tierraSeca = texture2D(uSTierraSeca, vec2(vTextureCoord.s, vTextureCoord.t)).xyz; 	\
+																\
+				   vec3 kDiffuse = mix(mix(mix(pasto, piedras, 0.3), tierra, 0.2), tierraSeca, 0.3); 		\
 				   vec3 kAmbient = vec3(0.2, 0.2, 0.2); 							\
 				   vec3 kSpecular = vec3(1.0, 1.0, 1.0); 							\
 																\

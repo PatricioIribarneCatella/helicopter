@@ -53,9 +53,6 @@ export class GraphicLand extends Graphic {
 
 	_handleLoadedTexture(id) {
 	
-		console.log("id: " + id);
-		console.log("textures: " + this.textures);
-
 		var t = this.textures[id];
 
 		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
