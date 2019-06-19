@@ -29,9 +29,13 @@ var normal_fragment_shader = 'precision highp float; 										\
 				   vec3 directDiff = max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight; 	\
 				   vec3 directSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularDirectLight; 		\
 																\
+				   float a = 1.1; 										\
+				   float b = 1.0; 										\
+				   float c = 5.0; 										\
+				   float d = 1.0; 										\
 																\
 				   float distL = distance(leftLightPos, vPosWorld); 						\
-				   float decayL = (5.0 / (0.4*distL*distL + distL + 5.0)); 					\
+				   float decayL = (d / (a * distL*distL + b * distL + c)); 					\
 																\
 				   vec3 ambientLeftLight = pointLeftColor; 							\
 				   vec3 diffuseLeftLight = pointLeftColor; 							\
@@ -44,7 +48,7 @@ var normal_fragment_shader = 'precision highp float; 										\
 				   vec3 leftSpec = decayL * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight; 	\
 																\
 				   float distR = distance(leftLightPos, vPosWorld); 						\
-				   float decayR = (5.0 / (0.4*distR*distR + distR + 5.0)); 					\
+				   float decayR = (d / (a * distR*distR + b * distR + c)); 					\
 																\
 				   vec3 ambientRightLight = pointRightColor; 							\
 				   vec3 diffuseRightLight = pointRightColor; 							\

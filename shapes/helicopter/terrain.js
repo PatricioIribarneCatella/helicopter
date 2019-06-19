@@ -46,6 +46,7 @@ export class Terrain extends Grid {
 	}
 
 	_transform() {
+		
 		var data = this._generateHeight(this.cols, this.rows);
 
 		for (var i = 0, j = 0, l = data.length; i < l; i++, j += 3) {

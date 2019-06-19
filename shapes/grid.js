@@ -33,7 +33,7 @@ export class Grid extends Surface {
 				// normal buffer
 				this.normal_buffer.push(0.0);
 				this.normal_buffer.push(0.0);
-				this.normal_buffer.push(-1.0);
+				this.normal_buffer.push(1.0);
 
 				// uv texture buffer
 				var u = i * 1/(this.rows - 1);

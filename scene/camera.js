@@ -65,7 +65,7 @@ export class Camera {
 		switch (c) {
 			case "global":
 				center = [0.0, 0.0, 0.0];
-				eye = [0.0, 0.0, this.d*6.0];
+				eye = [0.0, 50.0, this.d*6.0];
 				this.position = eye;
 				break;
 			case "lateral":

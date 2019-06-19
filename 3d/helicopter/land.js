@@ -9,8 +9,8 @@ export class GraphicLand extends Graphic {
 	constructor(gl, shader) {
 	
 		var land = new Terrain();
-		var tland = [new Translation([0.0, 0.0, 0.0]),
-			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
+		var tland = [new Translation([0.0, -30.0, 0.0]),
+			     new Rotation([1.0, 0.0, 0.0], -Math.PI/2, 0.0)];
 
 		super(gl, land, tland, shader);
 
