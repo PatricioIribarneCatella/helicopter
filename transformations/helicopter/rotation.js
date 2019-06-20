@@ -86,8 +86,15 @@ export class MotorRotation {
 	constructor(position) {
 		
 		this.position = position;
+		
 		this.up = false;
 		this.prevState = false;
+		this.targetUp = false;
+		this.targetDown = false;
+
+		this.angle = 0.0;
+		this.delta = 0.01;
+
 		this.modelMatrix = mat4.create();
 	}
 
@@ -96,35 +103,63 @@ export class MotorRotation {
 	update(controller) {
 		
 		var state = controller.getMotorPosChanged();
-	
-		if (state === this.prevState)
-			return;
+		var target;
 
-		mat4.identity(this.modelMatrix);
+		if (state === this.prevState) {
+			
+			if (this.up && this.targetDown) {
+			
+				if (this.position === "left") {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, 0.0);
+				} else {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, 0.0);
+				}
+				
+				if (this.angle == 0.0) {
+					this.up = false;
+					this.targetDown = false;
+				}
+
+			} else if (!this.up && this.targetUp) {
+
+				if (this.position === "left") {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, Math.PI/2);
+				} else {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, -Math.PI/2);
+				}
+				
+				if (this.angle == Math.PI/2 || this.angle == -Math.PI/2) {
+					this.up = true;
+					this.targetUp = false;
+				}
+			}
+			
+			mat4.identity(this.modelMatrix);
+	
+			mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    this.angle,
+			    [0.0, 1.0, 0.0]);
+
+			return;
+		}
 		
 		this.prevState = state;
 
 		if (this.up) {
-			this.angle = 0.0;
-			this.up = false;
+			this.targetDown = true;
 		} else {
-			if (this.position === "left")
-				this.angle = Math.PI/2;
-			else
-				this.angle = -Math.PI/2;
-			this.up = true;
+			this.targetUp = true;
 		}
-
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    this.angle,
-			    [0.0, 1.0, 0.0]);
 	}
 
 	getMatrix() {
 		return this.modelMatrix;
 	}
-
 }
 
 //
