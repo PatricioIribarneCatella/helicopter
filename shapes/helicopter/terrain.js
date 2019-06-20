@@ -55,13 +55,14 @@ export class Terrain extends Grid {
 		}
 
 		var normals = [];
+		var x, y, z;
 
 		// update normal buffer calculus
 		for (var j = 0, l = data.length; j < l; j ++) {
 				
-			var x = data[j - 2] - data[j + 2];
-			var y = data[j - this.cols*2] - data[j + this.cols*2];
-			var z = 2;
+			x = data[j - 2] - data[j + 2];
+			y = data[j - this.cols*2] - data[j + this.cols*2];
+			z = 2;
 
 			normals.push(x);
 			normals.push(y);
@@ -71,3 +72,4 @@ export class Terrain extends Grid {
 		this.normal_buffer = normals;
 	}
 }
+

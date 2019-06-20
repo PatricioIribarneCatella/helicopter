@@ -27,20 +27,20 @@ export class ImprovedNoise {
 
 	/* private methods */
 
-	_fade( t ) {
-		return t * t * t * ( t * ( t * 6 - 15 ) + 10 );
+	_fade(t) {
+		return t * t * t * (t * (t * 6 - 15) + 10);
 	}
 
-	_lerp( t, a, b ) {
-		return a + t * ( b - a );
+	_lerp(t, a, b) {
+		return a + t * (b - a);
 	}
 
-	_grad( hash, x, y, z ) {
+	_grad(hash, x, y, z) {
 
 		var h = hash & 15;
 		var u = h < 8 ? x : y, v = h < 4 ? y : h == 12 || h == 14 ? x : z;
 		
-		return ( ( h & 1 ) == 0 ? u : - u ) + ( ( h & 2 ) == 0 ? v : - v );
+		return ((h & 1) == 0 ? u : - u) + ((h & 2) == 0 ? v : - v);
 	}
 
 	/* public methods */
