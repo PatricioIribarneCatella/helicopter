@@ -253,10 +253,18 @@ export class LegRotation {
 export class StairwayRotation {
 
 	constructor(angle) {
-		
+	
 		this.angle = angle;
+		this.minAngle = angle;
+		this.maxAngle = angle - Math.PI/2;
+		this.delta = 0.02;
+
 		this.opened = false;
+		this.hasEnd = false;
 		this.prevState = false;
+		this.targetOpen = false;
+		this.targetClose = false;
+
 		this.modelMatrix = mat4.create();
 
 		this._init();
@@ -275,31 +283,58 @@ export class StairwayRotation {
 	update(controller) {
 		
 		var state = controller.getDoorChanged();
-	
-		if (state === this.prevState)
-			return;
+		var target;
 
-		mat4.identity(this.modelMatrix);
+		if (state === this.prevState) {
+
+			if (this.opened && this.targetClose) {
+			
+				target = this.angle + this.delta;
+				this.angle = Math.min(target, this.minAngle);
+
+				if (this.angle === this.minAngle) {
+					this.opened = false;
+					this.targetClose = false;
+				}
+
+			} else if (!this.opened && this.targetOpen) {
+			
+				target = this.angle - this.delta;
+				this.angle = Math.max(target, this.maxAngle);
+
+				if (this.angle === this.maxAngle) {
+					this.opened = true;
+					this.hasEnd = true;
+					this.targetOpen = false;
+				}
+			}
+			
+			mat4.identity(this.modelMatrix);
+			
+			mat4.rotate(this.modelMatrix,
+				    this.modelMatrix,
+				    this.angle,
+				    [0.0, 0.0, 1.0]);
 		
-		var angle;
+			return;
+		}
+		
 		this.prevState = state;
 
 		if (this.opened) {
-			angle = this.angle;
-			this.opened = false;
+			this.targetClose = true;
+			this.hasEnd = false;
 		} else {
-			angle = this.angle - Math.PI/2;
-			this.opened = true;
+			this.targetOpen = true;
 		}
-
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    angle,
-			    [0.0, 0.0, 1.0]);
 	}
 
 	getMatrix() {
 		return this.modelMatrix;
+	}
+
+	hasFinished() {
+		return this.hasEnd;
 	}
 }
 

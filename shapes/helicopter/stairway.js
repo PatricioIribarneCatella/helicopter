@@ -169,13 +169,17 @@ export class StairwayStep extends SweepSurface {
 
 export class Steps extends Container3D {
 
-	constructor(gl, shader) {
+	constructor(gl, shader, r1, r2) {
 
 		super([new Translation([2.0, -2.0, 1.0]),
 		       new Rotation([1.0, 0.0, 0.0], Math.PI/4, 0.0)]);
 
 		this.gl = gl;
 		this.shader = shader;
+		this.r1 = r1;
+		this.r2 = r2;
+
+		this.hasChanged = false;
 		this.visibility = false;
 		this.prevState = false;
 
@@ -203,15 +207,20 @@ export class Steps extends Container3D {
 
 		var state = controller.getDoorChanged();
 
-		if (state === this.prevState)
+		if (state === this.prevState) {
+
+			if (this.hasChanged && this.r1.hasFinished() && this.r2.hasFinished())
+				this.visibility = true;
+
 			return this.visibility;
+		}
 
 		this.prevState = state;
 
 		if (this.visibility) {
 			this.visibility = false;
 		} else {
-			this.visibility = true;
+			this.hasChanged = true;
 		}
 
 		return this.visibility;
