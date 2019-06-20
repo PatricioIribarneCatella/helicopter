@@ -120,17 +120,23 @@ export class LandingLeg extends Container3D {
 	constructor(position, gl, shader) {
 
 		var upAngle, downAngle;
-		
+	
+		var up = Math.PI/3;
+		var down = 2*Math.PI/3;
+
 		if (position === "left") {
-			upAngle = Math.PI/4;
-			downAngle = -Math.PI/2;
+			upAngle = up;
+			downAngle = -down;
 		} else {
-			upAngle = -Math.PI/4;
-			downAngle = Math.PI/2;
+			upAngle = -up;
+			downAngle = down;
 		}
 
-		super([new LegRotation(upAngle)]);
+		var delta = 0.01;
 
+		super([new LegRotation(upAngle, delta)]);
+
+		this.delta = delta;
 		this.upAngle = upAngle;
 		this.downAngle = downAngle;
 
@@ -164,7 +170,7 @@ export class LandingLeg extends Container3D {
 		//// Down and Base ////
 
 		var tcDown = [new Translation([0.0, -1.5, 0.0]),
-			      new LegRotation(this.downAngle)];
+			      new LegRotation(this.downAngle, this.delta*2)];
 		var cdown = new Container3D(tcDown);
 
 		//// Down ////
@@ -177,7 +183,7 @@ export class LandingLeg extends Container3D {
 		//// Base ////
 		var base = new LandingGearBase();
 		var tbase = [new Translation([0.0, -1.3, 0.0]),
-			     new LegRotation(this.upAngle),
+			     new LegRotation(this.upAngle, this.delta),
 		     	     new Scale([2.0/5.0, 1.0/4.0, 2.0/5.0]),
 			     new Rotation([0.0, 1.0, 0.0], Math.PI/4, 0.0),
 			     new Translation([0.0, -4.0, 0.0])];
