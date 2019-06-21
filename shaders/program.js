@@ -1,4 +1,4 @@
-import * as utils from '../libs/utils.js';
+import * as utils from '../utils/utils.js';
 
 //
 // Manipulates GL programs and

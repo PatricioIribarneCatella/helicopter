@@ -1,4 +1,4 @@
-import {ImprovedNoise} from '../../libs/noise.js';
+import {ImprovedNoise} from '../../utils/noise.js';
 
 import {Color} from '../../3d/color.js';
 import {Grid} from '../../shapes/grid.js';
