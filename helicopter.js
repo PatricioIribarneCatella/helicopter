@@ -156,14 +156,14 @@ export class HelicopterApp extends App {
 		var scaleS = new Scale([0.4, 0.4, 0.4]);
 
 		// Red sphere light
-		var treds = [new Translation([2.0, -1.0, 5.0]),
+		var treds = [new Translation([2.0, -1.0, -5.0]),
 			     scaleS];
 		var gred = new Graphic(this.gl, reds, treds, shader);
 
 		backHelixAndLegs.add(gred);
 
 		// Green sphere light
-		var tgreens = [new Translation([2.0, -1.0, -5.0]),
+		var tgreens = [new Translation([2.0, -1.0, 5.0]),
 			       scaleS];
 		var ggreen = new Graphic(this.gl, greens, tgreens, shader);
 
