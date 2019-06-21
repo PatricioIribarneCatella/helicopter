@@ -167,6 +167,69 @@ export class StairwayStep extends SweepSurface {
 	}
 }
 
+class Step extends Graphic {
+
+	constructor(gl, shader, id, size, r1, r2) {
+	
+		var step = new StairwayStep();
+		
+		var t = [new Translation([0.0, 0.0, 2*(Math.sqrt(2)/3.0)*id]),
+			 new Scale([1.0, 0.5, Math.sqrt(2)/3.0])];
+
+		super(gl, step, t, shader);
+
+		this.id = id + 1;
+		this.current = id + 1;
+		this.size = size;
+
+		this.r1 = r1;
+		this.r2 = r2;
+
+		this.hasChanged = false;
+		this.visibility = false;
+		this.prevState = false;
+	}
+
+	_isVisible(controller) {
+
+		var state = controller.getDoorChanged();
+
+		if (state === this.prevState) {
+
+			if (this.hasChanged &&
+				this.r1.hasFinished() &&
+				this.r2.hasFinished() && this.current > 0) {
+				
+				this.current -= 1;
+				
+				if (this.current == 0)
+					this.visibility = true;
+
+			} else if (!this.hasChanged && this.visibility) {
+				
+				if (this.current == this.size) {
+					this.visibility = false;
+					this.current = this.id;
+				} else
+					this.current++;
+			}
+
+			return this.visibility;
+		}
+
+		this.prevState = state;
+
+		if (this.visibility) {
+			this.hasChanged = false;
+			this.current = this.id - (this.size - this.id);
+		} else {
+			this.hasChanged = true;
+		}
+
+		return this.visibility;
+	}
+}
+
 export class Steps extends Container3D {
 
 	constructor(gl, shader, r1, r2) {
@@ -179,10 +242,6 @@ export class Steps extends Container3D {
 		this.r1 = r1;
 		this.r2 = r2;
 
-		this.hasChanged = false;
-		this.visibility = false;
-		this.prevState = false;
-
 		this._initialize();
 	}
 
@@ -190,39 +249,16 @@ export class Steps extends Container3D {
 
 	_initialize() {
 	
-		var step = new StairwayStep();
 		var t;
 
 		for (var i = 0; i < 6; i++) {
-			
-			t = [new Translation([0.0, 0.0, 2*(Math.sqrt(2)/3.0)*i]),
-			     new Scale([1.0, 0.5, Math.sqrt(2)/3.0])];
-			var gstep = new Graphic(this.gl, step, t, this.shader);
 
+			var gstep = new Step(this.gl,
+					     this.shader,
+					     i, 6,
+					     this.r1, this.r2);
 			this.add(gstep);
 		}
 	}
-
-	_isVisible(controller) {
-
-		var state = controller.getDoorChanged();
-
-		if (state === this.prevState) {
-
-			if (this.hasChanged && this.r1.hasFinished() && this.r2.hasFinished())
-				this.visibility = true;
-
-			return this.visibility;
-		}
-
-		this.prevState = state;
-
-		if (this.visibility) {
-			this.visibility = false;
-		} else {
-			this.hasChanged = true;
-		}
-
-		return this.visibility;
-	}
 }
+

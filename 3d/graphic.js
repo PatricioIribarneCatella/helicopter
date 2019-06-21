@@ -253,32 +253,39 @@ export class Graphic {
 		return true;
 	}
 
+	_isVisible(controller) {
+		return true;
+	}
+
 	/* public methods */
 
 	draw(camera, controller, lights, matrix) {
 		
-		this.program.use();
-		
-		camera.bind(this.program);
+		if (this._isVisible(controller)) {
 
-		this._updateTransformations(matrix);
-
-		this._bindTransformations();
-
-		if (this._isLighting()) {
+			this.program.use();
 			
-			this._updateNormals(camera.getView());
+			camera.bind(this.program);
 
-			this._bindNormals();
+			this._updateTransformations(matrix);
 
-			this._bindLights(lights, camera.getEye());
+			this._bindTransformations();
+
+			if (this._isLighting()) {
+				
+				this._updateNormals(camera.getView());
+
+				this._bindNormals();
+
+				this._bindLights(lights, camera.getEye());
+			}
+
+			this._bindTexture();
+			
+			this._draw();
+
+			this._animate(controller);
 		}
-
-		this._bindTexture();
-		
-		this._draw();
-
-		this._animate(controller);
 	}
 
 	loadTexture(path) {
