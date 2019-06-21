@@ -44,17 +44,24 @@ export class LandingGear extends SweepSurface {
 
 	_complete(path) {
 
-		var k, p;
+		var k, p, n;
 
 		var pos_buffer = [];
+		var norm_buffer = [];
 
 		p = path.get(0.0);
+		n = [0.0, -1.0, 0.0];
 
 		// Add level zero to create the 'floor'
 		for (k = 0; k < this.cols; k++) {
+			
 			pos_buffer.push(p[0]);
 			pos_buffer.push(p[1]);
 			pos_buffer.push(p[2]);
+
+			norm_buffer.push(n[0]);
+			norm_buffer.push(n[1]);
+			norm_buffer.push(n[2]);
 		}
 
 		// Move all the points to the new buffer
@@ -62,19 +69,29 @@ export class LandingGear extends SweepSurface {
 			pos_buffer.push(this.position_buffer[k]);
 		}
 
+		for (k = 0; k < this.normal_buffer.length; k++) {
+			norm_buffer.push(this.normal_buffer[k]);
+		}
+
 		p = path.get(1.0);
+		n = [0.0, 1.0, 0.0];
 		
 		// Add final level to create the 'roof'
 		for (k = 0; k < this.cols; k++) {
+			
 			pos_buffer.push(p[0]);
 			pos_buffer.push(p[1]);
 			pos_buffer.push(p[2]);
+
+			norm_buffer.push(n[0]);
+			norm_buffer.push(n[1]);
+			norm_buffer.push(n[2]);
 		}
 
 		this.position_buffer = pos_buffer;
+		this.normal_buffer = norm_buffer;
 
 		this.rows += 2;
-
 	}
 }
 
@@ -103,17 +120,23 @@ export class LandingLeg extends Container3D {
 	constructor(position, gl, shader) {
 
 		var upAngle, downAngle;
-		
+	
+		var up = Math.PI/3;
+		var down = 2*Math.PI/3;
+
 		if (position === "left") {
-			upAngle = Math.PI/4;
-			downAngle = -Math.PI/2;
+			upAngle = up;
+			downAngle = -down;
 		} else {
-			upAngle = -Math.PI/4;
-			downAngle = Math.PI/2;
+			upAngle = -up;
+			downAngle = down;
 		}
 
-		super([new LegRotation(upAngle)]);
+		var delta = 0.01;
 
+		super([new LegRotation(upAngle, delta)]);
+
+		this.delta = delta;
 		this.upAngle = upAngle;
 		this.downAngle = downAngle;
 
@@ -147,7 +170,7 @@ export class LandingLeg extends Container3D {
 		//// Down and Base ////
 
 		var tcDown = [new Translation([0.0, -1.5, 0.0]),
-			      new LegRotation(this.downAngle)];
+			      new LegRotation(this.downAngle, this.delta*2)];
 		var cdown = new Container3D(tcDown);
 
 		//// Down ////
@@ -160,7 +183,7 @@ export class LandingLeg extends Container3D {
 		//// Base ////
 		var base = new LandingGearBase();
 		var tbase = [new Translation([0.0, -1.3, 0.0]),
-			     new LegRotation(this.upAngle),
+			     new LegRotation(this.upAngle, this.delta),
 		     	     new Scale([2.0/5.0, 1.0/4.0, 2.0/5.0]),
 			     new Rotation([0.0, 1.0, 0.0], Math.PI/4, 0.0),
 			     new Translation([0.0, -4.0, 0.0])];

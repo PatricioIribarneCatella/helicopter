@@ -1,15 +1,15 @@
-// MATRIX with BITMAP VERTEX SHADER
+// NORMAL MATRIX VERTEX SHADER
 
-var bitmap_vertex_shader = `attribute vec3 aVertexPosition;
+var normal_vertex_shader = `attribute vec3 aVertexPosition;
+			    attribute vec3 aVertexColor;
 			    attribute vec3 aVertexNormal;
-			    attribute vec2 aTextureCoord;
 
 			    uniform mat4 normal;
 			    uniform mat4 model;
 			    uniform mat4 pv;
 
-			    varying vec2 vTextureCoord;
- 			    varying vec3 vNormal;
+			    varying highp vec4 vColor;
+			    varying vec3 vNormal;
 			    varying vec3 vPosWorld;
 
 			    void main(void) {
@@ -20,7 +20,6 @@ var bitmap_vertex_shader = `attribute vec3 aVertexPosition;
 
 				vNormal = (normal * vec4(aVertexNormal, 1.0)).xyz;
 
-				vec2 uvCoord = aTextureCoord;
-				vTextureCoord = uvCoord;
+				vColor = vec4(aVertexColor, 1.0);
 			    }`;
 

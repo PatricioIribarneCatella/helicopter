@@ -30,7 +30,7 @@ export class SweepSurface extends Surface {
 	
 	_createModel() {
 
-		var u, v, p, t, b, n, scaleX, scaleY, pos, matrix;
+		var u, v, p, t, b, n, nS, scaleX, scaleY, posP, posS, matrix;
 
 		var gradientScaleX = (this.endScale[0] - 1) / (this.rows - 1);
 		var gradientScaleY = (this.endScale[1] - 1) / (this.rows - 1);
@@ -50,31 +50,42 @@ export class SweepSurface extends Surface {
 			t = this.path.getTangent(u);
 			b = this.path.getBinormal(u);
 			n = this.path.getNormal(u);
-			pos = this.path.get(u);
+			posP = this.path.get(u);
 
 			for (var k = 0; k < 3; k++) {
 			
 				matrix[k] = b[k];
 				matrix[k+4] = n[k];
 				matrix[k+8] = t[k];
-				matrix[k+12] = pos[k];
+				matrix[k+12] = 0.0;
 			}
 
 			for (var j = 0.0; j < this.cols; j++) {
 
 				v = j / (this.cols - 1);
 
-				pos = this.shape.get(v);
+				posS = this.shape.get(v);
+				nS = this.shape.getNormal(v);
 
 				// scale shape
-				pos = [pos[0]*scaleX, pos[1]*scaleY, pos[2]];
+				posS = [posS[0]*scaleX, posS[1]*scaleY, posS[2]];
 
-				p = vec4.fromValues(pos[0], pos[1], pos[2], 1);
+				// transform position
+				p = vec4.fromValues(posS[0], posS[1], posS[2], 1);
 				p = vec4.transformMat4(p, p, matrix);
+				p = [p[0] + posP[0], p[1] + posP[1], p[2] + posP[2]];
 
 				this.position_buffer.push(p[0]);
 				this.position_buffer.push(p[1]);
 				this.position_buffer.push(p[2]);
+
+				// transform normal
+				p = vec4.fromValues(nS[0], nS[1], nS[2], 1);
+				p = vec4.transformMat4(p, p, matrix);
+
+				this.normal_buffer.push(p[0]);
+				this.normal_buffer.push(p[1]);
+				this.normal_buffer.push(p[2]);
 			}
 		}
 	}

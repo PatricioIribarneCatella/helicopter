@@ -13,12 +13,20 @@ import {HelicopterRotation,
 	StairwayRotation} from '../transformations/helicopter/rotation.js';
 import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
 
-import {Graphic} from '../3d/graphic.js';
-import {Container3D} from '../3d/container.js';
 import {World} from '../3d/world.js';
 import {Color} from '../3d/color.js';
+import {Graphic} from '../3d/graphic.js';
+import {Container3D} from '../3d/container.js';
+import {GraphicLand} from '../3d/helicopter/land.js';
+import {GraphicSky} from '../3d/helicopter/sky.js';
+import {GraphicReflect} from '../3d/helicopter/reflect.js';
+
+import {DirectLight} from '../lights/direct.js';
+import {PointLight} from '../lights/point.js';
+import {SpotLight} from '../lights/spot.js';
 
 import {Grid} from "../shapes/grid.js";
+import {Sphere} from "../shapes/sphere.js";
 import {Cylinder} from '../shapes/cylinder.js';
 import {BackCenter} from '../shapes/helicopter/back.js';
 import {FrontCenter} from '../shapes/helicopter/front.js';
@@ -40,12 +48,20 @@ export class HelicopterApp extends App {
 		var scene = new Scene(this.gl);
 
 		var shader = new ShaderProgram(this.gl,
-					       matrix_vertex_shader,
-					       simple_fragment_shader);
+					       normal_vertex_shader,
+					       normal_fragment_shader);
 
 		var landShader = new ShaderProgram(this.gl,
 						   bitmap_vertex_shader,
-						   simple_fragment_shader);
+						   bitmap_fragment_shader);
+
+		var skyShader = new ShaderProgram(this.gl,
+						  sky_vertex_shader,
+						  sky_fragment_shader);
+
+		var reflectShader = new ShaderProgram(this.gl,
+						      normal_vertex_shader,
+						      reflect_fragment_shader);
 
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
@@ -55,24 +71,40 @@ export class HelicopterApp extends App {
 		var controller = new HeliController();
 		scene.addController(controller);
 
+		// Lights
+		var lights = {
+			direct: new DirectLight([0.0, 1.0, 1.0], [1.0, 1.0, 1.0]),
+			spot: new SpotLight([1.75, -0.25, 0.0],
+					    [1.0, -2.0, 0.0],
+					    [1.0, 1.0, 1.0]),
+			red: new PointLight([-1.5, -0.5, 0.75], [1.0, 0.0, 0.0]),
+			green: new PointLight([-1.5, -0.5, -0.75], [0.0, 1.0, 0.0])
+		};
+		scene.addLights(lights);
+
 		// World
 		var world = new World();
 
-		// Lanscape
+		// Sky sphere
+		var gsky = new GraphicSky(this.gl, skyShader);
+		gsky.loadTexture("img/sunset.jpg");
 
-		var land = new Grid(200, 200, new Color([0.4, 0.4, 0.4]));
-		var tland = [new Translation([0.0, -5.0, 0.0]),
-			     new Rotation([1.0, 0.0, 0.0], Math.PI/2, 0.0)];
-		var gland = new Graphic(this.gl, land, tland, landShader);
-		gland.loadTexture("img/land-perlin-2.png");
+		world.add(gsky);
+		
+		// Lanscape
+		var gland = new GraphicLand(this.gl, landShader);
+		gland.loadTexture("img/pasto.jpg", "uSPasto");
+		gland.loadTexture("img/piedras.jpg", "uSPiedras");
+		gland.loadTexture("img/tierra.jpg", "uSTierra");
+		gland.loadTexture("img/tierraseca.jpg", "uSTierraSeca");
 
 		world.add(gland);
 
 		// Helicopter Tree
-
 		var t = [new HelicopterTranslation(),
 			 new HelicopterRotation(),
 			 new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0),
+			 new Scale([0.25, 0.25, 0.25]),
 			 new Translation([-4.0, 0.0, 0.0])];
 		var helicopter = new Container3D(t);
 
@@ -83,7 +115,8 @@ export class HelicopterApp extends App {
 		// Front center
 		var front = new FrontCenter(50, 50);
 		var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
-		var gfront = new Graphic(this.gl, front, t1, shader);
+		var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
+		gfront.loadTexture("img/sunset.jpg");
 
 		helicopter.add(gfront);
 
@@ -101,7 +134,9 @@ export class HelicopterApp extends App {
 		var t3 = [new Translation([2.0, 0.0, 0.0])];
 		var hexaCenterAndDoor = new Container3D(t3);
 		var hexa = new HexagonCenter(50, 50);
-		var ghexa = new Graphic(this.gl, hexa, [new Identity()], shader);
+		var ghexa = new GraphicReflect(this.gl,
+					hexa, [new Identity()], reflectShader);
+		ghexa.loadTexture("img/sunset.jpg");
 
 		hexaCenterAndDoor.add(ghexa);
 
@@ -109,10 +144,30 @@ export class HelicopterApp extends App {
 
 		// Second curve center
 		var backHelixAndLegs = new Container3D([new Translation([8.0, 0.0, 0.0])]);
+		
 		var t4 = [new Scale([2.0, 1.0, 1.0])];
 		var gcurve2 = new Graphic(this.gl, curve, t4, shader);
-
+		
 		backHelixAndLegs.add(gcurve2);
+		
+		// Lights
+		var reds = new Sphere(20, 20, new Color([1.0, 0.0, 0.0]));
+		var greens = new Sphere(20, 20, new Color([0.0, 1.0, 0.0]));
+		var scaleS = new Scale([0.4, 0.4, 0.4]);
+
+		// Red sphere light
+		var treds = [new Translation([2.0, -1.0, 5.0]),
+			     scaleS];
+		var gred = new Graphic(this.gl, reds, treds, shader);
+
+		backHelixAndLegs.add(gred);
+
+		// Green sphere light
+		var tgreens = [new Translation([2.0, -1.0, -5.0]),
+			       scaleS];
+		var ggreen = new Graphic(this.gl, greens, tgreens, shader);
+
+		backHelixAndLegs.add(ggreen);
 
 		helicopter.add(backHelixAndLegs);
 
@@ -211,9 +266,12 @@ export class HelicopterApp extends App {
 		
 		var door = new Stairway();
 
+		var r1 = new StairwayRotation(-Math.PI/4);
+		var r2 = new StairwayRotation(Math.PI/2);
+
 		var tdoor = [new Translation([3.0, -2.0, 1.0]),
 			     new Rotation([0.0, 1.0, 0.0], -Math.PI/2, 0.0),
-			     new StairwayRotation(-Math.PI/4)];
+			     r1];
 		var cdoor = new Container3D(tdoor);
 
 		var t17 = [new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
@@ -223,7 +281,7 @@ export class HelicopterApp extends App {
 		cdoor.add(gstair1);
 
 		var t18 = [new Translation([0.0, 2*Math.sqrt(2), 0.0]),
-			   new StairwayRotation(Math.PI/2),
+			   r2,
 			   new Scale([1.0, Math.sqrt(2)/2.0, 1.5]),
 			   new Translation([0.0, 2.0, 0.0])];
 		var gstair2 = new Graphic(this.gl, door, t18, shader);
@@ -232,7 +290,7 @@ export class HelicopterApp extends App {
 
 		hexaCenterAndDoor.add(cdoor);
 
-		var steps = new Steps(this.gl, shader);
+		var steps = new Steps(this.gl, shader, r1, r2);
 
 		hexaCenterAndDoor.add(steps);
 

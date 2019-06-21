@@ -86,8 +86,15 @@ export class MotorRotation {
 	constructor(position) {
 		
 		this.position = position;
+		
 		this.up = false;
 		this.prevState = false;
+		this.targetUp = false;
+		this.targetDown = false;
+
+		this.angle = 0.0;
+		this.delta = 0.01;
+
 		this.modelMatrix = mat4.create();
 	}
 
@@ -96,35 +103,63 @@ export class MotorRotation {
 	update(controller) {
 		
 		var state = controller.getMotorPosChanged();
-	
-		if (state === this.prevState)
-			return;
+		var target;
 
-		mat4.identity(this.modelMatrix);
+		if (state === this.prevState) {
+			
+			if (this.up && this.targetDown) {
+			
+				if (this.position === "left") {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, 0.0);
+				} else {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, 0.0);
+				}
+				
+				if (this.angle == 0.0) {
+					this.up = false;
+					this.targetDown = false;
+				}
+
+			} else if (!this.up && this.targetUp) {
+
+				if (this.position === "left") {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, Math.PI/2);
+				} else {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, -Math.PI/2);
+				}
+				
+				if (this.angle == Math.PI/2 || this.angle == -Math.PI/2) {
+					this.up = true;
+					this.targetUp = false;
+				}
+			}
+			
+			mat4.identity(this.modelMatrix);
+	
+			mat4.rotate(this.modelMatrix,
+			    this.modelMatrix,
+			    this.angle,
+			    [0.0, 1.0, 0.0]);
+
+			return;
+		}
 		
 		this.prevState = state;
 
 		if (this.up) {
-			this.angle = 0.0;
-			this.up = false;
+			this.targetDown = true;
 		} else {
-			if (this.position === "left")
-				this.angle = Math.PI/2;
-			else
-				this.angle = -Math.PI/2;
-			this.up = true;
+			this.targetUp = true;
 		}
-
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    this.angle,
-			    [0.0, 1.0, 0.0]);
 	}
 
 	getMatrix() {
 		return this.modelMatrix;
 	}
-
 }
 
 //
@@ -133,11 +168,17 @@ export class MotorRotation {
 //
 export class LegRotation {
 
-	constructor(angle) {
+	constructor(angle, delta) {
 		
-		this.angle = angle;
-		this.extended = false;
+		this.maxAngle = angle;
+		this.angle = 0.0;
+		this.delta = delta;
+
+		this.extended = true;
+		this.targetContract = false;
+		this.targetExtended = false;
 		this.prevState = false;
+		
 		this.modelMatrix = mat4.create();
 	}
 
@@ -146,27 +187,58 @@ export class LegRotation {
 	update(controller) {
 		
 		var state = controller.getLegPosChanged();
-	
-		if (state === this.prevState)
-			return;
+		var target;
 
-		mat4.identity(this.modelMatrix);
-		
-		var angle;
+		if (state === this.prevState) {
+
+			if (this.extended && this.targetContract) {
+				
+				if (this.maxAngle > 0.0) {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, this.maxAngle);
+				} else {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, this.maxAngle);
+				}
+				
+				if (this.angle == this.maxAngle) {
+					this.extended = false;
+					this.targetContract = false;
+				}
+
+			} else if (!this.extended && this.targetExtended) {
+				
+				if (this.maxAngle > 0.0) {
+					target = this.angle - this.delta;
+					this.angle = Math.max(target, 0.0);
+				} else {
+					target = this.angle + this.delta;
+					this.angle = Math.min(target, 0.0);
+				}
+
+				if (this.angle == 0.0) {
+					this.extended = true;
+					this.targetExtended = false;
+				}
+			}
+
+			mat4.identity(this.modelMatrix);
+
+			mat4.rotate(this.modelMatrix,
+				    this.modelMatrix,
+				    this.angle,
+				    [1.0, 0.0, 0.0]);
+
+			return;
+		}
+
 		this.prevState = state;
 
 		if (this.extended) {
-			angle = 0.0;
-			this.extended = false;
+			this.targetContract = true;
 		} else {
-			angle = this.angle;
-			this.extended = true;
+			this.targetExtended = true;
 		}
-
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    angle,
-			    [1.0, 0.0, 0.0]);
 	}
 
 	getMatrix() {
@@ -181,10 +253,18 @@ export class LegRotation {
 export class StairwayRotation {
 
 	constructor(angle) {
-		
+	
 		this.angle = angle;
+		this.minAngle = angle;
+		this.maxAngle = angle - Math.PI/2;
+		this.delta = 0.02;
+
 		this.opened = false;
+		this.hasEnd = false;
 		this.prevState = false;
+		this.targetOpen = false;
+		this.targetClose = false;
+
 		this.modelMatrix = mat4.create();
 
 		this._init();
@@ -203,31 +283,58 @@ export class StairwayRotation {
 	update(controller) {
 		
 		var state = controller.getDoorChanged();
-	
-		if (state === this.prevState)
-			return;
+		var target;
 
-		mat4.identity(this.modelMatrix);
+		if (state === this.prevState) {
+
+			if (this.opened && this.targetClose) {
+			
+				target = this.angle + this.delta;
+				this.angle = Math.min(target, this.minAngle);
+
+				if (this.angle === this.minAngle) {
+					this.opened = false;
+					this.targetClose = false;
+				}
+
+			} else if (!this.opened && this.targetOpen) {
+			
+				target = this.angle - this.delta;
+				this.angle = Math.max(target, this.maxAngle);
+
+				if (this.angle === this.maxAngle) {
+					this.opened = true;
+					this.hasEnd = true;
+					this.targetOpen = false;
+				}
+			}
+			
+			mat4.identity(this.modelMatrix);
+			
+			mat4.rotate(this.modelMatrix,
+				    this.modelMatrix,
+				    this.angle,
+				    [0.0, 0.0, 1.0]);
 		
-		var angle;
+			return;
+		}
+		
 		this.prevState = state;
 
 		if (this.opened) {
-			angle = this.angle;
-			this.opened = false;
+			this.targetClose = true;
+			this.hasEnd = false;
 		} else {
-			angle = this.angle - Math.PI/2;
-			this.opened = true;
+			this.targetOpen = true;
 		}
-
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    angle,
-			    [0.0, 0.0, 1.0]);
 	}
 
 	getMatrix() {
 		return this.modelMatrix;
+	}
+
+	hasFinished() {
+		return this.hasEnd;
 	}
 }
 

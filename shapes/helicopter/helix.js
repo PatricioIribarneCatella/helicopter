@@ -66,7 +66,7 @@ export class HelixConnector extends SweepSurface {
 					[5.0, 0.0, 0.0],
 					[6.0, 0.0, 0.0]]);
 
-		var c = new Color([1.0, 0.27, 0.0]);
+		var c = new Color([0.4, 0.4, 0.4]);
 
 		super(shape, path, rows, cols, [0.2, 0.2], c);
 
@@ -76,17 +76,24 @@ export class HelixConnector extends SweepSurface {
 
 	_complete(path) {
 	
-		var k, p;
+		var k, p, n;
 
 		var pos_buffer = [];
+		var norm_buffer = [];
 
 		p = path.get(0.0);
+		n = [0.0, -1.0, 0.0];
 
 		// Add level zero to create the 'floor'
 		for (k = 0; k < this.cols; k++) {
+			
 			pos_buffer.push(p[0]);
 			pos_buffer.push(p[1]);
 			pos_buffer.push(p[2]);
+
+			norm_buffer.push(n[0]);
+			norm_buffer.push(n[1]);
+			norm_buffer.push(n[2]);
 		}
 
 		// Move all the points to the new buffer
@@ -94,16 +101,27 @@ export class HelixConnector extends SweepSurface {
 			pos_buffer.push(this.position_buffer[k]);
 		}
 
+		for (k = 0; k < this.normal_buffer.length; k++) {
+			norm_buffer.push(this.normal_buffer[k]);
+		}
+
 		p = path.get(1.0);
+		n = [0.0, 1.0, 0.0];
 		
 		// Add final level to create the 'roof'
 		for (k = 0; k < this.cols; k++) {
+			
 			pos_buffer.push(p[0]);
 			pos_buffer.push(p[1]);
 			pos_buffer.push(p[2]);
+
+			norm_buffer.push(n[0]);
+			norm_buffer.push(n[1]);
+			norm_buffer.push(n[2]);
 		}
 
 		this.position_buffer = pos_buffer;
+		this.normal_buffer = norm_buffer;
 
 		this.rows += 2;
 	}

@@ -22,6 +22,10 @@ export class Scene {
 		this.controller = controller;
 	}
 
+	addLights(lights) {
+		this.lights = lights;
+	}
+
 	draw() {
 		window.requestAnimationFrame(() => this.draw());
 		
@@ -29,9 +33,13 @@ export class Scene {
 
 		this.camera.update(this.controller);
 
+		for (var l in this.lights) {
+			this.lights[l].update(this.controller);
+		}
+
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-		this.world.draw(this.camera, this.controller);
+		this.world.draw(this.camera, this.controller, this.lights);
 
 		$("#display").html(this.controller.getInfo());
 	}

@@ -21,18 +21,39 @@ export class Sphere extends Surface {
 
 	_createModel() {
 
-		for (var i = 0.0; i < this.rows; i++) {
-			for (var j = 0.0; j < this.cols; j++) {
-				
-				var x = Math.cos(i * this.theta) * Math.sin(j * this.phi);
-				var y = Math.sin(i * this.theta) * Math.sin(j * this.phi);
-				var z = Math.cos(j * this.phi);
-				
+		for (var i = 0; i < this.rows; i++) {
+
+			var theta = i * Math.PI / this.rows;
+			var sinTheta = Math.sin(theta);
+			var cosTheta = Math.cos(theta);
+
+			for (var j = 0; j <= this.cols; j++) {
+
+				var phi = j * 2 * Math.PI / this.cols;
+				var sinPhi = Math.sin(phi);
+				var cosPhi = Math.cos(phi);
+
+				var x = cosPhi * sinTheta;
+				var y = cosTheta;
+				var z = sinPhi * sinTheta;
+
 				this.position_buffer.push(x);
 				this.position_buffer.push(y);
 				this.position_buffer.push(z);
-			};
-		};
+
+				this.normal_buffer.push(x);
+				this.normal_buffer.push(y);
+				this.normal_buffer.push(z);
+
+				var u = 1.0 - (j / this.cols);
+				var v = 1.0 - (i / this.rows);
+
+				this.coord_buffer.push(u);
+				this.coord_buffer.push(v);
+			}
+		}
+		
+		this.cols += 1;
 	}
 
 	_init() {

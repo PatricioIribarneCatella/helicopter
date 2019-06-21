@@ -14,10 +14,13 @@ export class World {
 		this.elements.push(e);
 	}
 
-	draw(camera, controller) {
+	draw(camera, controller, lights) {
 		var i;
 		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].draw(camera, controller, this.matrix);
+			this.elements[i].draw(camera,
+					      controller,
+					      lights,
+					      this.matrix);
 		}
 	}
 }
