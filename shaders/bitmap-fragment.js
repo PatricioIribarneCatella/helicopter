@@ -67,7 +67,14 @@ var bitmap_fragment_shader = `precision highp float;
 				   vec3 tierra = texture2D(uSTierra, vec2(vTextureCoord.s, vTextureCoord.t)).xyz;
 				   vec3 tierraSeca = texture2D(uSTierraSeca, vec2(vTextureCoord.s, vTextureCoord.t)).xyz;
 
-				   vec3 kDiffuse = mix(mix(mix(pasto, piedras, 0.3), tierra, 0.2), tierraSeca, 0.3);
+				   vec3 up = vec3(0.0, 1.0, 0.0);
+				   float upFactor = max(0.0, dot(up, normalize(vNormal)));
+				   float a = pow(upFactor, 10.0);
+				   float b = pow(1.0 - upFactor, 0.5);
+
+				   vec3 wall = mix(mix(mix(piedras, tierra, 0.5), tierraSeca, 0.5), pasto, 0.35);
+
+				   vec3 kDiffuse = a*pasto + b*wall;
 				   vec3 kAmbient = vec3(0.2, 0.2, 0.2);
 				   vec3 kSpecular = vec3(1.0, 1.0, 1.0);
 
