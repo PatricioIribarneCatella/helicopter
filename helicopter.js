@@ -144,10 +144,30 @@ export class HelicopterApp extends App {
 
 		// Second curve center
 		var backHelixAndLegs = new Container3D([new Translation([8.0, 0.0, 0.0])]);
+		
 		var t4 = [new Scale([2.0, 1.0, 1.0])];
 		var gcurve2 = new Graphic(this.gl, curve, t4, shader);
-
+		
 		backHelixAndLegs.add(gcurve2);
+		
+		// Lights
+		var reds = new Sphere(20, 20, new Color([1.0, 0.0, 0.0]));
+		var greens = new Sphere(20, 20, new Color([0.0, 1.0, 0.0]));
+		var scaleS = new Scale([0.4, 0.4, 0.4]);
+
+		// Red sphere light
+		var treds = [new Translation([2.0, -1.0, 5.0]),
+			     scaleS];
+		var gred = new Graphic(this.gl, reds, treds, shader);
+
+		backHelixAndLegs.add(gred);
+
+		// Green sphere light
+		var tgreens = [new Translation([2.0, -1.0, -5.0]),
+			       scaleS];
+		var ggreen = new Graphic(this.gl, greens, tgreens, shader);
+
+		backHelixAndLegs.add(ggreen);
 
 		helicopter.add(backHelixAndLegs);
 
