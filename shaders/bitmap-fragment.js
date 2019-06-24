@@ -5,11 +5,13 @@ var bitmap_fragment_shader = `precision highp float;
 			      varying vec3 vPosWorld; 
 			      varying vec2 vTextureCoord;
 
+			      uniform vec3 directLight;
 			      uniform vec3 leftLightPos;
 			      uniform vec3 rightLightPos;
 			      uniform vec3 spotLightPos;
 			      uniform vec3 spotLightDir;
 
+			      uniform vec3 directColor;
 			      uniform vec3 pointLeftColor;
 			      uniform vec3 pointRightColor;
 			      uniform vec3 spotColor;
@@ -26,6 +28,16 @@ var bitmap_fragment_shader = `precision highp float;
 				   float gloss = 64.0;
 				   vec3 eyeVec = normalize(eye);
 
+				   vec3 rVec = reflect(-normalize(directLight), normalize(vNormal));
+
+				   vec3 ambientDirectLight = directColor;
+			  	   vec3 diffuseDirectLight = directColor;
+				   vec3 specularDirectLight = directColor;
+
+				   vec3 directDiff = 0.1 * max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight;
+				   vec3 directSpec = 0.2 * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularDirectLight;
+
+
 				   vec3 lightDirection = normalize(spotLightDir);
 				   vec3 surfaceTolight = normalize(spotLightPos - vPosWorld);
 
@@ -34,32 +46,42 @@ var bitmap_fragment_shader = `precision highp float;
 				   float inLight = smoothstep(0.90, 0.50, dotFromLight);
 				   inLight = 1.0 - inLight;
 
-				   vec3 rVec = reflect(-surfaceTolight, normalize(vNormal));
+				   rVec = reflect(-surfaceTolight, normalize(vNormal));
 				   
 				   vec3 spotDiff = max(0.0, inLight * dot(surfaceTolight, vNormal)) * spotColor;
 				   vec3 spotSpec = pow(max(0.0, inLight * dot(rVec, eyeVec)), gloss) * spotColor;
 
+				   float a = 0.5;
+				   float b = 0.5;
+				   float c = 5.0;
+				   float d = 1.0;
 
 				   float distL = distance(leftLightPos, vPosWorld);
-				   float decayL = (5.0 / (0.2*distL*distL + distL + 5.0));
+				   float decayL = (d / (a * distL*distL + b * distL + c));
 
-				   vec3 specularLeftLight = pointLeftColor;
+				   vec3 ambientLeftLight = decayL * pointLeftColor;
+				   vec3 diffuseLeftLight = decayL * pointLeftColor;
+				   vec3 specularLeftLight = decayL * pointLeftColor;
 
 				   surfaceTolight = normalize(leftLightPos - vPosWorld);
 				   rVec = reflect(-surfaceTolight, normalize(vNormal));
 
-				   vec3 leftSpec = decayL * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight;
+				   vec3 leftDiff = max(0.0, dot(surfaceTolight, vNormal)) * diffuseLeftLight;
+				   vec3 leftSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight;
 
 
 				   float distR = distance(leftLightPos, vPosWorld);
-				   float decayR = (5.0 / (0.2*distR*distR + distR + 5.0));
+				   float decayR = (d / (a * distR*distR + b * distR + c));
 
-				   vec3 specularRightLight = pointRightColor;
+				   vec3 ambientRightLight = decayR * pointRightColor;
+				   vec3 diffuseRightLight = decayR * pointRightColor;
+				   vec3 specularRightLight = decayR * pointRightColor;
 
 				   surfaceTolight = normalize(rightLightPos - vPosWorld);
 				   rVec = reflect(-surfaceTolight, normalize(vNormal));
 
-				   vec3 rightSpec = decayR * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight;
+				   vec3 rightDiff = max(0.0, dot(surfaceTolight, vNormal)) * diffuseRightLight;
+				   vec3 rightSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight;
 
 
 				   vec3 pasto = texture2D(uSPasto, vec2(vTextureCoord.s, vTextureCoord.t)).xyz;
@@ -69,20 +91,21 @@ var bitmap_fragment_shader = `precision highp float;
 
 				   vec3 up = vec3(0.0, 1.0, 0.0);
 				   float upFactor = max(0.0, dot(up, normalize(vNormal)));
-				   float a = pow(upFactor, 10.0);
-				   float b = pow(1.0 - upFactor, 0.5);
+				   float planeF = pow(upFactor, 10.0);
+				   float wallF = pow(1.0 - upFactor, 0.5);
 
 				   vec3 wall = mix(mix(mix(piedras, tierra, 0.5), tierraSeca, 0.5), pasto, 0.35);
 
-				   vec3 kDiffuse = a*pasto + b*wall;
-				   vec3 kAmbient = vec3(0.2, 0.2, 0.2);
+				   vec3 kDiffuse = planeF * pasto + wallF * wall;
+				   vec3 kAmbientD = vec3(0.1, 0.1, 0.1);
+				   vec3 kAmbientP = vec3(0.1, 0.1, 0.1);
 				   vec3 kSpecular = vec3(1.0, 1.0, 1.0);
 
-				   vec3 ambientInten = kAmbient * vec3(1.0, 1.0, 1.0);
-				   vec3 diffInten = kDiffuse * (vec3(1.0, 1.0, 1.0) + spotDiff);
-				   vec3 specInten = kSpecular * (leftSpec + rightSpec + spotSpec);
+				   vec3 ambientInten = kAmbientD * ambientDirectLight + kAmbientP * (ambientLeftLight + ambientRightLight);
+				   vec3 diffInten = kDiffuse * (directDiff + leftDiff + rightDiff + spotDiff);
+				   vec3 specInten = kSpecular * (directSpec + leftSpec + rightSpec + spotSpec);
 
-				   vec3 color = diffInten + specInten;
+				   vec3 color = ambientInten + diffInten + specInten;
 
 				   gl_FragColor = vec4(color, 1.0);
 			     }`;
