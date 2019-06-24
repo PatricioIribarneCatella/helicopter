@@ -148,6 +148,7 @@ export class Graphic {
 		this.gl.uniform3fv(uniformGreenColor, lights.green.getColor());
 
 		var uniformEye = this.program.findUniform("eye");
+		
 		this.gl.uniform3fv(uniformEye, eye);
 	}
 
@@ -219,7 +220,7 @@ export class Graphic {
 	
 		mat4.identity(this.normalMatrix);
 
-		mat4.multiply(this.normalMatrix, viewMatrix, this.matrix);
+		mat4.multiply(this.normalMatrix, this.normalMatrix, this.matrix);
 		mat4.invert(this.normalMatrix, this.normalMatrix);
 		mat4.transpose(this.normalMatrix, this.normalMatrix);
 	}
@@ -273,7 +274,7 @@ export class Graphic {
 
 			if (this._isLighting()) {
 				
-				this._updateNormals(camera.getView());
+				this._updateNormals();
 
 				this._bindNormals();
 

@@ -26,7 +26,7 @@ var normal_fragment_shader = `precision highp float;
 			  	   vec3 diffuseDirectLight = directColor;
 				   vec3 specularDirectLight = directColor;
 
-				   vec3 directDiff = max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight;
+				   vec3 directDiff = 0.2*max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight;
 				   vec3 directSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularDirectLight;
 
 				   float a = 1.1;
