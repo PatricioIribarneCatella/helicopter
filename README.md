@@ -21,8 +21,10 @@ Helicóptero realizado con _WebGL_, _JS_, _JQuery_ y _glMatrix_ (_Sistemas Gráf
 
 - Cámaras:
   - _1_: Global
-  - _2_: Lateral
-  - _3_: Superior
-  - _4_: Trasera
+  - _2_: Orbital
+  - _3_: Lateral
+  - _4_: Superior
+  - _5_: Trasera
 
+  - _Mouse wheel_: desplazamiento orbital para cámaras _1_ y _2_.
 
