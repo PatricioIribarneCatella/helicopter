@@ -1,6 +1,9 @@
 
 function HeliController() {
 
+	//
+	// Movement variables
+	//
 	var xArrow = 0;
 	var yArrow = 0;
 	var zArrow = 0;
@@ -36,6 +39,47 @@ function HeliController() {
 	var angleTarget = 0;
 	var altitudeTarget = minAltitude;
 	var speedTarget = 0;
+
+	//
+	// Camera movement variables (orbital)
+	//
+	var isMouseDown = false;
+	var radio = 40, alfa = 0, beta = 0;
+	var factorVelocidad = 0.01;
+	var mouseZoom = 0.0;
+	var previous = {
+		x: 0,
+		y: 0
+	};
+	var mouse = {
+		x: 0,
+		y: 0
+	};
+	var posCameraX = 0.0;
+	var posCameraY = 50.0;
+	var posCameraZ = 40.0;
+
+	/////////////////////
+	//  Event Handlers //
+	/////////////////////
+	
+	// Camera movement
+
+	$('body').mousemove(function(e) {
+
+		mouse.x = e.clientX || e.pageX;
+		mouse.y = e.clientY || e.pageY;
+	});
+
+	$('body').mousedown(function(e) {
+		isMouseDown = true;
+	});
+
+	$('body').mouseup(function(e) {
+		isMouseDown = false;
+	});
+
+	// Movement
 
 	$("body").keydown(function(e) {
 		switch (e.key) {
@@ -87,6 +131,9 @@ function HeliController() {
 			case "4":
 				camera = 4;
 				break;
+			case "5":
+				camera = 5;
+				break;
 		}
 	});
 
@@ -115,6 +162,9 @@ function HeliController() {
 
 	this.update = function() {
 
+		//
+		// Movement Update
+		//
 		if (xArrow != 0) {
 			speedTarget += xArrow * deltaSpeed;
 		} else {
@@ -150,26 +200,61 @@ function HeliController() {
 		positionX += directionX;
 		positionZ += directionZ;
 		positionY = altitude;
+
+		//
+		// Camera movement Update
+		//
+		if (isMouseDown) {
+			
+			var deltaX = mouse.x - previous.x;
+			var deltaY = mouse.y - previous.y;
+
+			previous.x = mouse.x;
+			previous.y = mouse.y;
+
+			alfa = alfa + deltaX * factorVelocidad;
+			beta = beta + deltaY * factorVelocidad;
+
+			if (beta < 0)
+				beta = 0;
+
+			if (beta > Math.PI)
+				beta = Math.PI;
+		
+			posCameraX = radio * Math.sin(alfa) * Math.sin(beta);
+			posCameraY = radio * Math.cos(beta);
+			posCameraZ = radio * Math.cos(alfa) * Math.sin(beta);
+		}
 	}
 
 	this.getPosition = function() {
 		return {
-			x:positionX,
-			y:positionY,
-			z:positionZ,
+			x: positionX,
+			y: positionY,
+			z: positionZ,
 		};
 	}
 
-	this.getCamera = function () {
+	this.getCameraPosition = function() {
+		return {
+			x: posCameraX,
+			y: posCameraY,
+			z: posCameraZ,
+		};
+	}
+
+	this.getCameraType = function () {
 
 		switch (camera) {
 			case 1:
 				return "global";
 			case 2:
-				return "lateral";
+				return "orbital";
 			case 3:
-				return "up";
+				return "lateral";
 			case 4:
+				return "up";
+			case 5:
 				return "back";
 		}
 	}
@@ -215,7 +300,7 @@ function HeliController() {
 		out += " <t>speed: " + speed.toFixed(2) + "<br>";
 		out += " <t>altitude: " + altitude.toFixed(2) + "<br><br>";
 
-		out += " <b>Camera:</b> " + this.getCamera() + "<br><br>";
+		out += " <b>Camera:</b> " + this.getCameraType() + "<br><br>";
 
 		out += " <b>Angles:</b><br>"
 		out += " <t>yaw: " + angle.toFixed(2) + "<br>";

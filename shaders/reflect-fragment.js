@@ -33,35 +33,39 @@ var reflect_fragment_shader = `precision highp float;
 			  	   vec3 diffuseDirectLight = directColor;
 				   vec3 specularDirectLight = directColor;
 
-				   vec3 directDiff = max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight;
+				   vec3 directDiff = 0.2 * max(0.0, dot(normalize(directLight), vNormal)) * diffuseDirectLight;
 				   vec3 directSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularDirectLight;
 
+				   float a = 1.0;
+				   float b = 1.0;
+				   float c = 5.0;
+				   float d = 1.0;
 
 				   float distL = distance(leftLightPos, vPosWorld);
-				   float decayL = (5.0 / (0.4*distL*distL + distL + 5.0));
+				   float decayL = (d / (a * distL*distL + b * distL + c));
 
-				   vec3 ambientLeftLight = pointLeftColor;
-				   vec3 diffuseLeftLight = pointLeftColor;
-				   vec3 specularLeftLight = pointLeftColor;
+				   vec3 ambientLeftLight = decayL * pointLeftColor;
+				   vec3 diffuseLeftLight = decayL * pointLeftColor;
+				   vec3 specularLeftLight = decayL * pointLeftColor;
 
 				   vec3 surfaceTolight = normalize(leftLightPos - vPosWorld);
 				   rVec = reflect(-surfaceTolight, normalize(vNormal));
 
-				   vec3 leftDiff = decayL * max(0.0, dot(surfaceTolight, vNormal)) * diffuseLeftLight;
-				   vec3 leftSpec = decayL * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight;
+				   vec3 leftDiff = max(0.0, dot(surfaceTolight, vNormal)) * diffuseLeftLight;
+				   vec3 leftSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularLeftLight;
 
 				   float distR = distance(leftLightPos, vPosWorld);
-				   float decayR = (5.0 / (0.4*distR*distR + distR + 5.0));
+				   float decayR = (d / (a * distR*distR + b * distR + c));
 
-				   vec3 ambientRightLight = pointRightColor;
-				   vec3 diffuseRightLight = pointRightColor;
-				   vec3 specularRightLight = pointRightColor;
+				   vec3 ambientRightLight = decayR * pointRightColor;
+				   vec3 diffuseRightLight = decayR * pointRightColor;
+				   vec3 specularRightLight = decayR * pointRightColor;
 
 				   surfaceTolight = normalize(rightLightPos - vPosWorld);
 				   rVec = reflect(-surfaceTolight, normalize(vNormal));
 
-				   vec3 rightDiff = decayR * max(0.0, dot(surfaceTolight, vNormal)) * diffuseRightLight;
-				   vec3 rightSpec = decayR * pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight;
+				   vec3 rightDiff = max(0.0, dot(surfaceTolight, vNormal)) * diffuseRightLight;
+				   vec3 rightSpec = pow(max(0.0, dot(rVec, eyeVec)), gloss) * specularRightLight;
 
 
 				   vec3 kDiffuse = vColor.xyz;

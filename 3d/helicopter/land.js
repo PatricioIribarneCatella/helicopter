@@ -22,19 +22,29 @@ export class GraphicLand extends Graphic {
 	/* private methods */
 
 	_bindLights(lights, eye) {
-	
+
+		// Direct Light
+		var uniformDirectLight = this.program.findUniform("directLight");
+		var uniformDirectColor = this.program.findUniform("directColor");
+
+		this.gl.uniform3fv(uniformDirectLight, lights.direct.getDirection());
+		this.gl.uniform3fv(uniformDirectColor, lights.direct.getColor());
+
+		// Left Point Light
 		var uniformRedLightPos = this.program.findUniform("leftLightPos");
 		var uniformGreenLightPos = this.program.findUniform("rightLightPos");
 
 		this.gl.uniform3fv(uniformRedLightPos, lights.red.getPosition());
 		this.gl.uniform3fv(uniformGreenLightPos, lights.green.getPosition());
 
+		// Right Point Light
 		var uniformRedColor = this.program.findUniform("pointLeftColor");
 		var uniformGreenColor = this.program.findUniform("pointRightColor");
 
 		this.gl.uniform3fv(uniformRedColor, lights.red.getColor());
 		this.gl.uniform3fv(uniformGreenColor, lights.green.getColor());
 
+		// Spot Light
 		var uniformSpotPos = this.program.findUniform("spotLightPos");
 		var uniformSpotDir = this.program.findUniform("spotLightDir");
 		var uniformSpotColor = this.program.findUniform("spotColor");
@@ -43,6 +53,7 @@ export class GraphicLand extends Graphic {
 		this.gl.uniform3fv(uniformSpotDir, lights.spot.getDirection());
 		this.gl.uniform3fv(uniformSpotColor, lights.spot.getColor());
 
+		// Camera 'eye'
 		var uniformEye = this.program.findUniform("eye");
 		this.gl.uniform3fv(uniformEye, eye);
 	}

@@ -109,7 +109,7 @@ export class LandingGearBase extends RevolutionSurface {
 					[2.5, 0.0, 0.0],
 					[0.0, 0.0, 0.0]]);
 
-		var c = new Color([0.9, 0.9, 0.9]);
+		var c = new Color([0.2, 0.2, 0.2]);
 
 		super(shape, [0.0, 1.0, 0.0], 4, 20, c);
 	}
