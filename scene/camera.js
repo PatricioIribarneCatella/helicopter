@@ -53,7 +53,8 @@ export class Camera {
 
 	update(controller) {
 	
-		var cType = controller.getCameraType();
+		var type = controller.getCameraType();
+
 		var cPos = controller.getCameraPosition();
 		var p = controller.getPosition();
 		var angle = controller.getYaw();
@@ -62,14 +63,14 @@ export class Camera {
 		var up = [0.0, 1.0, 0.0];
 		var eye, aux;
 
-		switch (cType) {
+		switch (type) {
 			case "global":
 				center = [0.0, 0.0, 0.0];
 				eye = [cPos.x, cPos.y, cPos.z];
 				this.position = eye;
 				break;
 			case "orbital":
-				eye = [cPos.x, cPos.y, cPos.z];
+				eye = [cPos.x + p.x, cPos.y + p.y, cPos.z + p.z];
 				this.position = eye;
 				break;
 			case "lateral":

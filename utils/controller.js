@@ -44,7 +44,8 @@ function HeliController() {
 	// Camera movement variables (orbital)
 	//
 	var isMouseDown = false;
-	var radio = 40, alfa = 0, beta = 0;
+	var radio = 40, rOrbital = 20;
+	var alfa = 0, beta = 0;
 	var factorVelocidad = 0.01;
 	var mouseZoom = 0.0;
 	var previous = {
@@ -206,6 +207,7 @@ function HeliController() {
 		//
 		if (isMouseDown) {
 			
+			var r = radio;
 			var deltaX = mouse.x - previous.x;
 			var deltaY = mouse.y - previous.y;
 
@@ -220,10 +222,13 @@ function HeliController() {
 
 			if (beta > Math.PI)
 				beta = Math.PI;
-		
-			posCameraX = radio * Math.sin(alfa) * Math.sin(beta);
-			posCameraY = radio * Math.cos(beta);
-			posCameraZ = radio * Math.cos(alfa) * Math.sin(beta);
+	
+			if (camera == 2)
+				r = rOrbital;
+
+			posCameraX = r * Math.sin(alfa) * Math.sin(beta);
+			posCameraY = r * Math.cos(beta);
+			posCameraZ = r * Math.cos(alfa) * Math.sin(beta);
 		}
 	}
 
