@@ -44,7 +44,12 @@ function HeliController() {
 	// Camera movement variables (orbital)
 	//
 	var isMouseDown = false;
-	var radio = 40, alfa = 0, beta = 0;
+	var zoomChanged = false, zoomState = false;
+	var zoom = 0;
+	var maxRadioGlobal = 80, maxRadioOrbital = 40;
+	var minRadio = 10;
+	var currentRadio = maxRadioGlobal;
+	var alfa = 0, beta = 0;
 	var factorVelocidad = 0.01;
 	var mouseZoom = 0.0;
 	var previous = {
@@ -56,8 +61,8 @@ function HeliController() {
 		y: 0
 	};
 	var posCameraX = 0.0;
-	var posCameraY = 50.0;
-	var posCameraZ = 40.0;
+	var posCameraY = 40.0;
+	var posCameraZ = 50.0;
 
 	/////////////////////
 	//  Event Handlers //
@@ -77,6 +82,12 @@ function HeliController() {
 
 	$('body').mouseup(function(e) {
 		isMouseDown = false;
+	});
+
+	$('body').mousewheel(function(e) {
+		
+		zoomChanged = !zoomChanged;
+		zoom = e.deltaY * e.deltaFactor * -0.1;
 	});
 
 	// Movement
@@ -204,6 +215,30 @@ function HeliController() {
 		//
 		// Camera movement Update
 		//
+		var r = maxRadioGlobal;
+		
+		if (camera == 2)
+			r = maxRadioOrbital;
+
+		// If zoom is changed, update
+		// the coordinates by changing
+		// the radio
+		if (zoomChanged != zoomState) {
+			
+			var targetRadio = Math.min(r, Math.max(minRadio, currentRadio + zoom));
+			
+			posCameraX = targetRadio * Math.sin(alfa) * Math.sin(beta);
+			posCameraY = targetRadio * Math.cos(beta);
+			posCameraZ = targetRadio * Math.cos(alfa) * Math.sin(beta);
+			
+			currentRadio = targetRadio;
+			zoomState = zoomChanged;
+		}
+
+		// If mouse is pressed, update
+		// the coordinates by changing
+		// the alfa and beta parameters
+		// and using the same radio
 		if (isMouseDown) {
 			
 			var deltaX = mouse.x - previous.x;
@@ -220,10 +255,10 @@ function HeliController() {
 
 			if (beta > Math.PI)
 				beta = Math.PI;
-		
-			posCameraX = radio * Math.sin(alfa) * Math.sin(beta);
-			posCameraY = radio * Math.cos(beta);
-			posCameraZ = radio * Math.cos(alfa) * Math.sin(beta);
+	
+			posCameraX = currentRadio * Math.sin(alfa) * Math.sin(beta);
+			posCameraY = currentRadio * Math.cos(beta);
+			posCameraZ = currentRadio * Math.cos(alfa) * Math.sin(beta);
 		}
 	}
 
