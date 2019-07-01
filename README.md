@@ -1,6 +1,12 @@
 # TP-Helicoptero
 
-Helicóptero realizado con _WebGL_, _JS_, _JQuery_ y _glMatrix_ (_Sistemas Gráficos - FIUBA_)
+Helicóptero realizado con [_WebGL_](https://webglfundamentals.org/), [_JS_](https://developer.mozilla.org/es/docs/Web/JavaScript), [_JQuery_](https://jquery.com/) y [_glMatrix_](http://glmatrix.net/docs/index.html) (_Sistemas Gráficos - FIUBA_)
+
+Para generar _build.js_ se utiliza [_rollup_](https://rollupjs.org/guide/en/)
+
+```bash
+ $ rollup helicopter.js --file build.js --format umd --name "HELICOPTER"
+```
 
 ### Run
 
