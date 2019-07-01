@@ -290,13 +290,12 @@ export class Graphic {
 	}
 
 	loadTexture(path) {
-	
+		
 		this.texture = this.gl.createTexture();
 
 		this.texture.image = new Image();
 
 		this.texture.image.onload = () => this._handleLoadedTexture();
-
 		this.texture.image.src = path;
 	}
 }

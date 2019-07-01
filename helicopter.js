@@ -1,39 +1,38 @@
-import {App} from '../scene/app.js';
-import {Scene} from '../scene/scene.js';
-import {Camera} from '../scene/camera.js';
+import {App} from './scene/app.js';
+import {Scene} from './scene/scene.js';
+import {Camera} from './scene/camera.js';
 
-import {ShaderProgram} from '../shaders/program.js';
+import {ShaderProgram} from './shaders/program.js';
 
-import {Rotation} from '../transformations/rotation.js';
-import {Identity} from '../transformations/identity.js';
-import {Translation} from '../transformations/translation.js';
-import {Scale} from '../transformations/scaling.js';
+import {Rotation} from './transformations/rotation.js';
+import {Identity} from './transformations/identity.js';
+import {Translation} from './transformations/translation.js';
+import {Scale} from './transformations/scaling.js';
 import {HelicopterRotation,
 	MotorRotation,
-	StairwayRotation} from '../transformations/helicopter/rotation.js';
-import {HelicopterTranslation} from '../transformations/helicopter/translation.js';
+	StairwayRotation} from './transformations/helicopter/rotation.js';
+import {HelicopterTranslation} from './transformations/helicopter/translation.js';
 
-import {World} from '../3d/world.js';
-import {Color} from '../3d/color.js';
-import {Graphic} from '../3d/graphic.js';
-import {Container3D} from '../3d/container.js';
-import {GraphicLand} from '../3d/helicopter/land.js';
-import {GraphicSky} from '../3d/helicopter/sky.js';
-import {GraphicReflect} from '../3d/helicopter/reflect.js';
+import {World} from './3d/world.js';
+import {Color} from './3d/color.js';
+import {Graphic} from './3d/graphic.js';
+import {Container3D} from './3d/container.js';
+import {GraphicLand} from './3d/helicopter/land.js';
+import {GraphicSky} from './3d/helicopter/sky.js';
+import {GraphicReflect} from './3d/helicopter/reflect.js';
 
-import {DirectLight} from '../lights/direct.js';
-import {PointLight} from '../lights/point.js';
-import {SpotLight} from '../lights/spot.js';
+import {DirectLight} from './lights/direct.js';
+import {PointLight} from './lights/point.js';
+import {SpotLight} from './lights/spot.js';
 
-import {Grid} from "../shapes/grid.js";
-import {Sphere} from "../shapes/sphere.js";
-import {Cylinder} from '../shapes/cylinder.js';
-import {BackCenter} from '../shapes/helicopter/back.js';
-import {FrontCenter} from '../shapes/helicopter/front.js';
-import {HexagonCenter, CurveCenter} from '../shapes/helicopter/center.js';
-import {Helix} from '../shapes/helicopter/helix.js';
-import {LandingLeg} from '../shapes/helicopter/landing.js';
-import {Stairway, Steps} from '../shapes/helicopter/stairway.js';
+import {Sphere} from './shapes/sphere.js';
+import {Cylinder} from './shapes/cylinder.js';
+import {BackCenter} from './shapes/helicopter/back.js';
+import {FrontCenter} from './shapes/helicopter/front.js';
+import {HexagonCenter, CurveCenter} from './shapes/helicopter/center.js';
+import {Helix} from './shapes/helicopter/helix.js';
+import {LandingLeg} from './shapes/helicopter/landing.js';
+import {Stairway, Steps} from './shapes/helicopter/stairway.js';
 
 export class HelicopterApp extends App {
 
@@ -87,16 +86,16 @@ export class HelicopterApp extends App {
 
 		// Sky sphere
 		var gsky = new GraphicSky(this.gl, skyShader);
-		gsky.loadTexture("img/sunset.jpg");
+		gsky.loadTexture("./img/sunset.jpg");
 
 		world.add(gsky);
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("img/pasto.jpg", "uSPasto");
-		gland.loadTexture("img/piedras.jpg", "uSPiedras");
-		gland.loadTexture("img/tierra.jpg", "uSTierra");
-		gland.loadTexture("img/tierraseca.jpg", "uSTierraSeca");
+		gland.loadTexture("./img/pasto.jpg", "uSPasto");
+		gland.loadTexture("./img/piedras.jpg", "uSPiedras");
+		gland.loadTexture("./img/tierra.jpg", "uSTierra");
+		gland.loadTexture("./img/tierraseca.jpg", "uSTierraSeca");
 
 		world.add(gland);
 
@@ -116,7 +115,7 @@ export class HelicopterApp extends App {
 		var front = new FrontCenter(50, 50);
 		var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
 		var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
-		gfront.loadTexture("img/sunset.jpg");
+		gfront.loadTexture("./img/sunset.jpg");
 
 		helicopter.add(gfront);
 
@@ -136,7 +135,7 @@ export class HelicopterApp extends App {
 		var hexa = new HexagonCenter(50, 50);
 		var ghexa = new GraphicReflect(this.gl,
 					hexa, [new Identity()], reflectShader);
-		ghexa.loadTexture("img/sunset.jpg");
+		ghexa.loadTexture("./img/sunset.jpg");
 
 		hexaCenterAndDoor.add(ghexa);
 

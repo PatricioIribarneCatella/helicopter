@@ -66,7 +66,40 @@
 
 		<script src="utils/controller.js"></script>
 
+		<script src="build.js"></script>
+
+		<script>
+			//
+			// main function
+			//
+			function main() {
+
+				var canvas = document.getElementById("canvas");
+
+				var gl = canvas.getContext("webgl");
+
+				canvas.width = $(window).width() - 20;
+				canvas.height = $(window).height() - 30;
+
+				// check if WebGL is available
+				if (gl ===  null) {
+					alert("WebGl not available");
+					return;
+				}
+
+				var app;
+
+				app = new HELICOPTER.HelicopterApp(gl, canvas);
+
+				app.start();
+			}
+
+			window.onload = main;
+		</script>
+
+		<!--
 		<script type="module" src="./main.js"></script>
+		-->
 	</body>
 </html>
 
