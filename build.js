@@ -185,24 +185,6 @@
 		}
 	}
 
-	// Compiles a shader source code
-	// depending on its type
-	//
-	function compile(gl, src, type) {
-
-		// compile the shader
-		var shader = gl.createShader(type);
-
-		gl.shaderSource(shader, src);
-		gl.compileShader(shader);
-
-		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-			alert("Error compiling shader: " + gl.getShaderInfoLog(shader));
-		}
-
-		return shader;
-	}
-
 	//
 	// Manipulates GL programs and
 	// loads shaders from src
@@ -222,8 +204,8 @@
 		
 		_init() {
 			// compile the shader
-			var vs = compile(this.gl, this.vs_src, this.gl.VERTEX_SHADER);
-			var fs = compile(this.gl, this.fs_src, this.gl.FRAGMENT_SHADER);
+			var vs = this._compile(this.vs_src, this.gl.VERTEX_SHADER);
+			var fs = this._compile(this.fs_src, this.gl.FRAGMENT_SHADER);
 
 			this.program = this.gl.createProgram();
 			
@@ -237,6 +219,20 @@
 			if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
 				alert("Unable to initialize the shader program.");
 			}
+		}
+
+		_compile(src, type) {
+		
+			var shader = this.gl.createShader(type);
+
+			this.gl.shaderSource(shader, src);
+			this.gl.compileShader(shader);
+
+			if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
+				alert("Error compiling shader: " + this.gl.getShaderInfoLog(shader));
+			}
+
+			return shader;
 		}
 
 		/* public methods  */

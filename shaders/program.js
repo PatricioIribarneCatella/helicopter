@@ -1,5 +1,3 @@
-import * as utils from '../utils/utils.js';
-
 //
 // Manipulates GL programs and
 // loads shaders from src
@@ -19,8 +17,8 @@ export class ShaderProgram {
 	
 	_init() {
 		// compile the shader
-		var vs = utils.compile(this.gl, this.vs_src, this.gl.VERTEX_SHADER);
-		var fs = utils.compile(this.gl, this.fs_src, this.gl.FRAGMENT_SHADER);
+		var vs = this._compile(this.vs_src, this.gl.VERTEX_SHADER);
+		var fs = this._compile(this.fs_src, this.gl.FRAGMENT_SHADER);
 
 		this.program = this.gl.createProgram();
 		
@@ -34,6 +32,20 @@ export class ShaderProgram {
 		if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
 			alert("Unable to initialize the shader program.");
 		}
+	}
+
+	_compile(src, type) {
+	
+		var shader = this.gl.createShader(type);
+
+		this.gl.shaderSource(shader, src);
+		this.gl.compileShader(shader);
+
+		if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
+			alert("Error compiling shader: " + this.gl.getShaderInfoLog(shader));
+		}
+
+		return shader;
 	}
 
 	/* public methods  */
