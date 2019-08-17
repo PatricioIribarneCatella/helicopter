@@ -37,7 +37,7 @@
 
 		/* public methods */
 
-		start() {}
+		start(images) {}
 	}
 
 	//
@@ -191,11 +191,11 @@
 	//
 	class ShaderProgram {
 
-		constructor(gl, vertex_src, fragment_src) {
+		constructor(gl, vertex_path, fragment_path) {
 			
 			this.gl = gl;
-			this.vs_src = vertex_src;
-			this.fs_src = fragment_src;
+			this.vs_path = vertex_path;
+			this.fs_path = fragment_path;
 			
 			this._init();
 		}
@@ -203,9 +203,22 @@
 		/* private methods  */
 		
 		_init() {
+
+			// get shader's text
+			var vs_src = this._loadFile(this.vs_path);
+			var fs_src = this._loadFile(this.fs_path);
+
+			if (!vs_src) {
+				alert("Could not find shader source: " + this.vs_path);
+			}
+
+			if (!fs_src) {
+				alert("Could not find shader source: " + this.fs_path);
+			}
+
 			// compile the shader
-			var vs = this._compile(this.vs_src, this.gl.VERTEX_SHADER);
-			var fs = this._compile(this.fs_src, this.gl.FRAGMENT_SHADER);
+			var vs = this._compile(vs_src, this.gl.VERTEX_SHADER);
+			var fs = this._compile(fs_src, this.gl.FRAGMENT_SHADER);
 
 			this.program = this.gl.createProgram();
 			
@@ -219,6 +232,17 @@
 			if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
 				alert("Unable to initialize the shader program.");
 			}
+		}
+
+		_loadFile(path) {
+			
+			var xhr = new XMLHttpRequest(),
+				okStatus = document.location.protocol === "file:" ? 0 : 200;
+			
+			xhr.open('GET', path, false);
+			xhr.send(null);
+			
+			return xhr.status == okStatus ? xhr.responseText : null;
 		}
 
 		_compile(src, type) {
@@ -831,26 +855,13 @@
 
 		/* private methods */
 
-		_handleLoadedTexture() {
-			
-			this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
-			this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
-			this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
-					   this.gl.RGBA, this.gl.RGBA,
-					   this.gl.UNSIGNED_BYTE, this.texture.image);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_WRAP_S,
-					      this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_WRAP_T,
-					      this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_MIN_FILTER,
-					      this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_MAG_FILTER,
-					      this.gl.LINEAR);
-			this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+		_init() {
+			// initialize model matrix element
+			this.matrix = mat4.create();
+			this.normalMatrix = mat4.create();
+
+			this._createIndexes();
+			this._initBuffers();
 		}
 
 		_createIndexes() {
@@ -907,15 +918,6 @@
 			this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,
 					   new Uint16Array(this.index_buffer),
 					   this.gl.STATIC_DRAW);
-		}
-
-		_init() {
-			// initialize model matrix element
-			this.matrix = mat4.create();
-			this.normalMatrix = mat4.create();
-
-			this._createIndexes();
-			this._initBuffers();
 		}
 
 		_bindTexture() {
@@ -1071,6 +1073,32 @@
 			return true;
 		}
 
+		_loadImage(image) {
+		
+			var texture = this.gl.createTexture();
+
+			this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+			this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+			this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
+					   this.gl.RGBA, this.gl.RGBA,
+					   this.gl.UNSIGNED_BYTE, image);
+			this.gl.texParameteri(this.gl.TEXTURE_2D,
+					      this.gl.TEXTURE_WRAP_S,
+					      this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D,
+					      this.gl.TEXTURE_WRAP_T,
+					      this.gl.CLAMP_TO_EDGE);
+			this.gl.texParameteri(this.gl.TEXTURE_2D,
+					      this.gl.TEXTURE_MIN_FILTER,
+					      this.gl.LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D,
+					      this.gl.TEXTURE_MAG_FILTER,
+					      this.gl.LINEAR);
+			this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
+			return texture;
+		}
+
 		/* public methods */
 
 		draw(camera, controller, lights, matrix) {
@@ -1102,14 +1130,8 @@
 			}
 		}
 
-		loadTexture(path) {
-			
-			this.texture = this.gl.createTexture();
-
-			this.texture.image = new Image();
-
-			this.texture.image.onload = () => this._handleLoadedTexture();
-			this.texture.image.src = path;
+		loadTexture(image) {
+			this.texture = this._loadImage(image);
 		}
 	}
 
@@ -1509,30 +1531,6 @@
 			return false;
 		}
 
-		_handleLoadedTexture(id) {
-		
-			var t = this.textures[id];
-
-			this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
-			this.gl.bindTexture(this.gl.TEXTURE_2D, t);
-			this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
-					   this.gl.RGBA, this.gl.RGBA,
-					   this.gl.UNSIGNED_BYTE, t.image);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_WRAP_S,
-					      this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_WRAP_T,
-					      this.gl.CLAMP_TO_EDGE);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_MIN_FILTER,
-					      this.gl.LINEAR);
-			this.gl.texParameteri(this.gl.TEXTURE_2D,
-					      this.gl.TEXTURE_MAG_FILTER,
-					      this.gl.LINEAR);
-			this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-		}
-
 		_bindTexture() {
 			
 			for (var i = 0; i < this.textures.length; i++) {
@@ -1551,18 +1549,12 @@
 		
 		/* public methods */
 
-		loadTexture(path, uniformName) {
+		loadTexture(image, uniformName) {
 			
-			var texture = this.gl.createTexture();
-			var id = this.texId;
-
-			texture.image = new Image();
-			texture.image.onload = () => this._handleLoadedTexture(id);
-			texture.image.src = path;
+			var texture = this._loadImage(image);
 
 			this.textures.push(texture);
-			this.uniforms[id] = uniformName;
-			this.texId++;
+			this.uniforms[this.texId++] = uniformName;
 		}
 	}
 
@@ -3284,25 +3276,25 @@
 
 		/* public methods */
 
-		start() {
+		start(images, shaders) {
 		
 			var scene = new Scene(this.gl);
 
 			var shader = new ShaderProgram(this.gl,
-						       normal_vertex_shader,
-						       normal_fragment_shader);
+						       shaders["normal"]["vertex"],
+						       shaders["normal"]["fragment"]);
 
 			var landShader = new ShaderProgram(this.gl,
-							   bitmap_vertex_shader,
-							   bitmap_fragment_shader);
+							   shaders["land"]["vertex"],
+							   shaders["land"]["fragment"]);
 
 			var skyShader = new ShaderProgram(this.gl,
-							  sky_vertex_shader,
-							  sky_fragment_shader);
+							  shaders["sky"]["vertex"],
+							  shaders["sky"]["fragment"]);
 
 			var reflectShader = new ShaderProgram(this.gl,
-							      normal_vertex_shader,
-							      reflect_fragment_shader);
+							      shaders["normal"]["vertex"],
+							      shaders["reflect"]["fragment"]);
 
 			// Perspective camera
 			var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
@@ -3328,16 +3320,16 @@
 
 			// Sky sphere
 			var gsky = new GraphicSky(this.gl, skyShader);
-			gsky.loadTexture("./img/sunset.jpg");
+			gsky.loadTexture(images["sky"]);
 
 			world.add(gsky);
 			
 			// Lanscape
 			var gland = new GraphicLand(this.gl, landShader);
-			gland.loadTexture("./img/pasto.jpg", "uSPasto");
-			gland.loadTexture("./img/piedras.jpg", "uSPiedras");
-			gland.loadTexture("./img/tierra.jpg", "uSTierra");
-			gland.loadTexture("./img/tierraseca.jpg", "uSTierraSeca");
+			gland.loadTexture(images["pasto"], "uSPasto");
+			gland.loadTexture(images["piedras"], "uSPiedras");
+			gland.loadTexture(images["tierra"], "uSTierra");
+			gland.loadTexture(images["tierraseca"], "uSTierraSeca");
 
 			world.add(gland);
 
@@ -3357,7 +3349,7 @@
 			var front = new FrontCenter(50, 50);
 			var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
 			var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
-			gfront.loadTexture("./img/sunset.jpg");
+			gfront.loadTexture(images["sky"]);
 
 			helicopter.add(gfront);
 
@@ -3377,7 +3369,7 @@
 			var hexa = new HexagonCenter(50, 50);
 			var ghexa = new GraphicReflect(this.gl,
 						hexa, [new Identity()], reflectShader);
-			ghexa.loadTexture("./img/sunset.jpg");
+			ghexa.loadTexture(images["sky"]);
 
 			hexaCenterAndDoor.add(ghexa);
 

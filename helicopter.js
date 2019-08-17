@@ -42,25 +42,25 @@ export class HelicopterApp extends App {
 
 	/* public methods */
 
-	start() {
+	start(images, shaders) {
 	
 		var scene = new Scene(this.gl);
 
 		var shader = new ShaderProgram(this.gl,
-					       normal_vertex_shader,
-					       normal_fragment_shader);
+					       shaders["normal"]["vertex"],
+					       shaders["normal"]["fragment"]);
 
 		var landShader = new ShaderProgram(this.gl,
-						   bitmap_vertex_shader,
-						   bitmap_fragment_shader);
+						   shaders["land"]["vertex"],
+						   shaders["land"]["fragment"]);
 
 		var skyShader = new ShaderProgram(this.gl,
-						  sky_vertex_shader,
-						  sky_fragment_shader);
+						  shaders["sky"]["vertex"],
+						  shaders["sky"]["fragment"]);
 
 		var reflectShader = new ShaderProgram(this.gl,
-						      normal_vertex_shader,
-						      reflect_fragment_shader);
+						      shaders["normal"]["vertex"],
+						      shaders["reflect"]["fragment"]);
 
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
@@ -86,16 +86,16 @@ export class HelicopterApp extends App {
 
 		// Sky sphere
 		var gsky = new GraphicSky(this.gl, skyShader);
-		gsky.loadTexture("./img/sunset.jpg");
+		gsky.loadTexture(images["sky"]);
 
 		world.add(gsky);
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("./img/pasto.jpg", "uSPasto");
-		gland.loadTexture("./img/piedras.jpg", "uSPiedras");
-		gland.loadTexture("./img/tierra.jpg", "uSTierra");
-		gland.loadTexture("./img/tierraseca.jpg", "uSTierraSeca");
+		gland.loadTexture(images["pasto"], "uSPasto");
+		gland.loadTexture(images["piedras"], "uSPiedras");
+		gland.loadTexture(images["tierra"], "uSTierra");
+		gland.loadTexture(images["tierraseca"], "uSTierraSeca");
 
 		world.add(gland);
 
@@ -115,7 +115,7 @@ export class HelicopterApp extends App {
 		var front = new FrontCenter(50, 50);
 		var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
 		var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
-		gfront.loadTexture("./img/sunset.jpg");
+		gfront.loadTexture(images["sky"]);
 
 		helicopter.add(gfront);
 
@@ -135,7 +135,7 @@ export class HelicopterApp extends App {
 		var hexa = new HexagonCenter(50, 50);
 		var ghexa = new GraphicReflect(this.gl,
 					hexa, [new Identity()], reflectShader);
-		ghexa.loadTexture("./img/sunset.jpg");
+		ghexa.loadTexture(images["sky"]);
 
 		hexaCenterAndDoor.add(ghexa);
 

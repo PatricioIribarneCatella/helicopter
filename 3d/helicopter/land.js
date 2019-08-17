@@ -62,30 +62,6 @@ export class GraphicLand extends Graphic {
 		return false;
 	}
 
-	_handleLoadedTexture(id) {
-	
-		var t = this.textures[id];
-
-		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, t);
-		this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
-				   this.gl.RGBA, this.gl.RGBA,
-				   this.gl.UNSIGNED_BYTE, t.image);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_WRAP_S,
-				      this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_WRAP_T,
-				      this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_MIN_FILTER,
-				      this.gl.LINEAR);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_MAG_FILTER,
-				      this.gl.LINEAR);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-	}
-
 	_bindTexture() {
 		
 		for (var i = 0; i < this.textures.length; i++) {
@@ -104,17 +80,11 @@ export class GraphicLand extends Graphic {
 	
 	/* public methods */
 
-	loadTexture(path, uniformName) {
+	loadTexture(image, uniformName) {
 		
-		var texture = this.gl.createTexture();
-		var id = this.texId;
-
-		texture.image = new Image();
-		texture.image.onload = () => this._handleLoadedTexture(id);
-		texture.image.src = path;
+		var texture = this._loadImage(image);
 
 		this.textures.push(texture);
-		this.uniforms[id] = uniformName;
-		this.texId++;
+		this.uniforms[this.texId++] = uniformName;
 	}
 }

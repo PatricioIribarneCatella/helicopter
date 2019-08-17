@@ -30,33 +30,9 @@
 			<canvas id="canvas"></canvas>
 		</center>
 
-		<!--------------- shaders !------------------>
-		
-		<!-- vertex !-->
-		
-		<script src="shaders/simple-vertex.js"></script>
-		
-		<script src="shaders/matrix-vertex.js"></script>
-
-		<script src="shaders/normal-vertex.js"></script>
-		
-		<script src="shaders/bitmap-vertex.js"></script>
-
-		<script src="shaders/sky-vertex.js"></script>	
-
-		<!-- fragment !-->
-
-		<script src="shaders/simple-fragment.js"></script>
-		
-		<script src="shaders/normal-fragment.js"></script>
-		
-		<script src="shaders/bitmap-fragment.js"></script>
-		
-		<script src="shaders/sky-fragment.js"></script>
-	
-		<script src="shaders/reflect-fragment.js"></script>
-
 		<!------------------ src !------------------>
+
+		<!-- libs !-->
 
 		<script src="libs/gl-matrix.js"></script>
 
@@ -64,7 +40,14 @@
 
 		<script src="libs/jquery.mousewheel.js"></script>
 
+		<!-- utils !-->
+
 		<script src="utils/controller.js"></script>
+
+		<script src="utils/loader.js"></script>
+
+
+		<!-- build !-->
 
 		<script src="build.js"></script>
 
@@ -82,16 +65,59 @@
 				canvas.height = $(window).height() - 30;
 
 				// check if WebGL is available
-				if (gl ===  null) {
-					alert("WebGl not available");
+				if (!gl) {
+					alert("WebGL not available");
 					return;
 				}
 
-				var app;
+				var loader, app, images, shaders;
 
 				app = new HELICOPTER.HelicopterApp(gl, canvas);
+				
+				images = [
+					{
+						path: "./img/sunset.jpg",
+						name: "sky"
+					},
+					{
+						path: "./img/pasto.jpg",
+						name: "pasto"
+					},
+					{
+						path: "./img/piedras.jpg",
+						name: "piedras"
+					},
+					{
+						path: "./img/tierra.jpg",
+						name: "tierra"
+					},
+					{
+						path: "./img/tierraseca.jpg",
+						name: "tierraseca"
+					}
+				];
 
-				app.start();
+				shaders = {
+					normal: {
+						vertex: "./shaders/normal/vertex.glsl",
+						fragment: "./shaders/normal/fragment.glsl"
+					},
+					sky: {
+						vertex: "./shaders/sky/vertex.glsl",
+						fragment: "./shaders/sky/fragment.glsl"
+					},
+					land: {
+						vertex: "./shaders/land/vertex.glsl",
+						fragment: "./shaders/land/fragment.glsl"
+					},
+					reflect: {
+						vertex: "./shaders/normal/vertex.glsl",
+						fragment: "./shaders/reflect/fragment.glsl"
+					}
+				};
+
+				loader = new Loader(images, shaders, app);
+				loader.start();
 			}
 
 			window.onload = main;
