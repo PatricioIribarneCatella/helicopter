@@ -58,13 +58,19 @@
 
 		<!------------------ src !------------------>
 
+		<!-- libs !-->
+
 		<script src="libs/gl-matrix.js"></script>
 
 		<script src="libs/jquery.js"></script>
 
 		<script src="libs/jquery.mousewheel.js"></script>
 
+		<!-- utils !-->
+
 		<script src="utils/controller.js"></script>
+
+		<script src="utils/loader.js"></script>
 
 		<script src="build.js"></script>
 
@@ -82,16 +88,40 @@
 				canvas.height = $(window).height() - 30;
 
 				// check if WebGL is available
-				if (gl ===  null) {
-					alert("WebGl not available");
+				if (!gl) {
+					alert("WebGL not available");
 					return;
 				}
 
-				var app;
+				var loader, app, images;
 
 				app = new HELICOPTER.HelicopterApp(gl, canvas);
+				
+				images = [
+					{
+						path: "./img/sunset.jpg",
+						name: "sky"
+					},
+					{
+						path: "./img/pasto.jpg",
+						name: "pasto"
+					},
+					{
+						path: "./img/piedras.jpg",
+						name: "piedras"
+					},
+					{
+						path: "./img/tierra.jpg",
+						name: "tierra"
+					},
+					{
+						path: "./img/tierraseca.jpg",
+						name: "tierraseca"
+					}
+				];
 
-				app.start();
+				loader = new Loader(images, app);
+				loader.start();
 			}
 
 			window.onload = main;

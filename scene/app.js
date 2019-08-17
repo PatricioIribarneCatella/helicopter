@@ -31,6 +31,6 @@ export class App {
 
 	/* public methods */
 
-	start() {}
+	start(images) {}
 }
 

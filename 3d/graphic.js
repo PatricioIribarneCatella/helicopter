@@ -18,26 +18,13 @@ export class Graphic {
 
 	/* private methods */
 
-	_handleLoadedTexture() {
-		
-		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
-		this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
-				   this.gl.RGBA, this.gl.RGBA,
-				   this.gl.UNSIGNED_BYTE, this.texture.image);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_WRAP_S,
-				      this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_WRAP_T,
-				      this.gl.CLAMP_TO_EDGE);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_MIN_FILTER,
-				      this.gl.LINEAR);
-		this.gl.texParameteri(this.gl.TEXTURE_2D,
-				      this.gl.TEXTURE_MAG_FILTER,
-				      this.gl.LINEAR);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+	_init() {
+		// initialize model matrix element
+		this.matrix = mat4.create();
+		this.normalMatrix = mat4.create();
+
+		this._createIndexes();
+		this._initBuffers();
 	}
 
 	_createIndexes() {
@@ -94,15 +81,6 @@ export class Graphic {
 		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER,
 				   new Uint16Array(this.index_buffer),
 				   this.gl.STATIC_DRAW);
-	}
-
-	_init() {
-		// initialize model matrix element
-		this.matrix = mat4.create();
-		this.normalMatrix = mat4.create();
-
-		this._createIndexes();
-		this._initBuffers();
 	}
 
 	_bindTexture() {
@@ -258,6 +236,32 @@ export class Graphic {
 		return true;
 	}
 
+	_loadImage(image) {
+	
+		var texture = this.gl.createTexture();
+
+		this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+		this.gl.texImage2D(this.gl.TEXTURE_2D, 0,
+				   this.gl.RGBA, this.gl.RGBA,
+				   this.gl.UNSIGNED_BYTE, image);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_S,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_WRAP_T,
+				      this.gl.CLAMP_TO_EDGE);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MIN_FILTER,
+				      this.gl.LINEAR);
+		this.gl.texParameteri(this.gl.TEXTURE_2D,
+				      this.gl.TEXTURE_MAG_FILTER,
+				      this.gl.LINEAR);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
+		return texture;
+	}
+
 	/* public methods */
 
 	draw(camera, controller, lights, matrix) {
@@ -289,14 +293,8 @@ export class Graphic {
 		}
 	}
 
-	loadTexture(path) {
-		
-		this.texture = this.gl.createTexture();
-
-		this.texture.image = new Image();
-
-		this.texture.image.onload = () => this._handleLoadedTexture();
-		this.texture.image.src = path;
+	loadTexture(image) {
+		this.texture = this._loadImage(image);
 	}
 }
 

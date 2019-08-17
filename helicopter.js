@@ -42,7 +42,7 @@ export class HelicopterApp extends App {
 
 	/* public methods */
 
-	start() {
+	start(images) {
 	
 		var scene = new Scene(this.gl);
 
@@ -86,16 +86,16 @@ export class HelicopterApp extends App {
 
 		// Sky sphere
 		var gsky = new GraphicSky(this.gl, skyShader);
-		gsky.loadTexture("./img/sunset.jpg");
+		gsky.loadTexture(images["sky"]);
 
 		world.add(gsky);
 		
 		// Lanscape
 		var gland = new GraphicLand(this.gl, landShader);
-		gland.loadTexture("./img/pasto.jpg", "uSPasto");
-		gland.loadTexture("./img/piedras.jpg", "uSPiedras");
-		gland.loadTexture("./img/tierra.jpg", "uSTierra");
-		gland.loadTexture("./img/tierraseca.jpg", "uSTierraSeca");
+		gland.loadTexture(images["pasto"], "uSPasto");
+		gland.loadTexture(images["piedras"], "uSPiedras");
+		gland.loadTexture(images["tierra"], "uSTierra");
+		gland.loadTexture(images["tierraseca"], "uSTierraSeca");
 
 		world.add(gland);
 
@@ -115,7 +115,7 @@ export class HelicopterApp extends App {
 		var front = new FrontCenter(50, 50);
 		var t1 = [new Rotation([0.0, 1.0, 0.0], Math.PI, 0.0)];
 		var gfront = new GraphicReflect(this.gl, front, t1, reflectShader);
-		gfront.loadTexture("./img/sunset.jpg");
+		gfront.loadTexture(images["sky"]);
 
 		helicopter.add(gfront);
 
@@ -135,7 +135,7 @@ export class HelicopterApp extends App {
 		var hexa = new HexagonCenter(50, 50);
 		var ghexa = new GraphicReflect(this.gl,
 					hexa, [new Identity()], reflectShader);
-		ghexa.loadTexture("./img/sunset.jpg");
+		ghexa.loadTexture(images["sky"]);
 
 		hexaCenterAndDoor.add(ghexa);
 
