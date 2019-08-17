@@ -30,32 +30,6 @@
 			<canvas id="canvas"></canvas>
 		</center>
 
-		<!--------------- shaders !------------------>
-		
-		<!-- vertex !-->
-		
-		<script src="shaders/simple-vertex.js"></script>
-		
-		<script src="shaders/matrix-vertex.js"></script>
-
-		<script src="shaders/normal-vertex.js"></script>
-		
-		<script src="shaders/bitmap-vertex.js"></script>
-
-		<script src="shaders/sky-vertex.js"></script>	
-
-		<!-- fragment !-->
-
-		<script src="shaders/simple-fragment.js"></script>
-		
-		<script src="shaders/normal-fragment.js"></script>
-		
-		<script src="shaders/bitmap-fragment.js"></script>
-		
-		<script src="shaders/sky-fragment.js"></script>
-	
-		<script src="shaders/reflect-fragment.js"></script>
-
 		<!------------------ src !------------------>
 
 		<!-- libs !-->
@@ -71,6 +45,9 @@
 		<script src="utils/controller.js"></script>
 
 		<script src="utils/loader.js"></script>
+
+
+		<!-- build !-->
 
 		<script src="build.js"></script>
 
@@ -93,7 +70,7 @@
 					return;
 				}
 
-				var loader, app, images;
+				var loader, app, images, shaders;
 
 				app = new HELICOPTER.HelicopterApp(gl, canvas);
 				
@@ -120,7 +97,26 @@
 					}
 				];
 
-				loader = new Loader(images, app);
+				shaders = {
+					normal: {
+						vertex: "./shaders/normal/vertex.glsl",
+						fragment: "./shaders/normal/fragment.glsl"
+					},
+					sky: {
+						vertex: "./shaders/sky/vertex.glsl",
+						fragment: "./shaders/sky/fragment.glsl"
+					},
+					land: {
+						vertex: "./shaders/land/vertex.glsl",
+						fragment: "./shaders/land/fragment.glsl"
+					},
+					reflect: {
+						vertex: "./shaders/normal/vertex.glsl",
+						fragment: "./shaders/reflect/fragment.glsl"
+					}
+				};
+
+				loader = new Loader(images, shaders, app);
 				loader.start();
 			}
 

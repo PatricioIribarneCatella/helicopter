@@ -42,25 +42,25 @@ export class HelicopterApp extends App {
 
 	/* public methods */
 
-	start(images) {
+	start(images, shaders) {
 	
 		var scene = new Scene(this.gl);
 
 		var shader = new ShaderProgram(this.gl,
-					       normal_vertex_shader,
-					       normal_fragment_shader);
+					       shaders["normal"]["vertex"],
+					       shaders["normal"]["fragment"]);
 
 		var landShader = new ShaderProgram(this.gl,
-						   bitmap_vertex_shader,
-						   bitmap_fragment_shader);
+						   shaders["land"]["vertex"],
+						   shaders["land"]["fragment"]);
 
 		var skyShader = new ShaderProgram(this.gl,
-						  sky_vertex_shader,
-						  sky_fragment_shader);
+						  shaders["sky"]["vertex"],
+						  shaders["sky"]["fragment"]);
 
 		var reflectShader = new ShaderProgram(this.gl,
-						      normal_vertex_shader,
-						      reflect_fragment_shader);
+						      shaders["normal"]["vertex"],
+						      shaders["reflect"]["fragment"]);
 
 		// Perspective camera
 		var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);

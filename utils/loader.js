@@ -5,9 +5,10 @@
 //
 class Loader {
 
-	constructor(paths, app) {
+	constructor(paths, shaders, app) {
 		this.paths = paths;
 		this.app = app;
+		this.shaders = shaders;
 		this.images = {};
 		this.imagesToLoad = paths.length;
 	}
@@ -30,7 +31,7 @@ class Loader {
 		
 		// If all the images are loaded call the callback.
 		if (this.imagesToLoad === 0)
-			this.app.start(this.images);
+			this.app.start(this.images, this.shaders);
 	}
 
 	/* public methods */
