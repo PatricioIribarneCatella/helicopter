@@ -1517,10 +1517,12 @@
 			var uniformSpotPos = this.program.findUniform("spotLightPos");
 			var uniformSpotDir = this.program.findUniform("spotLightDir");
 			var uniformSpotColor = this.program.findUniform("spotColor");
+			var uniformSpotIntensity = this.program.findUniform("spotIntensity");
 
 			this.gl.uniform3fv(uniformSpotPos, lights.spot.getPosition());
 			this.gl.uniform3fv(uniformSpotDir, lights.spot.getDirection());
 			this.gl.uniform3fv(uniformSpotColor, lights.spot.getColor());
+			this.gl.uniform1f(uniformSpotIntensity, lights.spot.getIntensity());
 
 			// Camera 'eye'
 			var uniformEye = this.program.findUniform("eye");
@@ -1716,13 +1718,14 @@
 
 	class SpotLight {
 
-		constructor(position, direction, color) {
+		constructor(position, direction, color, intensity) {
 
 			this.direction = direction;
 			this.dir = direction;
 			this.offset = position;
 			this.position = position;
 			this.color = color;
+			this.intensity = intensity;
 		}
 
 		/* private methods */
@@ -1758,6 +1761,10 @@
 
 		getColor() {
 			return this.color;
+		}
+
+		getIntensity() {
+			return this.intensity;
 		}
 	}
 
@@ -3309,7 +3316,8 @@
 				direct: new DirectLight([0.0, 1.0, 1.0], [1.0, 1.0, 1.0]),
 				spot: new SpotLight([1.75, -0.25, 0.0],
 						    [1.0, -2.0, 0.0],
-						    [1.0, 1.0, 1.0]),
+						    [1.0, 1.0, 1.0],
+						    0.07),
 				red: new PointLight([-1.5, -0.5, 0.75], [1.0, 0.0, 0.0]),
 				green: new PointLight([-1.5, -0.5, -0.75], [0.0, 1.0, 0.0])
 			};

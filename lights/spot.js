@@ -1,12 +1,13 @@
 export class SpotLight {
 
-	constructor(position, direction, color) {
+	constructor(position, direction, color, intensity) {
 
 		this.direction = direction;
 		this.dir = direction;
 		this.offset = position;
 		this.position = position;
 		this.color = color;
+		this.intensity = intensity;
 	}
 
 	/* private methods */
@@ -42,5 +43,9 @@ export class SpotLight {
 
 	getColor() {
 		return this.color;
+	}
+
+	getIntensity() {
+		return this.intensity;
 	}
 }
