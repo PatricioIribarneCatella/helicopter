@@ -16,6 +16,8 @@ uniform vec3 pointLeftColor;
 uniform vec3 pointRightColor;
 uniform vec3 spotColor;
 
+uniform float spotIntensity;
+
 uniform sampler2D uSPasto;
 uniform sampler2D uSPiedras;
 uniform sampler2D uSTierra;
@@ -102,7 +104,7 @@ void main(void) {
    vec3 kSpecular = vec3(1.0, 1.0, 1.0);
 
    vec3 ambientInten = kAmbientD * ambientDirectLight + kAmbientP * (ambientLeftLight + ambientRightLight);
-   vec3 diffInten = kDiffuse * (directDiff + leftDiff + rightDiff + spotDiff);
+   vec3 diffInten = kDiffuse * (directDiff + leftDiff + rightDiff) + spotIntensity * spotDiff;
    vec3 specInten = kSpecular * (directSpec + leftSpec + rightSpec + spotSpec);
 
    vec3 color = ambientInten + diffInten + specInten;
