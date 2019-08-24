@@ -93,12 +93,12 @@ void main(void) {
 
    vec3 up = vec3(0.0, 1.0, 0.0);
    float upFactor = max(0.0, dot(up, normalize(vNormal)));
-   float planeF = pow(upFactor, 10.0);
-   float wallF = pow(1.0 - upFactor, 0.5);
 
-   vec3 wall = mix(mix(mix(piedras, tierra, 0.5), tierraSeca, 0.5), pasto, 0.35);
+   vec3 rocks = mix(mix(mix(piedras, tierra, 0.6), tierraSeca, 0.5), pasto, 0.3);
+   vec3 terrain = mix(rocks, pasto, smoothstep(0.30, 0.80, upFactor));
 
-   vec3 kDiffuse = planeF * pasto + wallF * wall;
+   vec3 kDiffuse = terrain;
+   
    vec3 kAmbientD = vec3(0.1, 0.1, 0.1);
    vec3 kAmbientP = vec3(0.1, 0.1, 0.1);
    vec3 kSpecular = vec3(1.0, 1.0, 1.0);
