@@ -2,7 +2,7 @@ import {App} from './scene/app.js';
 import {Scene} from './scene/scene.js';
 import {Camera} from './scene/camera.js';
 
-import {ShaderProgram} from './shaders/program.js';
+import {Shader} from './shaders/program.js';
 
 import {Rotation} from './transformations/rotation.js';
 import {Identity} from './transformations/identity.js';
@@ -46,19 +46,19 @@ export class HelicopterApp extends App {
 	
 		var scene = new Scene(this.gl);
 
-		var shader = new ShaderProgram(this.gl,
+		var shader = new Shader(this.gl,
 					       shaders["normal"]["vertex"],
 					       shaders["normal"]["fragment"]);
 
-		var landShader = new ShaderProgram(this.gl,
+		var landShader = new Shader(this.gl,
 						   shaders["land"]["vertex"],
 						   shaders["land"]["fragment"]);
 
-		var skyShader = new ShaderProgram(this.gl,
+		var skyShader = new Shader(this.gl,
 						  shaders["sky"]["vertex"],
 						  shaders["sky"]["fragment"]);
 
-		var reflectShader = new ShaderProgram(this.gl,
+		var reflectShader = new Shader(this.gl,
 						      shaders["normal"]["vertex"],
 						      shaders["reflect"]["fragment"]);
 

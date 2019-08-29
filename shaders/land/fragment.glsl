@@ -93,8 +93,11 @@ void main(void) {
 
    vec3 up = vec3(0.0, 1.0, 0.0);
    float upFactor = max(0.0, dot(up, normalize(vNormal)));
+   float planeFactor = 1.0 - upFactor;
 
-   vec3 rocks = mix(mix(mix(piedras, tierra, 0.6), tierraSeca, 0.5), pasto, 0.3);
+   vec3 rocks = mix(mix(mix(piedras, tierra, smoothstep(0.60, 0.80, planeFactor)),
+			   tierraSeca, smoothstep(0.50, 0.80, planeFactor)),
+		   		pasto, 0.5);
    vec3 terrain = mix(rocks, pasto, smoothstep(0.30, 0.80, upFactor));
 
    vec3 kDiffuse = terrain;
