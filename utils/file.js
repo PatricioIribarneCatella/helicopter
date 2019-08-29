@@ -2,7 +2,7 @@
 // Utility class to store
 // files text and type
 //
-class File {
+class ShaderFile {
 
 	constructor(path, type, callback) {
 	
@@ -35,6 +35,10 @@ class File {
 
 	getText() {
 		return this.text;
+	}
+
+	getType() {
+		return this.type;
 	}
 }
 

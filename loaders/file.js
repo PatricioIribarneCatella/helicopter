@@ -18,7 +18,7 @@ class FileLoader {
 
 	_loadFile(file, callback) {
 	
-		var f = new File(file.path, file.type, callback);
+		var f = new ShaderFile(file.path, file.type, callback);
 
 		return f;
 	}
