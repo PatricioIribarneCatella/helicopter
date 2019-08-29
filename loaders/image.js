@@ -3,12 +3,13 @@
 // all the textures, and then
 // runs the 'callback'
 //
-class Loader {
+class ImageLoader {
 
-	constructor(paths, shaders, app) {
+	constructor(paths, loader) {
+		
 		this.paths = paths;
-		this.app = app;
-		this.shaders = shaders;
+		this.loader = loader;
+
 		this.images = {};
 		this.imagesToLoad = paths.length;
 	}
@@ -31,7 +32,7 @@ class Loader {
 		
 		// If all the images are loaded call the callback.
 		if (this.imagesToLoad === 0)
-			this.app.start(this.images, this.shaders);
+			this.loader.start(this.images);
 	}
 
 	/* public methods */

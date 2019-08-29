@@ -37,7 +37,7 @@
 
 		/* public methods */
 
-		start(images) {}
+		start(images, shaders) {}
 	}
 
 	//
@@ -189,14 +189,14 @@
 	// Manipulates GL programs and
 	// loads shaders from src
 	//
-	class ShaderProgram {
+	class Shader {
 
-		constructor(gl, vertex_path, fragment_path) {
+		constructor(gl, vertex_file, fragment_file) {
 			
 			this.gl = gl;
-			this.vs_path = vertex_path;
-			this.fs_path = fragment_path;
-			
+			this.vs_src = vertex_file.getText();
+			this.fs_src = fragment_file.getText();
+
 			this._init();
 		}
 
@@ -204,21 +204,9 @@
 		
 		_init() {
 
-			// get shader's text
-			var vs_src = this._loadFile(this.vs_path);
-			var fs_src = this._loadFile(this.fs_path);
-
-			if (!vs_src) {
-				alert("Could not find shader source: " + this.vs_path);
-			}
-
-			if (!fs_src) {
-				alert("Could not find shader source: " + this.fs_path);
-			}
-
 			// compile the shader
-			var vs = this._compile(vs_src, this.gl.VERTEX_SHADER);
-			var fs = this._compile(fs_src, this.gl.FRAGMENT_SHADER);
+			var vs = this._compile(this.vs_src, this.gl.VERTEX_SHADER);
+			var fs = this._compile(this.fs_src, this.gl.FRAGMENT_SHADER);
 
 			this.program = this.gl.createProgram();
 			
@@ -229,20 +217,8 @@
 			// link program
 			this.gl.linkProgram(this.program);
 
-			if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
+			if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS))
 				alert("Unable to initialize the shader program.");
-			}
-		}
-
-		_loadFile(path) {
-			
-			var xhr = new XMLHttpRequest(),
-				okStatus = document.location.protocol === "file:" ? 0 : 200;
-			
-			xhr.open('GET', path, false);
-			xhr.send(null);
-			
-			return xhr.status == okStatus ? xhr.responseText : null;
 		}
 
 		_compile(src, type) {
@@ -3287,21 +3263,21 @@
 		
 			var scene = new Scene(this.gl);
 
-			var shader = new ShaderProgram(this.gl,
-						       shaders["normal"]["vertex"],
-						       shaders["normal"]["fragment"]);
+			var shader = new Shader(this.gl,
+						shaders["normal-vertex"],
+						shaders["normal-fragment"]);
 
-			var landShader = new ShaderProgram(this.gl,
-							   shaders["land"]["vertex"],
-							   shaders["land"]["fragment"]);
+			var landShader = new Shader(this.gl,
+						    shaders["land-vertex"],
+						    shaders["land-fragment"]);
 
-			var skyShader = new ShaderProgram(this.gl,
-							  shaders["sky"]["vertex"],
-							  shaders["sky"]["fragment"]);
+			var skyShader = new Shader(this.gl,
+						   shaders["sky-vertex"],
+						   shaders["sky-fragment"]);
 
-			var reflectShader = new ShaderProgram(this.gl,
-							      shaders["normal"]["vertex"],
-							      shaders["reflect"]["fragment"]);
+			var reflectShader = new Shader(this.gl,
+						       shaders["normal-vertex"],
+						       shaders["reflect-fragment"]);
 
 			// Perspective camera
 			var camera = new Camera(this.gl, this.canvas, [0.0, 0.0, 40.0]);
