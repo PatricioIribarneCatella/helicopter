@@ -44,22 +44,28 @@ function HeliController() {
 	// Camera movement variables (orbital)
 	//
 	var isMouseDown = false;
-	var zoomChanged = false, zoomState = false;
+	var zoomChanged = false;
+	var zoomState = false;
 	var zoom = 0;
+	var mouseZoom = 0.0;
+	
 	var maxRadioGlobal = 80, maxRadioOrbital = 40;
 	var minRadio = 10;
 	var currentRadio = maxRadioGlobal;
+	
 	var alfa = 0, beta = 0;
 	var factorVelocidad = 0.01;
-	var mouseZoom = 0.0;
+	
 	var previous = {
 		x: 0,
 		y: 0
 	};
+	
 	var mouse = {
 		x: 0,
 		y: 0
 	};
+	
 	var posCameraX = 0.0;
 	var posCameraY = 40.0;
 	var posCameraZ = 50.0;
@@ -244,21 +250,26 @@ function HeliController() {
 			var deltaX = mouse.x - previous.x;
 			var deltaY = mouse.y - previous.y;
 
+			var distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+
 			previous.x = mouse.x;
 			previous.y = mouse.y;
+			
+			if (distance <= 20.0 && distance > 0.0) {
+				
+				alfa = alfa + deltaX * factorVelocidad;
+				beta = beta + deltaY * factorVelocidad;
 
-			alfa = alfa + deltaX * factorVelocidad;
-			beta = beta + deltaY * factorVelocidad;
+				if (beta < 0)
+					beta = 0;
 
-			if (beta < 0)
-				beta = 0;
-
-			if (beta > Math.PI)
-				beta = Math.PI;
-	
-			posCameraX = currentRadio * Math.sin(alfa) * Math.sin(beta);
-			posCameraY = currentRadio * Math.cos(beta);
-			posCameraZ = currentRadio * Math.cos(alfa) * Math.sin(beta);
+				if (beta > Math.PI)
+					beta = Math.PI;
+		
+				posCameraX = currentRadio * Math.sin(alfa) * Math.sin(beta);
+				posCameraY = currentRadio * Math.cos(beta);
+				posCameraZ = currentRadio * Math.cos(alfa) * Math.sin(beta);
+			}
 		}
 	}
 
@@ -341,6 +352,30 @@ function HeliController() {
 		out += " <t>yaw: " + angle.toFixed(2) + "<br>";
 		out += " <t>pitch: " + pitch.toFixed(2) + "<br>";
 		out += " <t>roll: " + roll.toFixed(2) + "<br>";
+
+		return out;
+	}
+
+	this.getControls = function() {
+		
+		var out = "";
+
+		out += "  <b>Moving</b><br>";
+		out += "    Horizontal: Arrow Keys - ASWD<br>";
+		out += "    Vertical: UpPag/DownPag - Q/E<br>";
+		out += "  <b>Vehicle</b><br>";
+		out += "    Motors: H key<br>";
+		out += "    Landing gear: T key<br>";
+		out += "    Door/Stariway: P key<br>";
+		out += "  <b>Cameras</b><br>";
+		out += "    Global: 1 key<br>";
+		out += "    Orbital: 2 key<br>";
+		out += "    Lateral: 3 key<br>";
+		out += "    Up: 4 key<br>";
+		out += "    Back: 5 key<br>";
+		out += "  <b>Mouse</b><br>";
+		out += "    Cursor: orbital moving for cameras 1 and 2<br>";
+		out += "    Scroll: Zoom In/Out<br>";
 
 		return out;
 	}
