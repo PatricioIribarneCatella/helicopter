@@ -7,7 +7,7 @@ Helicóptero realizado con [_WebGL_](https://webglfundamentals.org/), [_JS_](htt
 Para generar _build.js_ se utiliza [_rollup_](https://rollupjs.org/guide/en/)
 
 ```bash
- $ rollup --config
+ $ rollup -c
 ```
 
 ### Run

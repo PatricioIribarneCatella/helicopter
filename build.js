@@ -84,6 +84,7 @@
 			this.world.draw(this.camera, this.controller, this.lights);
 
 			$("#display").html(this.controller.getInfo());
+			$("#controls").html(this.controller.getControls());
 		}
 	}
 
