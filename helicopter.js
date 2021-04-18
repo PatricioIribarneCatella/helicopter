@@ -26,7 +26,6 @@ import {PointLight} from './lights/point.js';
 import {SpotLight} from './lights/spot.js';
 
 import {Sphere} from './shapes/sphere.js';
-import {Cylinder} from './shapes/cylinder.js';
 import {BackCenter} from './shapes/helicopter/back.js';
 import {FrontCenter} from './shapes/helicopter/front.js';
 import {HexagonCenter, CurveCenter} from './shapes/helicopter/center.js';
