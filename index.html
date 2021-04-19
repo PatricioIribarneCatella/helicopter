@@ -1,14 +1,15 @@
 <!doctype html>
 
 <html lang="en">
-
 	<head>
 		<title>Helicopter</title>
 		<link rel="shortcut icon" href="favicon.ico">
 		<style>
-			body{ background-color: #222222; }
+			body {
+				background-color: #222222;
+			}
 
-			#display{
+			#display {
 				position: absolute;
 				left: 0;
 				bottom: 0;
@@ -21,7 +22,7 @@
 				text-align: left;
 			}
 
-			#controls{
+			#controls {
 				position: absolute;
 				right: 0;
 				bottom: 0;
@@ -54,23 +55,20 @@
 
 		<!-- utils !-->
 
-		<script src="utils/controller.js"></script>
-		<script src="utils/file.js"></script>
+		<script src="src/utils/controller.js"></script>
+		<script src="src/utils/file.js"></script>
 
 		<!-- loaders !-->
 
-		<script src="loaders/image.js"></script>
-		<script src="loaders/file.js"></script>
-		<script src="loaders/loader.js"></script>
+		<script src="src/loaders/image.js"></script>
+		<script src="src/loaders/file.js"></script>
+		<script src="src/loaders/loader.js"></script>
 
 		<!-- build !-->
 
 		<script src="build.js"></script>
 
 		<script>
-			//
-			// main function
-			//
 			function main() {
 
 				var canvas = document.getElementById("canvas");
@@ -117,42 +115,42 @@
 					{
 						name: "normal-vertex",
 						type: "vertex",
-						path: "./shaders/normal/vertex.glsl"
+						path: "./src/shaders/normal/vertex.glsl"
 					},
 					{
 						name: "normal-fragment",
 						type: "fragment",
-						path: "./shaders/normal/fragment.glsl"
+						path: "./src/shaders/normal/fragment.glsl"
 					},
 					{
 						name: "sky-vertex",
 						type: "vertex",
-						path: "./shaders/sky/vertex.glsl"
+						path: "./src/shaders/sky/vertex.glsl"
 					},
 					{
 						name: "sky-fragment",
 						type: "fragment",
-						path: "./shaders/sky/fragment.glsl"
+						path: "./src/shaders/sky/fragment.glsl"
 					},
 					{
 						name: "land-vertex",
 						type: "vertex",
-						path: "./shaders/land/vertex.glsl"
+						path: "./src/shaders/land/vertex.glsl"
 					},
 					{
 						name: "land-fragment",
 						type: "fragment",
-						path: "./shaders/land/fragment.glsl"
+						path: "./src/shaders/land/fragment.glsl"
 					},
 					{
 						name: "reflect-vertex",
 						type: "vertex",
-						path: "./shaders/normal/vertex.glsl"
+						path: "./src/shaders/normal/vertex.glsl"
 					},
 					{
 						name: "reflect-fragment",
 						type: "fragment",
-						path: "./shaders/reflect/fragment.glsl"
+						path: "./src/shaders/reflect/fragment.glsl"
 					}
 				];
 
@@ -164,4 +162,3 @@
 		</script>
 	</body>
 </html>
-

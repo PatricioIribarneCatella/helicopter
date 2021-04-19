@@ -1,5 +1,5 @@
 export default {
-	input: 'helicopter.js',
+	input: 'src/helicopter.js',
 	output: {
 		format: 'umd',
 		name: 'HELICOPTER',
