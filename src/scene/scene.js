@@ -3,46 +3,44 @@
 // that live in. (Shaders too)
 //
 export class Scene {
+    constructor(gl) {
+        this.gl = gl;
+    }
 
-	constructor(gl) {
-		this.gl = gl;
-	}
+    /* public methods */
 
-	/* public methods */
+    add(world) {
+        this.world = world;
+    }
 
-	add(world) {
-		this.world = world;
-	}
+    addCamera(camera) {
+        this.camera = camera;
+    }
 
-	addCamera(camera) {
-		this.camera = camera;
-	}
+    addController(controller) {
+        this.controller = controller;
+    }
 
-	addController(controller) {
-		this.controller = controller;
-	}
+    addLights(lights) {
+        this.lights = lights;
+    }
 
-	addLights(lights) {
-		this.lights = lights;
-	}
+    draw() {
+        window.requestAnimationFrame(() => this.draw());
 
-	draw() {
-		window.requestAnimationFrame(() => this.draw());
-		
-		this.controller.update();
+        this.controller.update();
 
-		this.camera.update(this.controller);
+        this.camera.update(this.controller);
 
-		for (var l in this.lights) {
-			this.lights[l].update(this.controller);
-		}
+        for (var l in this.lights) {
+            this.lights[l].update(this.controller);
+        }
 
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-		this.world.draw(this.camera, this.controller, this.lights);
+        this.world.draw(this.camera, this.controller, this.lights);
 
-		$("#display").html(this.controller.getInfo());
-		$("#controls").html(this.controller.getControls())
-	}
+        $('#display').html(this.controller.getInfo());
+        $('#controls').html(this.controller.getControls());
+    }
 }
-

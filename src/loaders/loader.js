@@ -6,20 +6,20 @@
 // of the app
 //
 class Loader {
+    constructor(images, shaders, app) {
+        this.imagesPaths = images;
+        this.shadersPaths = shaders;
+        this.app = app;
 
-	constructor(images, shaders, app) {
-		
-		this.imagesPaths = images;
-		this.shadersPaths = shaders;
-		this.app = app;
+        this.imageLoader = new ImageLoader(
+            this.imagesPaths,
+            new FileLoader(this.shadersPaths, this.app),
+        );
+    }
 
-		this.imageLoader = new ImageLoader(this.imagesPaths,
-					new FileLoader(this.shadersPaths, this.app));
-	}
+    /* public method */
 
-	/* public method */
-
-	start() {
-		this.imageLoader.start();
-	}
+    start() {
+        this.imageLoader.start();
+    }
 }

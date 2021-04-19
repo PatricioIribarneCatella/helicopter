@@ -2,45 +2,35 @@
 // Represents a Rotation
 //
 export class Rotation {
+    constructor(axis, init_angle, increment) {
+        this.raxis = axis;
+        this.angle = init_angle;
+        this.increment = increment;
 
-	constructor(axis, init_angle, increment) {
+        this.modelMatrix = mat4.create();
 
-		this.raxis = axis;
-		this.angle = init_angle;
-		this.increment = increment;
+        this._init();
+    }
 
-		this.modelMatrix = mat4.create();
+    /* private methods */
 
-		this._init();
-	}
+    _init() {
+        // initialize rotation matrix
+        mat4.identity(this.modelMatrix);
+        mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, this.raxis);
+    }
 
-	/* private methods */
+    /* public methods */
 
-	_init() {
-		// initialize rotation matrix
-		mat4.identity(this.modelMatrix);
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    this.angle,
-			    this.raxis);
-	}
+    update(controller) {
+        this.angle += this.increment;
 
-	/* public methods */
+        mat4.identity(this.modelMatrix);
 
-	update(controller) {
+        mat4.rotate(this.modelMatrix, this.modelMatrix, this.angle, this.raxis);
+    }
 
-		this.angle += this.increment;
-
-		mat4.identity(this.modelMatrix);
-		
-		mat4.rotate(this.modelMatrix,
-			    this.modelMatrix,
-			    this.angle,
-			    this.raxis);
-	}
-
-	getMatrix() {
-		return this.modelMatrix;
-	}
+    getMatrix() {
+        return this.modelMatrix;
+    }
 }
-

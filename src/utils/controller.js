@@ -1,383 +1,369 @@
-
 function HeliController() {
+    //
+    // Movement variables
+    //
+    var xArrow = 0;
+    var yArrow = 0;
+    var zArrow = 0;
 
-	//
-	// Movement variables
-	//
-	var xArrow = 0;
-	var yArrow = 0;
-	var zArrow = 0;
+    var motorChanged = false;
+    var legChanged = false;
+    var doorChanged = false;
+    var camera = 1;
 
-	var motorChanged = false;
-	var legChanged = false;
-	var doorChanged = false;
-	var camera = 1;
+    var altitudeInertia = 0.01;
+    var speedInertia = 0.1;
+    var angleInertia = 0.02;
 
-	var altitudeInertia = 0.01;
-	var speedInertia = 0.1;
-	var angleInertia = 0.02;
+    var deltaAltitude = 1;
+    var deltaSpeed = 0.01;
+    var deltaAngle = 0.03;
 
-	var deltaAltitude = 1;
-	var deltaSpeed = 0.01;
-	var deltaAngle = 0.03;
+    var maxSpeed = 2;
+    var maxAltitude = 300;
+    var minAltitude = 0.0;
 
-	var maxSpeed = 2;
-	var maxAltitude = 300;
-	var minAltitude = 0.0;
+    var positionX = 40;
+    var positionY = 10;
+    var positionZ = 0;
 
-	var positionX = 40;
-	var positionY = 10;
-	var positionZ = 0;
+    var speed = 0;
+    var altitude = minAltitude;
+    var angle = 0;
 
-	var speed = 0;
-	var altitude = minAltitude;
-	var angle = 0;
+    var pitch = 0;
+    var roll = 0;
 
-	var pitch = 0;
-	var roll = 0;
+    var angleTarget = 0;
+    var altitudeTarget = minAltitude;
+    var speedTarget = 0;
 
-	var angleTarget = 0;
-	var altitudeTarget = minAltitude;
-	var speedTarget = 0;
+    //
+    // Camera movement variables (orbital)
+    //
+    var isMouseDown = false;
+    var zoomChanged = false;
+    var zoomState = false;
+    var zoom = 0;
+    var mouseZoom = 0.0;
 
-	//
-	// Camera movement variables (orbital)
-	//
-	var isMouseDown = false;
-	var zoomChanged = false;
-	var zoomState = false;
-	var zoom = 0;
-	var mouseZoom = 0.0;
-	
-	var maxRadioGlobal = 80, maxRadioOrbital = 40;
-	var minRadio = 10;
-	var currentRadio = maxRadioGlobal;
-	
-	var alfa = 0, beta = 0;
-	var factorVelocidad = 0.01;
-	
-	var previous = {
-		x: 0,
-		y: 0
-	};
-	
-	var mouse = {
-		x: 0,
-		y: 0
-	};
-	
-	var posCameraX = 0.0;
-	var posCameraY = 40.0;
-	var posCameraZ = 50.0;
+    var maxRadioGlobal = 80,
+        maxRadioOrbital = 40;
+    var minRadio = 10;
+    var currentRadio = maxRadioGlobal;
 
-	/////////////////////
-	//  Event Handlers //
-	/////////////////////
-	
-	// Camera movement
+    var alfa = 0,
+        beta = 0;
+    var factorVelocidad = 0.01;
 
-	$('body').mousemove(function(e) {
+    var previous = {
+        x: 0,
+        y: 0,
+    };
 
-		mouse.x = e.clientX || e.pageX;
-		mouse.y = e.clientY || e.pageY;
-	});
+    var mouse = {
+        x: 0,
+        y: 0,
+    };
 
-	$('body').mousedown(function(e) {
-		isMouseDown = true;
-	});
+    var posCameraX = 0.0;
+    var posCameraY = 40.0;
+    var posCameraZ = 50.0;
 
-	$('body').mouseup(function(e) {
-		isMouseDown = false;
-	});
+    /////////////////////
+    //  Event Handlers //
+    /////////////////////
 
-	$('body').mousewheel(function(e) {
-		
-		zoomChanged = !zoomChanged;
-		zoom = e.deltaY * e.deltaFactor * -0.1;
-	});
+    // Camera movement
 
-	// Movement
+    $('body').mousemove(function (e) {
+        mouse.x = e.clientX || e.pageX;
+        mouse.y = e.clientY || e.pageY;
+    });
 
-	$("body").keydown(function(e) {
-		switch (e.key) {
-			case "w":
-			case "ArrowUp":
-				xArrow = 1;
-				break;
-			case "s":
-			case "ArrowDown":
-				xArrow = -1;
-				break;
-			case "a":
-			case "ArrowLeft":
-				zArrow = 1;
-				break;
-			case "d":
-			case "ArrowRight":
-				zArrow = -1;
-				break;
+    $('body').mousedown(function (e) {
+        isMouseDown = true;
+    });
 
-			case "q":
-			case "PageUp":
-				yArrow = 1;
-				break;
-			case "e":
-			case "PageDown":
-				yArrow = -1;
-				break;
+    $('body').mouseup(function (e) {
+        isMouseDown = false;
+    });
 
-			case "h":
-				motorChanged = !motorChanged;
-				break;
-			case "t":
-				legChanged = !legChanged;
-				break;
-			case "p":
-				doorChanged = !doorChanged;
-				break;
+    $('body').mousewheel(function (e) {
+        zoomChanged = !zoomChanged;
+        zoom = e.deltaY * e.deltaFactor * -0.1;
+    });
 
-			case "1":
-				camera = 1;
-				break;
-			case "2":
-				camera = 2;
-				break;
-			case "3":
-				camera = 3;
-				break;
-			case "4":
-				camera = 4;
-				break;
-			case "5":
-				camera = 5;
-				break;
-		}
-	});
+    // Movement
 
-	$("body").keyup(function(e) {
-		switch (e.key) {
-			case "w":
-			case "s":
-			case "ArrowUp":
-			case "ArrowDown":
-				xArrow = 0;
-				break;
-			case "a":
-			case "d":
-			case "ArrowLeft":
-			case "ArrowRight":
-				zArrow = 0;
-				break;
-			case "q":
-			case "e":
-			case "PageUp":
-			case "PageDown":
-				yArrow = 0;
-				break;
-		}
-	});
+    $('body').keydown(function (e) {
+        switch (e.key) {
+            case 'w':
+            case 'ArrowUp':
+                xArrow = 1;
+                break;
+            case 's':
+            case 'ArrowDown':
+                xArrow = -1;
+                break;
+            case 'a':
+            case 'ArrowLeft':
+                zArrow = 1;
+                break;
+            case 'd':
+            case 'ArrowRight':
+                zArrow = -1;
+                break;
 
-	this.update = function() {
+            case 'q':
+            case 'PageUp':
+                yArrow = 1;
+                break;
+            case 'e':
+            case 'PageDown':
+                yArrow = -1;
+                break;
 
-		//
-		// Movement Update
-		//
-		if (xArrow != 0) {
-			speedTarget += xArrow * deltaSpeed;
-		} else {
-			speedTarget += (0 - speedTarget) * deltaSpeed;
-		}
+            case 'h':
+                motorChanged = !motorChanged;
+                break;
+            case 't':
+                legChanged = !legChanged;
+                break;
+            case 'p':
+                doorChanged = !doorChanged;
+                break;
 
-		speedTarget = Math.max(-maxAltitude, Math.min(maxSpeed, speedTarget));
+            case '1':
+                camera = 1;
+                break;
+            case '2':
+                camera = 2;
+                break;
+            case '3':
+                camera = 3;
+                break;
+            case '4':
+                camera = 4;
+                break;
+            case '5':
+                camera = 5;
+                break;
+        }
+    });
 
-		var speedSign = 1;
+    $('body').keyup(function (e) {
+        switch (e.key) {
+            case 'w':
+            case 's':
+            case 'ArrowUp':
+            case 'ArrowDown':
+                xArrow = 0;
+                break;
+            case 'a':
+            case 'd':
+            case 'ArrowLeft':
+            case 'ArrowRight':
+                zArrow = 0;
+                break;
+            case 'q':
+            case 'e':
+            case 'PageUp':
+            case 'PageDown':
+                yArrow = 0;
+                break;
+        }
+    });
 
-		if (speed < 0)
-			speedSign = -1;
+    this.update = function () {
+        //
+        // Movement Update
+        //
+        if (xArrow != 0) {
+            speedTarget += xArrow * deltaSpeed;
+        } else {
+            speedTarget += (0 - speedTarget) * deltaSpeed;
+        }
 
-		if (zArrow != 0) {
-			angleTarget += zArrow * deltaAngle * speedSign;
-		}
+        speedTarget = Math.max(-maxAltitude, Math.min(maxSpeed, speedTarget));
 
-		if (yArrow != 0) {
-			altitudeTarget += yArrow * deltaAltitude;
-			altitudeTarget = Math.max(minAltitude, Math.min(maxAltitude, altitudeTarget));
-		}
+        var speedSign = 1;
 
-		roll = -(angleTarget - angle) * 0.4;
-		pitch = -Math.max(-0.5, Math.min(0.5, speed));
+        if (speed < 0) speedSign = -1;
 
-		speed += (speedTarget - speed) * speedInertia;
-		altitude += (altitudeTarget - altitude) * altitudeInertia;
-		angle += (angleTarget - angle) * angleInertia;
+        if (zArrow != 0) {
+            angleTarget += zArrow * deltaAngle * speedSign;
+        }
 
-		var directionX = Math.cos(-angle) * speed;
-		var directionZ = Math.sin(-angle) * speed;
+        if (yArrow != 0) {
+            altitudeTarget += yArrow * deltaAltitude;
+            altitudeTarget = Math.max(minAltitude, Math.min(maxAltitude, altitudeTarget));
+        }
 
-		positionX += directionX;
-		positionZ += directionZ;
-		positionY = altitude;
+        roll = -(angleTarget - angle) * 0.4;
+        pitch = -Math.max(-0.5, Math.min(0.5, speed));
 
-		//
-		// Camera movement Update
-		//
-		var r = maxRadioGlobal;
-		
-		if (camera == 2)
-			r = maxRadioOrbital;
+        speed += (speedTarget - speed) * speedInertia;
+        altitude += (altitudeTarget - altitude) * altitudeInertia;
+        angle += (angleTarget - angle) * angleInertia;
 
-		// If zoom is changed, update
-		// the coordinates by changing
-		// the radio
-		if (zoomChanged != zoomState) {
-			
-			var targetRadio = Math.min(r, Math.max(minRadio, currentRadio + zoom));
-			
-			posCameraX = targetRadio * Math.sin(alfa) * Math.sin(beta);
-			posCameraY = targetRadio * Math.cos(beta);
-			posCameraZ = targetRadio * Math.cos(alfa) * Math.sin(beta);
-			
-			currentRadio = targetRadio;
-			zoomState = zoomChanged;
-		}
+        var directionX = Math.cos(-angle) * speed;
+        var directionZ = Math.sin(-angle) * speed;
 
-		// If mouse is pressed, update
-		// the coordinates by changing
-		// the alfa and beta parameters
-		// and using the same radio
-		if (isMouseDown) {
-			
-			var deltaX = mouse.x - previous.x;
-			var deltaY = mouse.y - previous.y;
+        positionX += directionX;
+        positionZ += directionZ;
+        positionY = altitude;
 
-			var distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+        //
+        // Camera movement Update
+        //
+        var r = maxRadioGlobal;
 
-			previous.x = mouse.x;
-			previous.y = mouse.y;
-			
-			if (distance <= 20.0 && distance > 0.0) {
-				
-				alfa = alfa + deltaX * factorVelocidad;
-				beta = beta + deltaY * factorVelocidad;
+        if (camera == 2) r = maxRadioOrbital;
 
-				if (beta < 0)
-					beta = 0;
+        // If zoom is changed, update
+        // the coordinates by changing
+        // the radio
+        if (zoomChanged != zoomState) {
+            var targetRadio = Math.min(r, Math.max(minRadio, currentRadio + zoom));
 
-				if (beta > Math.PI)
-					beta = Math.PI;
-		
-				posCameraX = currentRadio * Math.sin(alfa) * Math.sin(beta);
-				posCameraY = currentRadio * Math.cos(beta);
-				posCameraZ = currentRadio * Math.cos(alfa) * Math.sin(beta);
-			}
-		}
-	}
+            posCameraX = targetRadio * Math.sin(alfa) * Math.sin(beta);
+            posCameraY = targetRadio * Math.cos(beta);
+            posCameraZ = targetRadio * Math.cos(alfa) * Math.sin(beta);
 
-	this.getPosition = function() {
-		return {
-			x: positionX,
-			y: positionY,
-			z: positionZ,
-		};
-	}
+            currentRadio = targetRadio;
+            zoomState = zoomChanged;
+        }
 
-	this.getCameraPosition = function() {
-		return {
-			x: posCameraX,
-			y: posCameraY,
-			z: posCameraZ,
-		};
-	}
+        // If mouse is pressed, update
+        // the coordinates by changing
+        // the alfa and beta parameters
+        // and using the same radio
+        if (isMouseDown) {
+            var deltaX = mouse.x - previous.x;
+            var deltaY = mouse.y - previous.y;
 
-	this.getCameraType = function () {
+            var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		switch (camera) {
-			case 1:
-				return "global";
-			case 2:
-				return "orbital";
-			case 3:
-				return "lateral";
-			case 4:
-				return "up";
-			case 5:
-				return "back";
-		}
-	}
+            previous.x = mouse.x;
+            previous.y = mouse.y;
 
-	this.getYaw = function() {
-		return angle;
-	}
+            if (distance <= 20.0 && distance > 0.0) {
+                alfa = alfa + deltaX * factorVelocidad;
+                beta = beta + deltaY * factorVelocidad;
 
-	this.getRoll = function() {
-		return roll;
-	}
+                if (beta < 0) beta = 0;
 
-	this.getPitch = function() {
-		return pitch;
-	}
+                if (beta > Math.PI) beta = Math.PI;
 
-	this.getSpeed = function() {
-		return speed;
-	}
+                posCameraX = currentRadio * Math.sin(alfa) * Math.sin(beta);
+                posCameraY = currentRadio * Math.cos(beta);
+                posCameraZ = currentRadio * Math.cos(alfa) * Math.sin(beta);
+            }
+        }
+    };
 
-	this.getMotorPosChanged = function() {
-		return motorChanged;
-	}
+    this.getPosition = function () {
+        return {
+            x: positionX,
+            y: positionY,
+            z: positionZ,
+        };
+    };
 
-	this.getLegPosChanged = function() {
-		return legChanged;
-	}
+    this.getCameraPosition = function () {
+        return {
+            x: posCameraX,
+            y: posCameraY,
+            z: posCameraZ,
+        };
+    };
 
-	this.getDoorChanged = function() {
-		return doorChanged;
-	}
+    this.getCameraType = function () {
+        switch (camera) {
+            case 1:
+                return 'global';
+            case 2:
+                return 'orbital';
+            case 3:
+                return 'lateral';
+            case 4:
+                return 'up';
+            case 5:
+                return 'back';
+        }
+    };
 
-	this.getInfo = function() {
+    this.getYaw = function () {
+        return angle;
+    };
 
-		var out = "";
+    this.getRoll = function () {
+        return roll;
+    };
 
-		out += " <b>Target:</b><br>";
-		out += " <t>speed: " + speedTarget.toFixed(2) + "<br>";
-		out += " <t>altitude: " + altitudeTarget.toFixed(2) + "<br>";
-		out += " <t>angle: " + angleTarget.toFixed(2) + "<br><br>";
+    this.getPitch = function () {
+        return pitch;
+    };
 
-		out += " <b>Current:</b><br>";
-		out += " <t>speed: " + speed.toFixed(2) + "<br>";
-		out += " <t>altitude: " + altitude.toFixed(2) + "<br><br>";
+    this.getSpeed = function () {
+        return speed;
+    };
 
-		out += " <b>Camera:</b> " + this.getCameraType() + "<br><br>";
+    this.getMotorPosChanged = function () {
+        return motorChanged;
+    };
 
-		out += " <b>Angles:</b><br>"
-		out += " <t>yaw: " + angle.toFixed(2) + "<br>";
-		out += " <t>pitch: " + pitch.toFixed(2) + "<br>";
-		out += " <t>roll: " + roll.toFixed(2) + "<br>";
+    this.getLegPosChanged = function () {
+        return legChanged;
+    };
 
-		return out;
-	}
+    this.getDoorChanged = function () {
+        return doorChanged;
+    };
 
-	this.getControls = function() {
-		
-		var out = "";
+    this.getInfo = function () {
+        var out = '';
 
-		out += "  <b>Moving</b><br>";
-		out += "    Horizontal: Arrow Keys - ASWD<br>";
-		out += "    Vertical: UpPag/DownPag - Q/E<br>";
-		out += "  <b>Vehicle</b><br>";
-		out += "    Motors: H key<br>";
-		out += "    Landing gear: T key<br>";
-		out += "    Door/Stariway: P key<br>";
-		out += "  <b>Cameras</b><br>";
-		out += "    Global: 1 key<br>";
-		out += "    Orbital: 2 key<br>";
-		out += "    Lateral: 3 key<br>";
-		out += "    Up: 4 key<br>";
-		out += "    Back: 5 key<br>";
-		out += "  <b>Mouse</b><br>";
-		out += "    Cursor: orbital moving for cameras 1 and 2<br>";
-		out += "    Scroll: Zoom In/Out<br>";
+        out += ' <b>Target:</b><br>';
+        out += ' <t>speed: ' + speedTarget.toFixed(2) + '<br>';
+        out += ' <t>altitude: ' + altitudeTarget.toFixed(2) + '<br>';
+        out += ' <t>angle: ' + angleTarget.toFixed(2) + '<br><br>';
 
-		return out;
-	}
+        out += ' <b>Current:</b><br>';
+        out += ' <t>speed: ' + speed.toFixed(2) + '<br>';
+        out += ' <t>altitude: ' + altitude.toFixed(2) + '<br><br>';
+
+        out += ' <b>Camera:</b> ' + this.getCameraType() + '<br><br>';
+
+        out += ' <b>Angles:</b><br>';
+        out += ' <t>yaw: ' + angle.toFixed(2) + '<br>';
+        out += ' <t>pitch: ' + pitch.toFixed(2) + '<br>';
+        out += ' <t>roll: ' + roll.toFixed(2) + '<br>';
+
+        return out;
+    };
+
+    this.getControls = function () {
+        var out = '';
+
+        out += '  <b>Moving</b><br>';
+        out += '    Horizontal: Arrow Keys - ASWD<br>';
+        out += '    Vertical: UpPag/DownPag - Q/E<br>';
+        out += '  <b>Vehicle</b><br>';
+        out += '    Motors: H key<br>';
+        out += '    Landing gear: T key<br>';
+        out += '    Door/Stariway: P key<br>';
+        out += '  <b>Cameras</b><br>';
+        out += '    Global: 1 key<br>';
+        out += '    Orbital: 2 key<br>';
+        out += '    Lateral: 3 key<br>';
+        out += '    Up: 4 key<br>';
+        out += '    Back: 5 key<br>';
+        out += '  <b>Mouse</b><br>';
+        out += '    Cursor: orbital moving for cameras 1 and 2<br>';
+        out += '    Scroll: Zoom In/Out<br>';
+
+        return out;
+    };
 }
-

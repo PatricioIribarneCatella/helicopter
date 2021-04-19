@@ -1,34 +1,33 @@
 export class PointLight {
+    constructor(position, color) {
+        this.offset = position;
+        this.position = position;
+        this.color = color;
+    }
 
-	constructor(position, color) {
+    /* private methods */
 
-		this.offset = position;
-		this.position = position;
-		this.color = color;
-	}
-	
-	/* private methods */
-	
-	/* public methods */
+    /* public methods */
 
-	update(controller) {
-	
-		var aux;
-		var p = controller.getPosition();
-		var angle = controller.getYaw();
+    update(controller) {
+        var aux;
+        var p = controller.getPosition();
+        var angle = controller.getYaw();
 
-		aux = [this.offset[0]*Math.cos(angle) + this.offset[2]*Math.sin(angle),
-		       this.offset[1],
-		       -this.offset[0]*Math.sin(angle) + this.offset[2]*Math.cos(angle)];
-		
-		this.position = [p.x + aux[0], p.y + aux[1], p.z + aux[2]];
-	}
+        aux = [
+            this.offset[0] * Math.cos(angle) + this.offset[2] * Math.sin(angle),
+            this.offset[1],
+            -this.offset[0] * Math.sin(angle) + this.offset[2] * Math.cos(angle),
+        ];
 
-	getPosition() {
-		return this.position;
-	}
+        this.position = [p.x + aux[0], p.y + aux[1], p.z + aux[2]];
+    }
 
-	getColor() {
-		return this.color;
-	}
+    getPosition() {
+        return this.position;
+    }
+
+    getColor() {
+        return this.color;
+    }
 }

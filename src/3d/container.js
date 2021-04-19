@@ -9,67 +9,57 @@
 // 		(a.k.a 'Graphic' object)
 //
 export class Container3D {
-	
-	constructor(transformations) {
-		
-		this.ts = transformations;
-		this.childrens = [];
+    constructor(transformations) {
+        this.ts = transformations;
+        this.childrens = [];
 
-		this._init();
-	}
+        this._init();
+    }
 
-	/* private methods */
+    /* private methods */
 
-	_init() {
-		this.matrix = mat4.create();
-	}
+    _init() {
+        this.matrix = mat4.create();
+    }
 
-	_updateTransformations(matrix) {
-	
-		var i;
-		mat4.identity(this.matrix);
+    _updateTransformations(matrix) {
+        var i;
+        mat4.identity(this.matrix);
 
-		for (i = 0; i < this.ts.length; i++) {
-			mat4.multiply(this.matrix, this.matrix, this.ts[i].getMatrix());
-		}
+        for (i = 0; i < this.ts.length; i++) {
+            mat4.multiply(this.matrix, this.matrix, this.ts[i].getMatrix());
+        }
 
-		mat4.multiply(this.matrix, matrix, this.matrix);
-	}
+        mat4.multiply(this.matrix, matrix, this.matrix);
+    }
 
-	_animate(controller) {
+    _animate(controller) {
+        var i;
+        for (i = 0; i < this.ts.length; i++) {
+            this.ts[i].update(controller);
+        }
+    }
 
-		var i;
-		for (i = 0; i < this.ts.length; i++) {
-			this.ts[i].update(controller);
-		}
-	}
+    _isVisible(_controller) {
+        return true;
+    }
 
-	_isVisible(controller) {
-		return true;
-	}
+    /* public methods */
 
-	/* public methods */
+    add(e) {
+        this.childrens.push(e);
+    }
 
-	add(e) {
-		this.childrens.push(e);
-	}
+    draw(camera, controller, lights, matrix) {
+        this._updateTransformations(matrix);
 
-	draw(camera, controller, lights, matrix) {
+        if (this._isVisible(controller)) {
+            var i;
+            for (i = 0; i < this.childrens.length; i++) {
+                this.childrens[i].draw(camera, controller, lights, this.matrix);
+            }
 
-		this._updateTransformations(matrix);
-
-		if (this._isVisible(controller)) {
-
-			var i;
-			for (i = 0; i < this.childrens.length; i++) {
-				this.childrens[i].draw(camera,
-							controller,
-							lights,
-							this.matrix);
-			}
-
-			this._animate(controller);
-		}
-	}
+            this._animate(controller);
+        }
+    }
 }
-

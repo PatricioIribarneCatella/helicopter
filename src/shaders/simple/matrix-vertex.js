@@ -12,4 +12,3 @@ var matrix_vertex_shader = `attribute vec3 aVertexPosition;
 				gl_Position = pv * model * vec4(aVertexPosition, 1.0);
 				vColor = vec4(aVertexColor, 1.0);
 			    }`;
-

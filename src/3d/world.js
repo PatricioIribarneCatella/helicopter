@@ -2,25 +2,21 @@
 // Represents the 'World'
 //
 export class World {
+    constructor() {
+        this.matrix = mat4.create();
+        this.elements = [];
+    }
 
-	constructor() {
-		this.matrix = mat4.create();
-		this.elements = [];
-	}
+    /* public methods */
 
-	/* public methods */
+    add(e) {
+        this.elements.push(e);
+    }
 
-	add(e) {
-		this.elements.push(e);
-	}
-
-	draw(camera, controller, lights) {
-		var i;
-		for (i = 0; i < this.elements.length; i++) {
-			this.elements[i].draw(camera,
-					      controller,
-					      lights,
-					      this.matrix);
-		}
-	}
+    draw(camera, controller, lights) {
+        var i;
+        for (i = 0; i < this.elements.length; i++) {
+            this.elements[i].draw(camera, controller, lights, this.matrix);
+        }
+    }
 }

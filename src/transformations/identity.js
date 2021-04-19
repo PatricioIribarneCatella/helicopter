@@ -3,18 +3,16 @@
 // transformation
 //
 export class Identity {
+    constructor() {
+        this.modelMatrix = mat4.create();
+    }
 
-	constructor() {
-		this.modelMatrix = mat4.create();
-	}
+    /* public methods */
 
-	/* public methods */
+    // it does not need to be updated
+    update(controller) {}
 
-	// it does not need to be updated
-	update(controller) {}
-
-	getMatrix() {
-		return this.modelMatrix;
-	}
+    getMatrix() {
+        return this.modelMatrix;
+    }
 }
-

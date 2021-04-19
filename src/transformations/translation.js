@@ -2,33 +2,29 @@
 // Represents a Translation
 //
 export class Translation {
-	
-	constructor(position) {
+    constructor(position) {
+        this.position = position;
 
-		this.position = position;
-	
-		this.modelMatrix = mat4.create();
+        this.modelMatrix = mat4.create();
 
-		this._init();
-	}
+        this._init();
+    }
 
-	/* private methods */
+    /* private methods */
 
-	_init() {
-		// initialize rotation matrix
-		mat4.identity(this.modelMatrix);
-		mat4.translate(this.modelMatrix,
-			       this.modelMatrix,
-			       this.position);
-	}
+    _init() {
+        // initialize rotation matrix
+        mat4.identity(this.modelMatrix);
+        mat4.translate(this.modelMatrix, this.modelMatrix, this.position);
+    }
 
-	/* public methods */
-	
-	// translation does not need to be updated
-	// in every animation frame as a rotation does
-	update(controller) {}
+    /* public methods */
 
-	getMatrix() {
-		return this.modelMatrix;
-	}
+    // translation does not need to be updated
+    // in every animation frame as a rotation does
+    update(controller) {}
+
+    getMatrix() {
+        return this.modelMatrix;
+    }
 }

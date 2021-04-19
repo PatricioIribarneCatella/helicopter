@@ -4,94 +4,88 @@
 // projection (perspective) + view (position)
 //
 export class Camera {
+    constructor(gl, canvas, pos) {
+        this.gl = gl;
+        this.canvas = canvas;
 
-	constructor(gl, canvas, pos) {
+        // invert the z index
+        this.position = [pos[0], pos[1], -pos[2]];
+        this.d = 7.0;
 
-		this.gl = gl;
-		this.canvas = canvas;
+        this.projMatrix = mat4.create();
+        this.viewMatrix = mat4.create();
+        this.matrix = mat4.create();
 
-		// invert the z index
-		this.position = [pos[0], pos[1], -pos[2]];
-		this.d = 7.0;
+        this._init();
+    }
 
-		this.projMatrix = mat4.create();
-		this.viewMatrix = mat4.create();
-		this.matrix = mat4.create();
+    /* private methods */
 
-		this._init();
-	}
+    _init() {
+        // initialize perspective matrix
+        mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 10000.0);
 
-	/* private methods */
+        // initialize translation matrix
+        mat4.translate(this.viewMatrix, this.viewMatrix, this.position);
 
-	_init() {
-		// initialize perspective matrix
-		mat4.perspective(this.projMatrix, 45,
-				 this.canvas.width / this.canvas.height,
-				 0.1, 10000.0);
+        mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
+    }
 
-		// initialize translation matrix
-		mat4.translate(this.viewMatrix, this.viewMatrix, this.position);
+    /* public methods */
 
-		mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
-	}
+    bind(program) {
+        var uniformMatrixPV = program.findUniform('pv');
+        this.gl.uniformMatrix4fv(uniformMatrixPV, false, this.matrix);
+    }
 
-	/* public methods */
+    getView() {
+        return this.viewMatrix;
+    }
 
-	bind(program) {
+    getEye() {
+        return this.position;
+    }
 
-		var uniformMatrixPV = program.findUniform("pv");
-		this.gl.uniformMatrix4fv(uniformMatrixPV, false, this.matrix);
-	}
+    update(controller) {
+        var type = controller.getCameraType();
 
-	getView() {
-		return this.viewMatrix;
-	}
+        var cPos = controller.getCameraPosition();
+        var p = controller.getPosition();
+        var angle = controller.getYaw();
 
-	getEye() {
-		return this.position;
-	}
+        var center = [p.x, p.y, p.z];
+        var up = [0.0, 1.0, 0.0];
+        var eye, aux;
 
-	update(controller) {
-	
-		var type = controller.getCameraType();
+        switch (type) {
+            case 'global':
+                center = [0.0, 0.0, 0.0];
+                eye = [cPos.x, cPos.y, cPos.z];
+                this.position = eye;
+                break;
+            case 'orbital':
+                eye = [cPos.x + p.x, cPos.y + p.y, cPos.z + p.z];
+                this.position = eye;
+                break;
+            case 'lateral':
+                aux = [-this.d * Math.sin(angle), 0.0, -this.d * Math.cos(angle)];
+                eye = [p.x + aux[0], p.y, p.z + aux[2]];
+                this.position = eye;
+                break;
+            case 'up':
+                up = [1.0, 0.0, 0.0];
+                eye = [p.x, p.y + this.d, p.z];
+                this.position = eye;
+                break;
+            case 'back':
+                aux = [-this.d * Math.cos(angle), 0.0, this.d * Math.sin(angle)];
+                eye = [p.x + aux[0], p.y, p.z + aux[2]];
+                this.position = eye;
+                break;
+        }
 
-		var cPos = controller.getCameraPosition();
-		var p = controller.getPosition();
-		var angle = controller.getYaw();
+        mat4.lookAt(this.viewMatrix, eye, center, up);
 
-		var center = [p.x, p.y, p.z];
-		var up = [0.0, 1.0, 0.0];
-		var eye, aux;
-
-		switch (type) {
-			case "global":
-				center = [0.0, 0.0, 0.0];
-				eye = [cPos.x, cPos.y, cPos.z];
-				this.position = eye;
-				break;
-			case "orbital":
-				eye = [cPos.x + p.x, cPos.y + p.y, cPos.z + p.z];
-				this.position = eye;
-				break;
-			case "lateral":
-				aux = [-this.d*Math.sin(angle), 0.0, -this.d*Math.cos(angle)];
-				eye = [p.x + aux[0], p.y, p.z + aux[2]];
-				this.position = eye;
-				break;
-			case "up":
-				up = [1.0, 0.0, 0.0];
-				eye = [p.x, p.y + this.d, p.z];
-				this.position = eye;
-				break;
-			case "back":
-				aux = [-this.d*Math.cos(angle), 0.0, this.d*Math.sin(angle)];
-				eye = [p.x + aux[0], p.y, p.z + aux[2]];
-				this.position = eye;
-				break;
-		}
-
-		mat4.lookAt(this.viewMatrix, eye, center, up);
-
-		mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
-	}
+        mat4.multiply(this.matrix, this.projMatrix, this.viewMatrix);
+    }
 }

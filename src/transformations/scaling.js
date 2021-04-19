@@ -3,33 +3,29 @@
 // transformation
 //
 export class Scale {
+    constructor(scale) {
+        this.scale = scale;
 
-	constructor(scale) {
-		
-		this.scale = scale;
+        this.modelMatrix = mat4.create();
 
-		this.modelMatrix = mat4.create();
+        this._init();
+    }
 
-		this._init();
-	}
+    /* private methods */
 
-	/* private methods */
+    _init() {
+        // initialize scaling matrix
+        mat4.identity(this.modelMatrix);
+        mat4.scale(this.modelMatrix, this.modelMatrix, this.scale);
+    }
 
-	_init() {
-		// initialize scaling matrix
-		mat4.identity(this.modelMatrix);
-		mat4.scale(this.modelMatrix,
-			   this.modelMatrix,
-			   this.scale);
-	}
+    /* public methods */
 
-	/* public methods */
+    // scaling does not need to be updated
+    // in every animation frame as a rotation does
+    update(controller) {}
 
-	// scaling does not need to be updated
-	// in every animation frame as a rotation does
-	update(controller) {}
-
-	getMatrix() {
-		return this.modelMatrix;
-	}
+    getMatrix() {
+        return this.modelMatrix;
+    }
 }

@@ -1,24 +1,22 @@
 export class DirectLight {
+    constructor(direction, color) {
+        this.direction = direction;
+        this.color = color;
+    }
 
-	constructor(direction, color) {
+    /* private methods */
 
-		this.direction = direction;
-		this.color = color;
-	}
+    /* public methods */
 
-	/* private methods */
-	
-	/* public methods */
+    // Does not have to be
+    // updated
+    update(controller) {}
 
-	// Does not have to be
-	// updated
-	update(controller) {}
+    getDirection() {
+        return this.direction;
+    }
 
-	getDirection() {
-		return this.direction;
-	}
-
-	getColor() {
-		return this.color;
-	}
+    getColor() {
+        return this.color;
+    }
 }
