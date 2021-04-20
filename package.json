@@ -11,7 +11,7 @@
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "start": "",
+    "start": "python3 -m http.server",
     "build": "rollup -c",
     "prettier": "prettier --write \"src/**/*.js\" \"tests/*.js\""
   },

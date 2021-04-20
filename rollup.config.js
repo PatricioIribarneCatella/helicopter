@@ -3,7 +3,7 @@ export default {
 	output: {
 		format: 'umd',
 		name: 'HELICOPTER',
-		file: 'build.js',
+		file: 'build/index.js',
 		indent: '\t'
 	}
 };
