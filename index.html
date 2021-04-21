@@ -1,0 +1,165 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<title>Helicopter</title>
+		<meta charset="utf-8">
+		<link rel="shortcut icon" href="static/favicon.ico">
+		<style>
+			body {
+				background-color: #222222;
+			}
+
+			#display {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				border: 1px solid white;
+				padding: 10px;
+				color: white;
+				background-color: rgba(0,0,0,0.3);
+				min-height: 300px;
+				min-width: 200px;
+				text-align: left;
+			}
+
+			#controls {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				border: 1px solid white;
+				padding: 10px;
+				color: white;
+				background-color: rgba(0,0,0,0.3);
+				min-height: 300px;
+				min-width: 300px;
+				text-align: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="display"></div>
+		<div id="controls"></div>
+
+		<center>
+			<canvas id="canvas"></canvas>
+		</center>
+
+		<!------------------ src !------------------>
+
+		<!-- libs !-->
+
+		<script src="libs/gl-matrix.js"></script>
+		<script src="libs/jquery.js"></script>
+		<script src="libs/jquery.mousewheel.js"></script>
+
+		<!-- utils !-->
+
+		<script src="src/utils/controller.js"></script>
+		<script src="src/utils/file.js"></script>
+
+		<!-- loaders !-->
+
+		<script src="src/loaders/image.js"></script>
+		<script src="src/loaders/file.js"></script>
+		<script src="src/loaders/loader.js"></script>
+
+		<!-- build !-->
+
+		<script src="build/index.js"></script>
+
+		<script>
+			function main() {
+
+				var canvas = document.getElementById("canvas");
+
+				var gl = canvas.getContext("webgl");
+
+				canvas.width = $(window).width() - 20;
+				canvas.height = $(window).height() - 30;
+
+				// check if WebGL is available
+				if (!gl) {
+					alert("WebGL not available");
+					return;
+				}
+
+				var loader, app, images, shaders;
+
+				app = new HELICOPTER.HelicopterApp(gl, canvas);
+				
+				images = [
+					{
+						path: "./static/img/sunset.jpg",
+						name: "sky"
+					},
+					{
+						path: "./static/img/pasto.jpg",
+						name: "pasto"
+					},
+					{
+						path: "./static/img/piedras.jpg",
+						name: "piedras"
+					},
+					{
+						path: "./static/img/tierra.jpg",
+						name: "tierra"
+					},
+					{
+						path: "./static/img/tierraseca.jpg",
+						name: "tierraseca"
+					}
+				];
+
+				shaders = [
+					{
+						name: "normal-vertex",
+						type: "vertex",
+						path: "./src/shaders/normal/vertex.glsl"
+					},
+					{
+						name: "normal-fragment",
+						type: "fragment",
+						path: "./src/shaders/normal/fragment.glsl"
+					},
+					{
+						name: "sky-vertex",
+						type: "vertex",
+						path: "./src/shaders/sky/vertex.glsl"
+					},
+					{
+						name: "sky-fragment",
+						type: "fragment",
+						path: "./src/shaders/sky/fragment.glsl"
+					},
+					{
+						name: "land-vertex",
+						type: "vertex",
+						path: "./src/shaders/land/vertex.glsl"
+					},
+					{
+						name: "land-fragment",
+						type: "fragment",
+						path: "./src/shaders/land/fragment.glsl"
+					},
+					{
+						name: "reflect-vertex",
+						type: "vertex",
+						path: "./src/shaders/normal/vertex.glsl"
+					},
+					{
+						name: "reflect-fragment",
+						type: "fragment",
+						path: "./src/shaders/reflect/fragment.glsl"
+					}
+				];
+
+				loader = new Loader(images, shaders, app);
+				loader.start();
+			}
+
+			window.onload = main;
+		</script>
+	</body>
+</html>
