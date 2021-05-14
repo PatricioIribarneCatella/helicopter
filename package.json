@@ -1,21 +1,25 @@
 {
   "name": "helicopter",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "WebGL Helicopter",
   "main": "src/helicopter.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PatricioIribarneCatella/helicopter.git"
+    "url": "https://github.com/PatricioIribarneCatella/helicopter.git"
   },
-  "author": "Patricio Iribarne Catella <patricio_14_94@hotmail.com>",
+  "author": {
+    "name": "Patricio Iribarne Catella",
+    "email": "patricioiribarnecatella@gmail.com"
+  },
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "start": "cd build/ && python3 -m http.server",
-    "build": "rollup -c && cp index.html build/",
+    "build": "./scripts/build",
+    "start": "http-server -p 8000 build",
     "prettier": "prettier --write \"src/**/*.js\" \"tests/*.js\""
   },
   "devDependencies": {
+    "http-server": "0.12.3",
     "prettier": "2.2.1",
     "rollup": "2.45.2"
   }

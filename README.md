@@ -9,7 +9,6 @@ Made with [_WebGL_](https://webglfundamentals.org/), [_JS_](https://developer.mo
 
 - [_node_](https://nodejs.org/es)
 - [_yarn_](https://yarnpkg.com)
-- [_python_](https://python.org)
 - [_rollup_](https://rollupjs.org/guide/en)
 
 ## Getting started
