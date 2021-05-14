@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+rollup -c
+cp -r libs static src/index.html src/shaders src/utils src/loaders build
