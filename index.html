@@ -4,7 +4,7 @@
 	<head>
 		<title>Helicopter</title>
 		<meta charset="utf-8">
-		<link rel="shortcut icon" href="static/favicon.ico">
+		<link rel="shortcut icon" href="./static/favicon.ico">
 		<style>
 			body {
 				background-color: #222222;
@@ -50,24 +50,24 @@
 
 		<!-- libs !-->
 
-		<script src="libs/gl-matrix.js"></script>
-		<script src="libs/jquery.js"></script>
-		<script src="libs/jquery.mousewheel.js"></script>
+		<script src="./libs/gl-matrix.js"></script>
+		<script src="./libs/jquery.js"></script>
+		<script src="./libs/jquery.mousewheel.js"></script>
 
 		<!-- utils !-->
 
-		<script src="src/utils/controller.js"></script>
-		<script src="src/utils/file.js"></script>
+		<script src="./utils/controller.js"></script>
+		<script src="./utils/file.js"></script>
 
 		<!-- loaders !-->
 
-		<script src="src/loaders/image.js"></script>
-		<script src="src/loaders/file.js"></script>
-		<script src="src/loaders/loader.js"></script>
+		<script src="./loaders/image.js"></script>
+		<script src="./loaders/file.js"></script>
+		<script src="./loaders/loader.js"></script>
 
 		<!-- build !-->
 
-		<script src="build/index.js"></script>
+		<script src="index.js"></script>
 
 		<script>
 			function main() {
@@ -116,42 +116,42 @@
 					{
 						name: "normal-vertex",
 						type: "vertex",
-						path: "./src/shaders/normal/vertex.glsl"
+						path: "./shaders/normal/vertex.glsl"
 					},
 					{
 						name: "normal-fragment",
 						type: "fragment",
-						path: "./src/shaders/normal/fragment.glsl"
+						path: "./shaders/normal/fragment.glsl"
 					},
 					{
 						name: "sky-vertex",
 						type: "vertex",
-						path: "./src/shaders/sky/vertex.glsl"
+						path: "./shaders/sky/vertex.glsl"
 					},
 					{
 						name: "sky-fragment",
 						type: "fragment",
-						path: "./src/shaders/sky/fragment.glsl"
+						path: "./shaders/sky/fragment.glsl"
 					},
 					{
 						name: "land-vertex",
 						type: "vertex",
-						path: "./src/shaders/land/vertex.glsl"
+						path: "./shaders/land/vertex.glsl"
 					},
 					{
 						name: "land-fragment",
 						type: "fragment",
-						path: "./src/shaders/land/fragment.glsl"
+						path: "./shaders/land/fragment.glsl"
 					},
 					{
 						name: "reflect-vertex",
 						type: "vertex",
-						path: "./src/shaders/normal/vertex.glsl"
+						path: "./shaders/normal/vertex.glsl"
 					},
 					{
 						name: "reflect-fragment",
 						type: "fragment",
-						path: "./src/shaders/reflect/fragment.glsl"
+						path: "./shaders/reflect/fragment.glsl"
 					}
 				];
 
