@@ -31,6 +31,8 @@ yarn build
 yarn start
 ```
 
+You can browse to your `localhost:5000`
+
 ## Controls
 
 - Movement:
