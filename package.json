@@ -1,6 +1,6 @@
 {
   "name": "helicopter",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "WebGL Helicopter",
   "main": "src/helicopter.js",
   "repository": {
@@ -15,12 +15,12 @@
   "private": "true",
   "scripts": {
     "build": "./scripts/build",
-    "start": "http-server -p 8000 build",
+    "start": "serve build",
     "prettier": "prettier --write \"src/**/*.js\" \"tests/*.js\""
   },
   "devDependencies": {
-    "http-server": "0.12.3",
     "prettier": "2.2.1",
-    "rollup": "2.45.2"
+    "rollup": "2.45.2",
+    "serve": "11.3.2"
   }
 }
