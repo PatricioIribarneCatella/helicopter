@@ -19,7 +19,6 @@
     "prettier": "prettier --write \"src/**/*.js\" \"tests/*.js\""
   },
   "devDependencies": {
-    "http-server": "0.12.3",
     "prettier": "2.2.1",
     "rollup": "2.45.2",
     "serve": "11.3.2"
